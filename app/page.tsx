@@ -4,10 +4,12 @@ import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const [code, setCode] = useState("");
+  const [wrongPass, setWrongPass] = useState("");
   const router = useRouter();
 
   async function checkPass(e: any) {
     e.preventDefault();
+    setWrongPass("");
 
     try {
       const res = await fetch("/datasets/p.json");
@@ -16,7 +18,7 @@ export default function HomePage() {
       if (json.p.includes(code)) {
         router.push("/menu");
       } else {
-        alert("کد اشتباه است!");
+        setWrongPass("wrong");
       }
     } catch (error) {
       console.error(error);
@@ -53,16 +55,26 @@ export default function HomePage() {
           <input
             type="number"
             aria-label="کد ورود"
-            onChange={(e) => setCode(e.target.value)}
+            onChange={(e) => {
+              setCode(e.target.value);
+              setWrongPass("");
+            }}
             className="w-full h-14 rounded-2xl bg-white text-black px-4 text-right text-4xl font-madimi focus:!outline-0 focus:!border-0"
           />
           <button
             type="submit"
-            className="w-full text-black h-15 bg-mygreen rounded-2xl border-0 border-b-8 border-b-mygreenLight font-iranyekan text-2xl"
+            className="w-full text-black h-15 bg-mygreen rounded-2xl border-0 border-b-8 border-b-mygreenLight font-iranyekan text-2xl active:translate-y-[2px] transition-all duration-100"
           >
             ورود
           </button>
         </form>
+        <p
+          className={`text-xl text-myorange font-iranyekan mt-5 transition-all duration-200 ${
+            wrongPass === "wrong" ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          رمز اشتباه است.{" "}
+        </p>
       </div>
     </main>
   );
