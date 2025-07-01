@@ -3,13 +3,43 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --mybg: #16262c;
+  --mygreen: #05d377;
+  --mygreenLight: #6efbbb;
+  --font-madimi: "Madimi One", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+@font-face {
+  font-family: "IRANYekan";
+  src: url("/fonts/iranyekanweblight.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IRANYekan";
+  src: url("/fonts/iranyekanwebregular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "IRANYekan";
+  src: url("/fonts/iranyekanwebbold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-mybg: var(--mybg);
+  --color-mygreen: var(--mygreen);
+  --color-mygreenLight: var(--mygreenLight);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-madimi: var(--font-madimi);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,5 +52,15 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "IRANYekan", sans-serif;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }

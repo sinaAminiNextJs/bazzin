@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Madimi_One } from "next/font/google";
 import "./globals.css";
-
+export const madimiOne = Madimi_One({
+  subsets: ["latin"],
+  weight: "400", // Madimi One only has one weight
+  variable: "--font-madimi-one", // optional, for Tailwind or CSS variables
+});
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -23,9 +27,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="fa" dir="rtl">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${madimiOne.variable} antialiased bg-black/20`}
       >
         {children}
       </body>
