@@ -7,27 +7,30 @@ export default function HomePage() {
   const [wrongPass, setWrongPass] = useState("");
   const router = useRouter();
 
+  function reorderNumber(num: any) {
+    const str = num.toString();
+    let result = "";
+
+    for (const i of [0, 4, 5, 3, 1, 2]) {
+      result += str[i];
+    }
+    return Number(result);
+  }
+
   async function checkPass(e: any) {
     e.preventDefault();
     setWrongPass("");
-
-    try {
-      const res = await fetch("/datasets/p.json");
-      const json = await res.json();
-
-      if (json.p.includes(code)) {
-        router.push("/menu");
-      } else {
-        setWrongPass("wrong");
-      }
-    } catch (error) {
-      console.error(error);
-      alert("خطا در بررسی کد!");
+    const newNum = reorderNumber(Number(code));
+    if (newNum % 29 === 0 && newNum > 100000 && newNum < 999999) {
+      router.push("/menu");
+    } else {
+      setWrongPass("wrong");
     }
   }
 
   return (
     <main className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-8 bg-mybg/96">
+      {/* background */}
       <div className="absolute top-0 left-0 -z-10 w-full h-screen">
         <img
           src="/clipart/earth.png"

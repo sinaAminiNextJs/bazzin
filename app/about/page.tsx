@@ -6,6 +6,7 @@ export default function About() {
 
   return (
     <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-8 bg-mybg/96">
+      {/* background */}
       <div className="absolute top-0 left-0 -z-10 w-full h-screen">
         <img
           src="/clipart/earth.png"
