@@ -1,24 +1,23 @@
-"use client";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import BackButton from "../components/BackButton";
 
 export default function About() {
-  const router = useRouter();
   type videoType = {
     name: string;
+    slug: string;
   };
 
   const videoList: videoType[] = [
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
-    { name: "اسم انیمیشن" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
+    { name: "اسم انیمیشن", slug: "vid-1" },
   ];
 
   return (
@@ -40,8 +39,8 @@ export default function About() {
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       <p className="text-2xl mt-5">انیمیشن</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-10 mt-10 text-lg leading-relaxed text-justify max-w-3xl mx-auto font-iranyekan">
-        {videoList.map(({ name }, index) => (
-          <article key={index} className="mx-auto ">
+        {videoList.map(({ name, slug }, index) => (
+          <Link href={`/videos/${slug}`} key={index} className="mx-auto ">
             <div className="flex justify-center items-center w-32 aspect-square rounded-2xl bg-mygreen">
               <svg
                 width="36"
@@ -96,7 +95,7 @@ export default function About() {
               </svg>
             </div>
             <p className="text-center mt-2">{name}</p>
-          </article>
+          </Link>
         ))}
       </div>
       {/* back button */}
