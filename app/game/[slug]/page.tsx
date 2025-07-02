@@ -1,7 +1,11 @@
 import BackButton from "@/app/components/BackButton";
 
-export default function GamePlay({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function GamePlay({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const { slug } = await params;
 
   type gameType = {
     name: string;
@@ -23,7 +27,7 @@ export default function GamePlay({ params }: { params: { slug: string } }) {
   );
 
   return (
-    <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-8 bg-mybg/96">
+    <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
       {/* page content */}
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       {gameData ? (
