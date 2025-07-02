@@ -1,3 +1,4 @@
+import BackButton from "../components/BackButton";
 import GlobeComponent from "../components/Globe";
 
 export default function HomePage() {
@@ -17,6 +18,8 @@ export default function HomePage() {
         Play Merge Rot on Poki
       </a>
       <GlobeComponent />
+      {/* back button */}
+      <BackButton pathName="/menu" />
     </main>
   );
 }
