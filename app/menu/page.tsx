@@ -28,7 +28,7 @@ export default function Menu() {
         <article className="w-full flex items-center group">
           <button
             onClick={() => router.push("/earthThD")}
-            className="w-full min-w-60 text-black h-15 bg-mygreen rounded-2xl border-0 border-b-8 border-b-mygreenLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-300 ease-in-out"
+            className="w-full min-w-60 text-black h-15 bg-mygreen rounded-2xl border-0 border-b-8 border-b-mygreenLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-500 ease-in-out"
           >
             کره زمین سه بعدی
           </button>
@@ -44,7 +44,7 @@ export default function Menu() {
         <article className="w-full flex items-center group">
           <button
             onClick={() => router.push("/game")}
-            className="w-full min-w-60 text-black h-15 bg-myblue rounded-2xl border-0 border-b-8 border-b-myblueLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-300 ease-in-out"
+            className="w-full min-w-60 text-black h-15 bg-myblue rounded-2xl border-0 border-b-8 border-b-myblueLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-500 ease-in-out"
           >
             بازی و سرگرمی{" "}
           </button>
@@ -60,7 +60,7 @@ export default function Menu() {
         <article className="w-full flex items-center group">
           <button
             onClick={() => router.push("/videos")}
-            className="w-full min-w-60 text-black h-15 bg-myred rounded-2xl border-0 border-b-8 border-b-myredLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-300 ease-in-out"
+            className="w-full min-w-60 text-black h-15 bg-myred rounded-2xl border-0 border-b-8 border-b-myredLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-500 ease-in-out"
           >
             انیمیشن{" "}
           </button>
@@ -76,7 +76,7 @@ export default function Menu() {
         <article className="w-full flex items-center group">
           <button
             onClick={() => router.push("/about")}
-            className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-300 ease-in-out"
+            className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-500 ease-in-out"
           >
             درباره ما{" "}
           </button>

@@ -15,18 +15,18 @@ export default function GlobeComponent({ isDay }) {
         .then((res) => res.json())
         .then((countries) => {
           globeInstance.current = Globe.default()(globeEl.current)
-            .globeImageUrl(isDay ? "/earth-day.jpg" : "/earth-night.jpg")
-            .backgroundImageUrl(isDay ? "/day-sky.jpg" : "/night-sky.png")
+            .globeImageUrl(isDay ? "/earth-day.webp" : "/night-earth.webp")
+            .backgroundImageUrl(isDay ? "/day-sky.webp" : "/night-sky.webp")
             .lineHoverPrecision(0)
             .polygonsData(
               countries.features.filter((d) => d.properties.ISO_A2 !== "")
             )
-            .polygonAltitude(0.0016)
+            .polygonAltitude(0.05)
             .polygonCapColor(
               (d) => d.properties.COLOR || "rgba(0, 200, 0, 0.6)"
             )
-            .polygonSideColor(() => "rgba(0, 100, 0, 0.15)")
-            .polygonStrokeColor(() => "#111")
+            .polygonSideColor(() => null)
+            .polygonStrokeColor(() => "rgba(0, 0, 0, 0.5)")
             .polygonLabel(
               ({ properties: d }) => `
                 <b>${d.ADMIN} (${d.ISO_A2}):</b> <br/>
@@ -52,8 +52,8 @@ export default function GlobeComponent({ isDay }) {
   useEffect(() => {
     if (globeInstance.current) {
       globeInstance.current
-        .globeImageUrl(isDay ? "/earth-day.jpg" : "/earth-night.jpg")
-        .backgroundImageUrl(isDay ? "/day-sky.jpg" : "/night-sky.png");
+        .globeImageUrl(isDay ? "/earth-day.webp" : "/night-earth.webp")
+        .backgroundImageUrl(isDay ? "/day-sky.webp" : "/night-sky.webp");
     }
   }, [isDay]);
 

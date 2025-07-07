@@ -1,42 +1,46 @@
 "use client";
-import BackButton from "@/app/components/BackButton";
+import { useState } from "react";
+import GlobeComponent from "./components/Globe";
+import DayNightToggle from "./components/DayNightToggle";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
+import BackButton from "../components/BackButton";
 import { useRouter } from "next/navigation";
 
-export default function EarthThD() {
+export default function HomePage() {
+  const [isDay, setIsDay] = useState(true);
+  const router = useRouter();
   useAuthCheck();
 
-  const router = useRouter();
   return (
-    <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
-      {/* page content */}
-      <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
-
-      <section className="flex flex-col justify-center items-center h-full">
-        <img
-          src="/earth.png"
-          className="w-full max-w-md aspect-square rounded-2xl mb-10"
-          alt="earth 3d"
-        />
-        <article className="w-full flex items-center">
-          <button onClick={() => router.push("/earthThD/AR-Description")}>
-            <img
-              src="/clipart/qustion.png"
-              alt="question button"
-              className="w-24 p-2 rotate-12 -mr-2"
-            />
-          </button>
-          <button
-            onClick={() => router.push("/earthThD/AR-Earth")}
-            className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100"
-          >
-            واقعیت افزوده (AR){" "}
-          </button>
-        </article>
-      </section>
-
+    <>
+      {/* <iframe
+        id="game-element"
+        allow="autoplay; fullscreen; camera; focus-without-user-activation *; monetization; gamepad; keyboard-map *; xr-spatial-tracking; clipboard-write; web-share; accelerometer; magnetometer; gyroscope"
+        name="gameFrame"
+        sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin allow-downloads"
+        src="https://games.poki.com/458768/28165370-9b06-40f6-b35b-c538dc818754?tag=pg-c269b0a890a4cfe1c499188409a9240669a68214&amp;site_id=3&amp;iso_lang=en&amp;country=NL&amp;poki_url=https://poki.com/en/g/merge-rot&amp;hoist=yes&amp;nonPersonalized=y&amp;cloudsavegames=n&amp;familyFriendly=y&amp;categories=7,37,72,96,909,929,1013,1126,1139,1140,1141,1143,1155,1186,1190,1206&amp;ab=24d8666f3b29486be8332664c5b70c486da11bc0&amp;experiment=a-d53d9d5a"
+        title="Game"
+        className="w-full h-[500px]"
+      ></iframe> */}
+      <GlobeComponent isDay={isDay} />
+      <DayNightToggle onToggle={setIsDay} />
+      <article className="w-full mx-auto fixed bottom-4 px-20 flex items-center">
+        {/* <button onClick={() => router.push("/earthThD/AR-Description")}>
+          <img
+            src="/clipart/qustion.png"
+            alt="question button"
+            className="w-24 p-2 rotate-12 -mr-2"
+          />
+        </button> */}
+        <button
+          onClick={() => router.push("/earthThD/AR-Earth")}
+          className="w-full text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
+        >
+          واقعیت افزوده (AR){" "}
+        </button>
+      </article>
       {/* back button */}
       <BackButton pathName="/menu" />
-    </section>
+    </>
   );
 }
