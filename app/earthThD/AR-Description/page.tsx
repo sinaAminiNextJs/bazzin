@@ -24,7 +24,7 @@ export default function About() {
       </div>
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       <p className="text-2xl mt-5">واقعیت افزوده یا فناوری AR</p>
-      <p className="my-10 text-lg leading-relaxed text-justify max-w-3xl mx-auto font-iranyekan">
+      <p className="my-10 text-lg leading-relaxed text-justify max-w-md mx-auto font-iranyekan">
         می‌توان در یک جمله گفت که واقعیت افزوده، ترکیب هم‌زمان دنیای واقعی با
         تصاویر مجازی است، در واقع به کمک واقعیت افزوده علاوه بر عناصر موجود در
         دنیای واقعی، نمای فیزیک زندۀ دیگری به‌صورت مستقیم و گاهی غیرمستقیم اضافه
@@ -34,7 +34,7 @@ export default function About() {
       </p>
       <button
         onClick={() => router.push("/earthThD/AR-Earth")}
-        className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100"
+        className="w-full max-w-md min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100"
       >
         واقعیت افزوده (AR){" "}
       </button>

@@ -18,7 +18,7 @@ export default function About() {
       </div>
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       <p className="text-2xl mt-5">درباره ما</p>
-      <p className="mt-10 text-lg leading-relaxed text-justify max-w-3xl mx-auto font-iranyekan">
+      <p className="mt-10 text-lg leading-relaxed text-justify max-w-md mx-auto font-iranyekan">
         صفحه درباره ما، شما و کسب و کارتان و معرفی می‌کند؛ تا از این طریق هم
         مخاطبان شما و هدفتان را بشناسند و به شما اعتماد کنند. در این مقاله به
         چگونگی ساخت این صفحه و معرفی نمونه صفحه درباره ما می‌پردازیم.صفحه درباره
