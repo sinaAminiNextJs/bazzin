@@ -25,7 +25,7 @@ export default function DayNightToggle({
         ${!isDay ? "bg-mygreen" : "bg-myblue"} 
         rounded-full border-2 
         ${!isDay ? "border-mygreenLight" : "border-myblueLight"}
-        active:translate-y-[2px] transition-all duration-100
+        active:translate-y-[2px] active:scale-95 transition-all duration-100
         shadow-[0px_0px_20px_black]`}
       >
         {!isDay ? (

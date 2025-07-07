@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { validTokens } from "@/public/datasets/tokens";
 
 export default function HomePage() {
   const [code, setCode] = useState("");
@@ -20,9 +21,17 @@ export default function HomePage() {
   async function checkPass(e: any) {
     e.preventDefault();
     setWrongPass("");
-    const newNum = reorderNumber(Number(code));
-    if (newNum % 29 === 0 && newNum > 100000 && newNum < 999999) {
-      router.push("/menu");
+
+    if (Number(code) > 100000 && Number(code) < 999999) {
+      const newNum = reorderNumber(Number(code));
+      if (newNum % 29 === 0) {
+        const token =
+          validTokens[Math.floor(Math.random() * validTokens.length)];
+        localStorage.setItem("tokenBazzin", token);
+        router.push("/menu");
+      } else {
+        setWrongPass("wrong");
+      }
     } else {
       setWrongPass("wrong");
     }
@@ -66,7 +75,7 @@ export default function HomePage() {
           />
           <button
             type="submit"
-            className="w-full text-black h-15 bg-mygreen rounded-2xl border-0 border-b-8 border-b-mygreenLight font-iranyekan text-2xl active:translate-y-[2px] transition-all duration-100"
+            className="w-full text-black h-15 bg-mygreen rounded-2xl border-0 border-b-8 border-b-mygreenLight font-iranyekan text-2xl active:translate-y-[2px] active:scale-95 transition-all duration-100"
           >
             ورود
           </button>

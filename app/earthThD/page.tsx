@@ -1,8 +1,17 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
+import { validTokens } from "@/public/datasets/tokens";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function EarthThD() {
+  useEffect(() => {
+    const token = localStorage.getItem("tokenBazzin");
+    if (!token || !validTokens.includes(token)) {
+      router.replace("/");
+    }
+  }, []);
+
   const router = useRouter();
   return (
     <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
@@ -12,7 +21,7 @@ export default function EarthThD() {
       <section className="flex flex-col justify-center items-center h-full">
         <img
           src="/earth.png"
-          className="w-full aspect-square rounded-2xl mb-10"
+          className="w-full max-w-md aspect-square rounded-2xl mb-10"
           alt="earth 3d"
         />
         <article className="w-full flex items-center">
@@ -25,7 +34,7 @@ export default function EarthThD() {
           </button>
           <button
             onClick={() => router.push("/earthThD/AR-Earth")}
-            className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] transition-all duration-100"
+            className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100"
           >
             واقعیت افزوده (AR){" "}
           </button>

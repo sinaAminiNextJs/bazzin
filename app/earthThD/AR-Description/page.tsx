@@ -1,8 +1,16 @@
 "use client";
 import { useRouter } from "next/navigation";
 import BackButton from "../../components/BackButton";
+import { useEffect } from "react";
+import { validTokens } from "@/public/datasets/tokens";
 
 export default function About() {
+  useEffect(() => {
+    const token = localStorage.getItem("tokenBazzin");
+    if (!token || !validTokens.includes(token)) {
+      router.replace("/");
+    }
+  }, []);
   const router = useRouter();
   return (
     <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
@@ -31,7 +39,7 @@ export default function About() {
       </p>
       <button
         onClick={() => router.push("/earthThD/AR-Earth")}
-        className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] transition-all duration-100"
+        className="w-full min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100"
       >
         واقعیت افزوده (AR){" "}
       </button>

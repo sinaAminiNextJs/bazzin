@@ -10,7 +10,7 @@ export default function BackButton({ pathName }: backButtonType) {
     <div className="fixed bottom-4 left-4">
       <button
         onClick={() => router.push(pathName)}
-        className="flex justify-center items-center w-12 pr-1 aspect-square bg-myred rounded-full border-2 border-myorangeLight active:translate-y-[2px] transition-all duration-100 shadow-[0px_0px_20px_black]"
+        className="flex justify-center items-center w-12 pr-1 aspect-square bg-myred rounded-full border-2 border-myorangeLight active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

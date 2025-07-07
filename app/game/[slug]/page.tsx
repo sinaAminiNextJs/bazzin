@@ -1,8 +1,18 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { useParams } from "next/navigation";
+import { validTokens } from "@/public/datasets/tokens";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 export default function GamePlay() {
+  const router = useRouter();
   const { slug } = useParams();
+  useEffect(() => {
+    const token = localStorage.getItem("tokenBazzin");
+    if (!token || !validTokens.includes(token)) {
+      router.replace("/");
+    }
+  }, []);
 
   type gameType = {
     name: string;

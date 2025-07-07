@@ -1,7 +1,17 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { useParams } from "next/navigation";
+import { validTokens } from "@/public/datasets/tokens";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 export default async function videoPlay() {
+  const router = useRouter();
+  useEffect(() => {
+    const token = localStorage.getItem("tokenBazzin");
+    if (!token || !validTokens.includes(token)) {
+      router.replace("/");
+    }
+  }, []);
+
   const { slug } = useParams();
 
   type videoType = {
