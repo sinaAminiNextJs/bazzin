@@ -32,10 +32,13 @@ export default function Menu() {
           >
             کره زمین سه بعدی
           </button>
-          <img
+          <Image
             src="/clipart/earth.png"
             alt="Earth illustration"
-            className="w-24 -mr-10 z-10 group-active:rotate-6"
+            width={96}
+            height={96}
+            priority
+            className="-mr-10 z-10 group-active:rotate-6"
           />
         </article>
         <article className="w-full flex items-center group">
@@ -61,10 +64,13 @@ export default function Menu() {
           >
             انیمیشن{" "}
           </button>
-          <img
+          <Image
             src="/clipart/play.png"
             alt="Earth illustration"
-            className="w-24 -mr-10 z-10 rotate-12 p-1 group-active:rotate-0"
+            width={96}
+            height={96}
+            priority
+            className="-mr-10 z-10 rotate-12 p-1 group-active:rotate-0"
           />
         </article>
         <article className="w-full flex items-center group">
@@ -74,10 +80,13 @@ export default function Menu() {
           >
             درباره ما{" "}
           </button>
-          <img
+          <Image
             src="/clipart/qustion.png"
             alt="Earth illustration"
-            className="w-24 -mr-10 z-10 -rotate-12 p-2 group-active:rotate-0"
+            width={96}
+            height={96}
+            priority
+            className="-mr-10 z-10 -rotate-12 p-2 group-active:rotate-0"
           />
         </article>
       </div>
