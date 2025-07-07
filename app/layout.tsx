@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Madimi_One } from "next/font/google";
 import "./globals.css";
-export const madimiOne = Madimi_One({
-  subsets: ["latin"],
-  weight: "400", // Madimi One only has one weight
-  variable: "--font-madimi-one", // optional, for Tailwind or CSS variables
-});
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const madimiOne = Madimi_One({
   subsets: ["latin"],
+  weight: "400",
+  variable: "--font-madimi-one",
 });
 
 export const metadata: Metadata = {
@@ -34,9 +26,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${madimiOne.variable} antialiased bg-black/20`}
-      >
+      <body className={`${madimiOne.variable} antialiased bg-black/20`}>
         {children}
       </body>
     </html>

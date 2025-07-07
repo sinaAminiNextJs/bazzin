@@ -1,11 +1,8 @@
+"use client";
 import BackButton from "@/app/components/BackButton";
-
-export default async function GamePlay({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = await params;
+import { useParams } from "next/navigation";
+export default function GamePlay() {
+  const { slug } = useParams();
 
   type gameType = {
     name: string;

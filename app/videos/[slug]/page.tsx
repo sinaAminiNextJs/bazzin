@@ -1,11 +1,8 @@
+"use client";
 import BackButton from "@/app/components/BackButton";
-
-export default async function videoPlay({
-  params,
-}: {
-  params: { slug: string };
-}) {
-  const { slug } = await params;
+import { useParams } from "next/navigation";
+export default async function videoPlay() {
+  const { slug } = useParams();
 
   type videoType = {
     name: string;
