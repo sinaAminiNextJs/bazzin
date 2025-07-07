@@ -1,16 +1,10 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { validTokens } from "@/public/datasets/tokens";
+import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function EarthThD() {
-  useEffect(() => {
-    const token = localStorage.getItem("tokenBazzin");
-    if (!token || !validTokens.includes(token)) {
-      router.replace("/");
-    }
-  }, []);
+  useAuthCheck();
 
   const router = useRouter();
   return (

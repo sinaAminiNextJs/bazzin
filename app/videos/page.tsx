@@ -1,18 +1,10 @@
 "use client";
 import Link from "next/link";
 import BackButton from "../components/BackButton";
-import { useEffect } from "react";
-import { validTokens } from "@/public/datasets/tokens";
-import { useRouter } from "next/navigation";
+import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 
 export default function About() {
-  const router = useRouter();
-  useEffect(() => {
-    const token = localStorage.getItem("tokenBazzin");
-    if (!token || !validTokens.includes(token)) {
-      router.replace("/");
-    }
-  }, []);
+  useAuthCheck();
 
   type videoType = {
     name: string;

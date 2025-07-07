@@ -1,20 +1,15 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BackButton from "../../components/BackButton";
 import GlobeComponent from "./components/Globe";
 import DayNightToggle from "./components/DayNightToggle";
-import { validTokens } from "@/public/datasets/tokens";
 import { useRouter } from "next/navigation";
+import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 
 export default function HomePage() {
   const [isDay, setIsDay] = useState(true);
-  const router = useRouter();
-  useEffect(() => {
-    const token = localStorage.getItem("tokenBazzin");
-    if (!token || !validTokens.includes(token)) {
-      router.replace("/");
-    }
-  }, []);
+  useAuthCheck();
+
   return (
     <>
       {/* <iframe

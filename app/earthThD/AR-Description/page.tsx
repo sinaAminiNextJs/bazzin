@@ -1,17 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 import BackButton from "../../components/BackButton";
-import { useEffect } from "react";
-import { validTokens } from "@/public/datasets/tokens";
 
 export default function About() {
-  useEffect(() => {
-    const token = localStorage.getItem("tokenBazzin");
-    if (!token || !validTokens.includes(token)) {
-      router.replace("/");
-    }
-  }, []);
   const router = useRouter();
+  useAuthCheck();
+
   return (
     <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
       {/* background */}
