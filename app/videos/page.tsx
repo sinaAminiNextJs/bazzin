@@ -83,8 +83,12 @@ export default function About() {
       <p className="text-2xl mt-5">انیمیشن</p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mt-10 text-lg leading-relaxed text-justify max-w-3xl mx-auto font-iranyekan">
         {videoList.map(({ name, slug, thumbnail }, index) => (
-          <Link href={`/videos/${slug}`} key={index} className="mx-auto ">
-            <div className="flex justify-center items-center aspect-video rounded-2xl bg-mygreen">
+          <Link
+            href={`/videos/${slug}`}
+            key={index}
+            className="mx-auto w-full "
+          >
+            <div className="relative flex justify-center items-center aspect-video rounded-2xl bg-mygreen">
               <img className="w-full rounded-2xl" src={thumbnail} />
               <svg
                 width="36"
@@ -92,6 +96,7 @@ export default function About() {
                 viewBox="0 0 36 40"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                className="absolute z-10"
               >
                 <g filter="url(#filter0_d_4610_3157)">
                   <path
