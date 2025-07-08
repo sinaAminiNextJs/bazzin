@@ -1,7 +1,7 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 export default async function videoPlay() {
   const { slug } = useParams();
   useAuthCheck();
@@ -9,16 +9,14 @@ export default async function videoPlay() {
   type videoType = {
     name: string;
     slug: string;
-    video: string;
+    src: string;
   };
 
   const videoList: videoType[] = [
-    { name: "اسم انیمیشن ۱", slug: "vid-1", video: "/g1.png" },
-    { name: "اسم انیمیشن ۲", slug: "vid-1", video: "/g2.png" },
-    { name: "اسم انیمیشن ۳", slug: "vid-1", video: "/g3.png" },
-    { name: "اسم انیمیشن ۴", slug: "vid-1", video: "/g4.png" },
-    { name: "اسم انیمیشن ۵", slug: "vid-1", video: "/g5.png" },
-    { name: "اسم انیمیشن ۶", slug: "vid-1", video: "/g6.png" },
+    { name: "دختر کفشدوزکی", slug: "vid-1", src: "h163yts" },
+    { name: "ماچارتا و کدوبلو", slug: "vid-2", src: "ybh9ll7" },
+    { name: "سگهای نگهبان", slug: "vid-3", src: "s1095fx" },
+    { name: "دیانا و روما", slug: "vid-4", src: "oqbtbo0" },
   ];
 
   const videoData: videoType | undefined = videoList.find(
@@ -31,11 +29,11 @@ export default async function videoPlay() {
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       {videoData ? (
         <section className="flex flex-col justify-center items-center h-full">
-          <img
-            src={videoData.video}
-            className="w-full aspect-square rounded-2xl"
-            alt={videoData.name}
-          />
+          <iframe
+            src={`https://www.aparat.com/video/video/embed/videohash/${videoData.src}/vt/frame?titleShow=true&muted=true&autoplay=true&recom=self`}
+            className=" aspect-video rounded-2xl"
+            allowFullScreen
+          ></iframe>
           <p className="text-center mt-4 text-3xl font-iranyekan">
             {videoData.name}
           </p>
