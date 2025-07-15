@@ -7,8 +7,10 @@ import { useLoader } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
 import { useEffect } from "react";
 
-function EarthSphere({ isDay }: { isDay: boolean }) {
-  const textureUrl = isDay ? "/day-sky.webp" : "/day-sky.webp";
+// function EarthSphere({ isDay }: { isDay: boolean }) {
+function EarthSphere() {
+  // const textureUrl = isDay ? "/day-sky.webp" : "/day-sky.webp";
+  const textureUrl = "/day-sky.webp";
   const texture = useLoader(TextureLoader, textureUrl);
   console.log("texture", texture);
 
@@ -63,7 +65,8 @@ function StartARButtonInScene() {
   );
 }
 
-export default function AREarthPage({ isDay }: { isDay: boolean }) {
+// export default function AREarthPage({ isDay }: { isDay: boolean }) {
+export default function AREarthPage() {
   return (
     <div
       style={{
@@ -84,7 +87,8 @@ export default function AREarthPage({ isDay }: { isDay: boolean }) {
         <ambientLight intensity={0.5} />
         <directionalLight position={[1, 2, 3]} />
         <Suspense fallback={null}>
-          <EarthSphere isDay={isDay} />
+          {/* <EarthSphere isDay={isDay} /> */}
+          <EarthSphere />
           <StartARButtonInScene />
         </Suspense>
       </Canvas>
