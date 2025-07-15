@@ -4,12 +4,9 @@ import { Canvas, useThree } from "@react-three/fiber";
 import { Suspense } from "react";
 import { TextureLoader, WebGLRenderer } from "three";
 import { useLoader } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
 
 function EarthSphere() {
-  const textureUrl = "/day-sky.webp";
-  const texture = useLoader(TextureLoader, textureUrl);
-  console.log("texture", texture);
+  const texture = useLoader(TextureLoader, "/day-sky.webp");
 
   return (
     <mesh scale={0.2} position={[0, 0, -0.5]}>
@@ -19,23 +16,19 @@ function EarthSphere() {
   );
 }
 
-function StartARButtonInScene() {
-  const { gl, scene, camera } = useThree();
-
+export default function AREarthPage() {
   const handleStartAR = async () => {
     if (navigator.xr) {
       try {
         const session = await navigator.xr.requestSession("immersive-ar", {
           optionalFeatures: ["local-floor", "bounded-floor"],
         });
-
-        const renderer = gl as WebGLRenderer;
-        renderer.xr.enabled = true;
-        await renderer.xr.setSession(session);
-
+        const canvas = document.querySelector("canvas");
+        if (!canvas) return;
+        const gl = canvas as unknown as WebGLRenderer;
+        gl.xr.enabled = true;
+        await gl.xr.setSession(session);
         console.log("AR session started!");
-
-        // در R3F نیازی به animationLoop نیست چون خودش هندل می‌کند
       } catch (e) {
         console.error("Failed to start AR session:", e);
       }
@@ -45,47 +38,32 @@ function StartARButtonInScene() {
   };
 
   return (
-    <Html
-      position={[0, 0, -1]}
-      transform
-      className="z-20"
-      style={{ pointerEvents: "auto" }}
-    >
-      <button
-        onClick={handleStartAR}
-        className="bg-amber-400 border z-20 text-black"
-      >
-        Start AR
-      </button>
-    </Html>
-  );
-}
-
-export default function AREarthPage() {
-  return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <Canvas
-        gl={{ alpha: true }}
-        style={{
-          background: "transparent",
-          width: "100%",
-          height: "100%",
-        }}
-      >
+    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
+      <Canvas gl={{ alpha: true }} style={{ background: "transparent" }}>
         <ambientLight intensity={0.5} />
         <directionalLight position={[1, 2, 3]} />
         <Suspense fallback={null}>
           <EarthSphere />
-          <StartARButtonInScene />
         </Suspense>
       </Canvas>
+      {/* دکمه رو بیرون از Canvas و Html قرار میدیم */}
+      <button
+        onClick={handleStartAR}
+        style={{
+          position: "absolute",
+          top: 20,
+          left: 20,
+          padding: "10px 20px",
+          background: "#fbbf24", // amber-400 رنگ Tailwind
+          border: "none",
+          borderRadius: 4,
+          color: "#000",
+          cursor: "pointer",
+          zIndex: 9999,
+        }}
+      >
+        Start AR
+      </button>
     </div>
   );
 }
