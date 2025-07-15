@@ -5,11 +5,8 @@ import { Suspense } from "react";
 import { TextureLoader, WebGLRenderer } from "three";
 import { useLoader } from "@react-three/fiber";
 import { Html } from "@react-three/drei";
-import { useEffect } from "react";
 
-// function EarthSphere({ isDay }: { isDay: boolean }) {
 function EarthSphere() {
-  // const textureUrl = isDay ? "/day-sky.webp" : "/day-sky.webp";
   const textureUrl = "/day-sky.webp";
   const texture = useLoader(TextureLoader, textureUrl);
   console.log("texture", texture);
@@ -48,16 +45,15 @@ function StartARButtonInScene() {
   };
 
   return (
-    <Html position={[0, 0, -1]} transform style={{ pointerEvents: "auto" }}>
+    <Html
+      position={[0, 0, -1]}
+      transform
+      className="z-20"
+      style={{ pointerEvents: "auto" }}
+    >
       <button
         onClick={handleStartAR}
-        style={{
-          background: "#000",
-          color: "#fff",
-          padding: "10px 20px",
-          border: "none",
-          borderRadius: "4px",
-        }}
+        className="bg-amber-400 border z-20 text-black"
       >
         Start AR
       </button>
@@ -65,7 +61,6 @@ function StartARButtonInScene() {
   );
 }
 
-// export default function AREarthPage({ isDay }: { isDay: boolean }) {
 export default function AREarthPage() {
   return (
     <div
@@ -87,7 +82,6 @@ export default function AREarthPage() {
         <ambientLight intensity={0.5} />
         <directionalLight position={[1, 2, 3]} />
         <Suspense fallback={null}>
-          {/* <EarthSphere isDay={isDay} /> */}
           <EarthSphere />
           <StartARButtonInScene />
         </Suspense>
