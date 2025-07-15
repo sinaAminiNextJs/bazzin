@@ -22,18 +22,22 @@ export default function HomePage() {
         title="Game"
         className="w-full h-[500px]"
       ></iframe> */}
+
+      <button
+        className="fixed w-full top-4 left-4 flex justify-end z-10"
+        onClick={() => router.push("/earthThD/AR-Description")}
+      >
+        <img
+          src="/clipart/qustion.png"
+          alt="question button"
+          className="w-10"
+        />
+      </button>
       <GlobeComponent isDay={isDay} />
       <DayNightToggle onToggle={setIsDay} />
       <article className="w-full mx-auto fixed bottom-4 px-20 flex items-center">
-        {/* <button onClick={() => router.push("/earthThD/AR-Description")}>
-          <img
-            src="/clipart/qustion.png"
-            alt="question button"
-            className="w-24 p-2 rotate-12 -mr-2"
-          />
-        </button> */}
         <button
-          onClick={() => router.push("/earthThD/AR-Earth")}
+          onClick={() => router.push("/earthThD/earthAR/")}
           className="w-full text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
         >
           واقعیت افزوده (AR){" "}
