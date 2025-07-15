@@ -2,34 +2,20 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Earth AR</title>
-
-    <!-- A-Frame & AR.js -->
+    <title>AR.js Test</title>
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/3.3.2/aframe/build/aframe-ar.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden">
-    <p>hi im here</p>
     <a-scene
       embedded
       arjs="sourceType: webcam; debugUIEnabled: true;"
       vr-mode-ui="enabled: false"
       renderer="logarithmicDepthBuffer: true;"
     >
-      <!-- مارکر پیش‌فرض 'hiro' -->
       <a-marker preset="hiro">
-        <!-- کره زمین ساده -->
-        <!-- src="/ar-earth/earth.png" -->
-        <a-sphere
-          position="0 0.5 0"
-          radius="0.5"
-          color="#4CC3D9"
-          segments-height="36"
-          segments-width="36"
-          roughness="1"
-          metalness="0.2"
-        ></a-sphere>
+        <a-box position="0 0.5 0" material="color: red;"></a-box>
       </a-marker>
 
       <a-entity camera></a-entity>
