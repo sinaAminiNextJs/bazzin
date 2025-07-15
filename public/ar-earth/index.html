@@ -10,6 +10,7 @@
   </head>
 
   <body style="margin: 0; overflow: hidden">
+    <p>hi im here</p>
     <a-scene
       embedded
       arjs="sourceType: webcam; debugUIEnabled: true;"
@@ -19,12 +20,13 @@
       <!-- مارکر پیش‌فرض 'hiro' -->
       <a-marker preset="hiro">
         <!-- کره زمین ساده -->
+        <!-- src="/ar-earth/earth.png" -->
         <a-sphere
           position="0 0.5 0"
           radius="0.5"
+          color="#4CC3D9"
           segments-height="36"
           segments-width="36"
-          src="/ar-earth/earth.png"
           roughness="1"
           metalness="0.2"
         ></a-sphere>
