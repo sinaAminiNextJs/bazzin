@@ -12,6 +12,8 @@
     "@react-three/drei": "^10.5.1",
     "@react-three/fiber": "^9.2.0",
     "@react-three/xr": "^6.6.19",
+    "aframe": "^1.7.1",
+    "ar.js": "^2.2.2",
     "globe.gl": "^2.41.6",
     "next": "15.3.4",
     "react": "^19.0.0",
