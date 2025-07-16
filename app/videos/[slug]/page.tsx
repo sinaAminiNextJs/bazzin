@@ -31,7 +31,7 @@ export default function videoPlay() {
         <section className="flex flex-col justify-center items-center h-full w-full">
           <iframe
             src={`https://www.aparat.com/video/video/embed/videohash/${videoData.src}/vt/frame?titleShow=true&muted=true&autoplay=true&recom=self`}
-            className=" aspect-video rounded-2xl"
+            className="w-full aspect-video rounded-2xl"
             allowFullScreen
           ></iframe>
           <p className="text-center mt-4 text-3xl font-iranyekan">
