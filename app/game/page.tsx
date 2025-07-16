@@ -10,19 +10,70 @@ export default function Game() {
     name: string;
     game: string;
     slug: string;
+    src: string;
   };
 
   const videoList: videoType[] = [
-    { name: "اسم بازی", game: "/g1.png", slug: "game-1" },
-    { name: "اسم بازی", game: "/g2.png", slug: "game-2" },
-    { name: "اسم بازی", game: "/g3.png", slug: "game-3" },
-    { name: "اسم بازی", game: "/g4.png", slug: "game-4" },
-    { name: "اسم بازی", game: "/g5.png", slug: "game-5" },
-    { name: "اسم بازی", game: "/g6.png", slug: "game-6" },
-    { name: "اسم بازی", game: "/g1.png", slug: "game-1" },
-    { name: "اسم بازی", game: "/g2.png", slug: "game-2" },
-    { name: "اسم بازی", game: "/g3.png", slug: "game-3" },
-    { name: "اسم بازی", game: "/g4.png", slug: "game-4" },
+    {
+      name: "اسم بازی",
+      game: "/g1.png",
+      slug: "game-1",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g2.png",
+      slug: "game-2",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g3.png",
+      slug: "game-3",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g4.png",
+      slug: "game-4",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g5.png",
+      slug: "game-5",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g6.png",
+      slug: "game-6",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g1.png",
+      slug: "game-1",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g2.png",
+      slug: "game-2",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g3.png",
+      slug: "game-3",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
+    {
+      name: "اسم بازی",
+      game: "/g4.png",
+      slug: "game-4",
+      src: "https://f3.silvergames.com/m/guess-the-flag/",
+    },
   ];
 
   return (
@@ -44,8 +95,13 @@ export default function Game() {
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       <p className="text-2xl mt-5">بازی و سرگرمی</p>
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-10 mt-10 text-lg leading-relaxed text-justify max-w-3xl mx-auto font-iranyekan">
-        {videoList.map(({ name, game, slug }, index) => (
-          <Link href={`/game/${slug}`} key={index} className="mx-auto ">
+        {videoList.map(({ name, game, src }, index) => (
+          <Link
+            //  href={`/game/${slug}`}
+            href={src}
+            key={index}
+            className="mx-auto "
+          >
             <img
               src={game}
               className="flex justify-center items-center w-32 aspect-square rounded-2xl"
