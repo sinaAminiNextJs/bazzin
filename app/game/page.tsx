@@ -15,16 +15,16 @@ export default function Game() {
 
   const videoList: videoType[] = [
     {
-      name: "اسم بازی",
+      name: "پرچم رو حدس بزن!",
       game: "/g1.png",
       slug: "game-1",
       src: "https://f3.silvergames.com/m/guess-the-flag/",
     },
     {
-      name: "اسم بازی",
+      name: "این کشور کجاست؟",
       game: "/g2.png",
       slug: "game-2",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
+      src: "https://www.playgeography.com/games/countries-of-the-world/",
     },
     {
       name: "اسم بازی",
