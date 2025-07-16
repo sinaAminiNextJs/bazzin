@@ -58,7 +58,7 @@ export default function GamePlay() {
   );
 
   return (
-    <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
+    <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
       {/* page content */}
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       {gameData ? (

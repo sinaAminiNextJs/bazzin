@@ -9,7 +9,7 @@ export default function Menu() {
   useAuthCheck();
 
   return (
-    <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
+    <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
       {/* background */}
       <div className="absolute top-0 left-0 -z-10 w-full h-screen">
         <img

@@ -2,7 +2,7 @@
 import BackButton from "@/app/components/BackButton";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
 import { useParams } from "next/navigation";
-export default async function videoPlay() {
+export default function videoPlay() {
   const { slug } = useParams();
   useAuthCheck();
 
@@ -24,11 +24,11 @@ export default async function videoPlay() {
   );
 
   return (
-    <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96">
+    <section className="relative overflow-hidden w-full h-screen text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
       {/* page content */}
       <h1 className="text-5xl font-madimi mt-10">BAZZIN</h1>
       {videoData ? (
-        <section className="flex flex-col justify-center items-center h-full">
+        <section className="flex flex-col justify-center items-center h-full w-full">
           <iframe
             src={`https://www.aparat.com/video/video/embed/videohash/${videoData.src}/vt/frame?titleShow=true&muted=true&autoplay=true&recom=self`}
             className=" aspect-video rounded-2xl"
