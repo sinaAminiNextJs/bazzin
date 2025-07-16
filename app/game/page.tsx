@@ -15,64 +15,40 @@ export default function Game() {
 
   const videoList: videoType[] = [
     {
-      name: "پرچم رو حدس بزن!",
+      name: "پرچم گو",
       game: "/g1.png",
       slug: "game-1",
       src: "https://f3.silvergames.com/m/guess-the-flag/",
     },
     {
-      name: "این کشور کجاست؟",
+      name: "کشوریاب",
       game: "/g2.png",
       slug: "game-2",
       src: "https://www.playgeography.com/games/countries-of-the-world/",
     },
     {
-      name: "اسم بازی",
-      game: "/g3.png",
+      name: "کاپی بارا",
+      game: "/g3.jpg",
       slug: "game-3",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
+      src: "https://html5.gamedistribution.com/63e8c2d0709e452f842f261a7c9f43f9/",
     },
     {
-      name: "اسم بازی",
-      game: "/g4.png",
+      name: "مسیر روستایی",
+      game: "/g4.jpg",
       slug: "game-4",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
+      src: "https://html5.gamedistribution.com/ba81748efe4043d5891173df143d4708/",
     },
     {
-      name: "اسم بازی",
-      game: "/g5.png",
+      name: "الماس لابوبو",
+      game: "/g5.jpg",
       slug: "game-5",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
+      src: "https://html5.gamedistribution.com/c44d8e4a1bff47078b37e07867553f8c/",
     },
     {
-      name: "اسم بازی",
-      game: "/g6.png",
+      name: "هاکی بال",
+      game: "/g6.jpg",
       slug: "game-6",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
-    },
-    {
-      name: "اسم بازی",
-      game: "/g1.png",
-      slug: "game-1",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
-    },
-    {
-      name: "اسم بازی",
-      game: "/g2.png",
-      slug: "game-2",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
-    },
-    {
-      name: "اسم بازی",
-      game: "/g3.png",
-      slug: "game-3",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
-    },
-    {
-      name: "اسم بازی",
-      game: "/g4.png",
-      slug: "game-4",
-      src: "https://f3.silvergames.com/m/guess-the-flag/",
+      src: "https://html5.gamedistribution.com/66da87c150bf4e7c9f2abef8cdbd2f7a/",
     },
   ];
 
@@ -106,7 +82,7 @@ export default function Game() {
               src={game}
               className="flex justify-center items-center w-32 aspect-square rounded-2xl"
             />
-            <p className="text-center mt-2">{name}</p>
+            <p className="w-full text-center mt-2">{name}</p>
           </Link>
         ))}
       </div>
