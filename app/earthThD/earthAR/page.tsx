@@ -94,6 +94,7 @@ export default function AREarth() {
       arButton.textContent = "واقعیت افزوده (AR)";
       arButton.className = "ar-button";
       Object.assign(arButton.style, {
+        position: "relative",
         width: "100%",
         height: "3rem",
         backgroundColor: "#FFA500",
@@ -117,6 +118,7 @@ export default function AREarth() {
 
       const container = document.getElementById("ar-button-container");
       if (container) {
+        alert(container);
         container.appendChild(arButton);
       }
 
@@ -197,7 +199,7 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className="fixed bottom-4 left-0 w-full px-4 z-50 flex justify-center"
+        className="fixed bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center"
       ></div>
 
       <div id="ar-view" className="w-full h-full" />
