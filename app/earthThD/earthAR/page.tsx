@@ -81,7 +81,7 @@ export default function AREarth() {
       });
       arButton.textContent = "واقعیت افزوده (AR)";
       Object.assign(arButton.style, {
-        position: "relative",
+        position: "absolute",
         width: "100%",
         height: "3rem",
         backgroundColor: "#FFA500",
