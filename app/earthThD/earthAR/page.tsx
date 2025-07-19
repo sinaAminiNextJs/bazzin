@@ -197,7 +197,7 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className="w-full min-h-[4rem] flex justify-center items-center z-50"
+        className="fixed bottom-4 left-0 w-full px-4 z-50 flex justify-center"
       ></div>
 
       <div id="ar-view" className="w-full h-full" />
