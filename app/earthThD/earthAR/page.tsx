@@ -104,7 +104,12 @@ export default function AREarth() {
       arButton.onmouseup = () => {
         arButton.style.transform = "translateY(0) scale(1)";
       };
-      document.body.appendChild(arButton);
+      const container = document.getElementById("ar-button-container");
+      if (container) {
+        container.appendChild(arButton);
+      }
+
+      // document.body.appendChild(arButton);
 
       // Load Earth model
       const loader = new GLTFLoader();
