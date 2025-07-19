@@ -1,24 +1,33 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
-import { color } from "three/tsl";
+import ARError from "./components/ARError";
+import ARLoading from "./components/ARLoading";
 
 export default function AREarth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [arSupported, setArSupported] = useState<boolean | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const handleResize = useCallback(() => {
+    if (rendererRef.current) {
+      const camera = rendererRef.current.xr.getCamera();
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
+    }
+  }, []);
 
   useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
     // Check WebXR AR support
     const checkARSupport = async () => {
       if (!navigator.xr) {
-        setArSupported(false);
         setError(
           "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
         );
@@ -27,7 +36,6 @@ export default function AREarth() {
 
       try {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
-        setArSupported(supported);
         if (!supported) {
           setError(
             "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
@@ -35,7 +43,6 @@ export default function AREarth() {
         }
         return supported;
       } catch (err) {
-        setArSupported(false);
         setError(
           "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
         );
@@ -85,24 +92,21 @@ export default function AREarth() {
         requiredFeatures: ["hit-test"],
       });
       arButton.textContent = "واقعیت افزوده (AR)";
-      arButton.style.backgroundColor = "#FFA500"; // your `bg-myorange`
-      arButton.style.color = "#000"; // text-black
-      arButton.style.borderRadius = "1rem"; // rounded-2xl
-      arButton.style.border = "2px solid #FFC87A"; // border-myorangeLight
-      arButton.style.fontFamily = "iranyekan, sans-serif";
-      arButton.style.fontSize = "1.25rem"; // text-xl
-      arButton.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.6)";
-      arButton.style.transition = "all 0.1s ease-in-out";
-      // Override default inline styles
-      arButton.style.width = "100%";
-      arButton.style.height = "3rem"; // h-12 equivalent
-      arButton.style.padding = "8px"; // Optional: remove default padding
-      arButton.style.maxWidth = "none"; // In case it's limited
-
-      // Optional: make it responsive/flexible
-      arButton.style.display = "block";
-      arButton.style.boxSizing = "border-box";
-
+      Object.assign(arButton.style, {
+        width: "100%",
+        height: "3rem",
+        backgroundColor: "#FFA500",
+        color: "#000",
+        borderRadius: "1rem",
+        border: "2px solid #FFC87A",
+        fontFamily: "iranyekan, sans-serif",
+        fontSize: "1.25rem",
+        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+        transition: "all 0.1s ease-in-out",
+        display: "block",
+        boxSizing: "border-box",
+        padding: "8px",
+      });
       arButton.onmousedown = () => {
         arButton.style.transform = "translateY(2px) scale(0.95)";
       };
@@ -110,7 +114,10 @@ export default function AREarth() {
         arButton.style.transform = "translateY(0) scale(1)";
       };
 
-      document.body.appendChild(arButton);
+      const container = document.getElementById("ar-button-container");
+      if (container) {
+        container.appendChild(arButton);
+      }
 
       // Load Earth model
       const loader = new GLTFLoader();
@@ -179,50 +186,11 @@ export default function AREarth() {
   }, []);
 
   if (loading) {
-    return (
-      <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
-        {/* background */}
-        <div className="absolute top-0 left-0 -z-10 w-full h-screen">
-          <img
-            src="/clipart/earth.png"
-            alt="Earth illustration"
-            className="w-40 absolute top-20 -right-3"
-          />
-          <img
-            src="/clipart/earth.png"
-            alt="Earth illustration"
-            className="w-96 absolute -bottom-7 -left-44"
-          />
-        </div>
-        <div className="flex flex-col w-full justify-center align-middle"></div>
-        <p>بارگزاری مدل واقعیت افزوده. صبور باشید.</p>
-        <BackButton pathName="/earthThD" />
-      </section>
-    );
+    <ARLoading />;
   }
 
   if (error) {
-    return (
-      <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
-        {/* background */}
-        <div className="absolute top-0 left-0 -z-10 w-full h-screen">
-          <img
-            src="/clipart/earth.png"
-            alt="Earth illustration"
-            className="w-40 absolute top-20 -right-3"
-          />
-          <img
-            src="/clipart/earth.png"
-            alt="Earth illustration"
-            className="w-96 absolute -bottom-7 -left-44"
-          />
-        </div>
-        <h2>خطا</h2>
-        <p>{error}</p>
-        <p>لطفا از دستگاه اندروید با مرورگر کروم استفاده کنید.</p>
-        <BackButton pathName="/earthThD" />
-      </section>
-    );
+    <ARError error={error} />;
   }
 
   return (
@@ -240,6 +208,7 @@ export default function AREarth() {
           className="w-96 absolute -bottom-7 -left-44"
         />
       </div>
+      <div id="ar-button-container" className="w-full px-4 mt-4" />
       <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
       <BackButton pathName="/earthThD" />
     </section>
