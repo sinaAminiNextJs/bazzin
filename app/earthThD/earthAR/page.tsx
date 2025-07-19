@@ -79,11 +79,29 @@ export default function AREarth() {
       const arButton = ARButton.createButton(renderer, {
         requiredFeatures: ["hit-test"],
       });
-      arButton.style.position = "absolute";
-      arButton.style.bottom = "20px";
-      arButton.style.left = "50%";
-      arButton.style.transform = "translateX(-50%)";
-      arButton.style.zIndex = "10";
+      arButton.textContent = "واقعیت افزوده (AR)";
+      Object.assign(arButton.style, {
+        position: "relative",
+        width: "100%",
+        height: "3rem",
+        backgroundColor: "#FFA500",
+        color: "#000",
+        borderRadius: "1rem",
+        border: "2px solid #FFC87A",
+        fontFamily: "iranyekan, sans-serif",
+        fontSize: "1.25rem",
+        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+        transition: "all 0.1s ease-in-out",
+        display: "block",
+        boxSizing: "border-box",
+        padding: "8px",
+      });
+      arButton.onmousedown = () => {
+        arButton.style.transform = "translateY(2px) scale(0.95)";
+      };
+      arButton.onmouseup = () => {
+        arButton.style.transform = "translateY(0) scale(1)";
+      };
       document.body.appendChild(arButton);
 
       // Load Earth model
@@ -129,7 +147,7 @@ export default function AREarth() {
         setLoading(false);
       } catch (err) {
         console.error("Error loading model:", err);
-        setError("Failed to load Earth model");
+        setError("بارگذاری مدل ناموفق بود.");
         setLoading(false);
       }
     };
