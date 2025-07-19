@@ -127,7 +127,7 @@ export default function AREarth() {
         earthRef.current = earth;
 
         // Adjust earth properties
-        earth.scale.set(0.1, 0.1, 0.1);
+        earth.scale.set(0.05, 0.05, 0.05);
         earth.rotation.y = Math.PI / 4; // Slight rotation for better viewing
 
         // Add rotation animation
@@ -194,7 +194,7 @@ export default function AREarth() {
   }
 
   return (
-    <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
+    <section className="relative overflow-hidden w-full text-white flex flex-col items-center bg-mybg/96">
       {/* background */}
       <div className="absolute top-0 left-0 -z-10 w-full h-screen">
         <img
@@ -208,8 +208,11 @@ export default function AREarth() {
           className="w-96 absolute -bottom-7 -left-44"
         />
       </div>
-      <div id="ar-button-container" className="w-full px-4 mt-4" />
-      <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
+      <div
+        id="ar-button-container"
+        className="w-full h-full flex justify-center align-middle"
+      />
+      <div id="ar-view" className="w-full h-full" />
       <BackButton pathName="/earthThD" />
     </section>
   );
