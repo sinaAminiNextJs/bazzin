@@ -1,4 +1,5 @@
 "use client";
+import BackButton from "@/app/components/BackButton";
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -179,29 +180,68 @@ export default function AREarth() {
 
   if (loading) {
     return (
-      <div className="flex w-full justify-center align-middle">
-        <div className="flex w-full justify-center align-middle"></div>
-        <p>
-          بارگزاری مدل واقعیت افزوده.
-          <br /> صبور باشید.
-        </p>
-      </div>
+      <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
+        {/* background */}
+        <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+          <img
+            src="/clipart/earth.png"
+            alt="Earth illustration"
+            className="w-40 absolute top-20 -right-3"
+          />
+          <img
+            src="/clipart/earth.png"
+            alt="Earth illustration"
+            className="w-96 absolute -bottom-7 -left-44"
+          />
+        </div>
+        <div className="flex flex-col w-full justify-center align-middle"></div>
+        <p>بارگزاری مدل واقعیت افزوده. صبور باشید.</p>
+        <BackButton pathName="/earthThD" />
+      </section>
     );
   }
 
   if (error) {
     return (
-      <div className="flex w-full justify-center align-middle">
+      <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
+        {/* background */}
+        <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+          <img
+            src="/clipart/earth.png"
+            alt="Earth illustration"
+            className="w-40 absolute top-20 -right-3"
+          />
+          <img
+            src="/clipart/earth.png"
+            alt="Earth illustration"
+            className="w-96 absolute -bottom-7 -left-44"
+          />
+        </div>
         <h2>خطا</h2>
         <p>{error}</p>
         <p>لطفا از دستگاه اندروید با مرورگر کروم استفاده کنید.</p>
-      </div>
+        <BackButton pathName="/earthThD" />
+      </section>
     );
   }
 
   return (
-    <div className="w-full">
+    <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-4 pb-20 bg-mybg/96">
+      {/* background */}
+      <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+        <img
+          src="/clipart/earth.png"
+          alt="Earth illustration"
+          className="w-40 absolute top-20 -right-3"
+        />
+        <img
+          src="/clipart/earth.png"
+          alt="Earth illustration"
+          className="w-96 absolute -bottom-7 -left-44"
+        />
+      </div>
       <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
-    </div>
+      <BackButton pathName="/earthThD" />
+    </section>
   );
 }
