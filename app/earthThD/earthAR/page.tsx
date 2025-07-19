@@ -1,6 +1,6 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
@@ -13,21 +13,14 @@ export default function AREarth() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const handleResize = useCallback(() => {
-    if (rendererRef.current) {
-      const camera = rendererRef.current.xr.getCamera();
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      rendererRef.current.setSize(window.innerWidth, window.innerHeight);
-    }
-  }, []);
+  const [arSupported, setArSupported] = useState<boolean | null>(null);
 
   useEffect(() => {
-    window.addEventListener("resize", handleResize);
-
     // Check WebXR AR support
     const checkARSupport = async () => {
       if (!navigator.xr) {
+        setArSupported(false);
+
         setError(
           "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
         );
@@ -37,12 +30,14 @@ export default function AREarth() {
       try {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
         if (!supported) {
+          setArSupported(false);
           setError(
             "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
           );
         }
         return supported;
       } catch (err) {
+        setArSupported(false);
         setError(
           "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
         );
@@ -173,7 +168,6 @@ export default function AREarth() {
       if (arButton) {
         document.body.removeChild(arButton);
       }
-      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
