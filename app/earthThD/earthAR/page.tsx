@@ -153,7 +153,7 @@ export default function AREarth() {
         setLoading(false);
       } catch (err) {
         console.error("Error loading model:", err);
-        setError("بارگزاری مدل ناموفق بود.");
+        setError("بارگذاری مدل ناموفق بود.");
         setLoading(false);
       }
     };
@@ -161,14 +161,14 @@ export default function AREarth() {
     initScene();
 
     return () => {
-      if (rendererRef.current) {
-        rendererRef.current.dispose();
-        rendererRef.current = null;
-      }
-      const arButton = document.querySelector(".ar-button");
-      if (arButton) {
-        document.body.removeChild(arButton);
-      }
+      // if (rendererRef.current) {
+      //   rendererRef.current.dispose();
+      //   rendererRef.current = null;
+      // }
+      // const arButton = document.querySelector(".ar-button");
+      // if (arButton) {
+      //   document.body.removeChild(arButton);
+      // }
     };
   }, []);
 
