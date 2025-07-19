@@ -1,69 +1,48 @@
 "use client";
+import { useEffect } from "react";
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { ARButton } from "three/addons/webxr/ARButton.js";
 
-import { Canvas, useThree } from "@react-three/fiber";
-import { Suspense } from "react";
-import { TextureLoader, WebGLRenderer } from "three";
-import { useLoader } from "@react-three/fiber";
+export default function AREarth() {
+  useEffect(() => {
+    // Initialize scene, camera, renderer
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      0.01,
+      20
+    );
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-function EarthSphere() {
-  const texture = useLoader(TextureLoader, "/day-sky.webp");
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.xr.enabled = true;
+    document.getElementById("ar-view")?.appendChild(renderer.domElement);
 
-  return (
-    <mesh scale={0.2} position={[0, 0, -0.5]}>
-      <sphereGeometry args={[1, 64, 64]} />
-      <meshStandardMaterial map={texture} />
-    </mesh>
-  );
-}
+    // Add AR button
+    document.body.appendChild(ARButton.createButton(renderer));
 
-export default function AREarthPage() {
-  const handleStartAR = async () => {
-    if (navigator.xr) {
-      try {
-        const session = await navigator.xr.requestSession("immersive-ar", {
-          optionalFeatures: ["local-floor", "bounded-floor"],
-        });
-        const canvas = document.querySelector("canvas");
-        if (!canvas) return;
-        const gl = canvas as unknown as WebGLRenderer;
-        gl.xr.enabled = true;
-        await gl.xr.setSession(session);
-        console.log("AR session started!");
-      } catch (e) {
-        console.error("Failed to start AR session:", e);
+    // Add Earth model
+    const loader = new GLTFLoader();
+    loader.load(
+      "/ar-earth/earth.glb", // You'll need to provide this model
+      (gltf: any) => {
+        const earth = gltf.scene;
+        earth.scale.set(0.5, 0.5, 0.5);
+        scene.add(earth);
       }
-    } else {
-      alert("WebXR not supported on this device/browser.");
-    }
-  };
+    );
 
-  return (
-    <div style={{ width: "100vw", height: "100vh", position: "relative" }}>
-      <Canvas gl={{ alpha: true }} style={{ background: "transparent" }}>
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[1, 2, 3]} />
-        <Suspense fallback={null}>
-          <EarthSphere />
-        </Suspense>
-      </Canvas>
-      {/* دکمه رو بیرون از Canvas و Html قرار میدیم */}
-      <button
-        onClick={handleStartAR}
-        style={{
-          position: "absolute",
-          top: 20,
-          left: 20,
-          padding: "10px 20px",
-          background: "#fbbf24", // amber-400 رنگ Tailwind
-          border: "none",
-          borderRadius: 4,
-          color: "#000",
-          cursor: "pointer",
-          zIndex: 9999,
-        }}
-      >
-        Start AR
-      </button>
-    </div>
-  );
+    // Animation loop
+    renderer.setAnimationLoop(() => {
+      renderer.render(scene, camera);
+    });
+
+    return () => {
+      renderer.dispose();
+    };
+  }, []);
+
+  return <div id="ar-view" style={{ width: "100%", height: "100vh" }} />;
 }
