@@ -3,6 +3,9 @@ import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
+import ARLoading from "./components/ARLoading";
+import ARError from "./components/ARError";
+import BackButton from "@/app/components/BackButton";
 
 export default function AREarth() {
   const [loading, setLoading] = useState(true);
@@ -149,28 +152,33 @@ export default function AREarth() {
     };
   }, []);
 
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
-        <p>Loading AR experience...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="error-container">
-        <h2>Error</h2>
-        <p>{error}</p>
-        <p>Please try Chrome on an ARCore-supported Android device.</p>
-      </div>
-    );
-  }
+  if (loading) return <ARLoading />;
+  if (error) return <ARError error={error} />;
 
   return (
-    <div className="ar-container">
-      <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
-    </div>
+    <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
+      {/* background */}
+      <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+        <img
+          src="/clipart/earth.png"
+          alt="Earth illustration"
+          className="w-40 absolute top-20 -right-3"
+        />
+        <img
+          src="/clipart/earth.png"
+          alt="Earth illustration"
+          className="w-96 absolute -bottom-7 -left-44"
+        />
+      </div>
+      <div
+        id="ar-button-container"
+        className="fixed bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center"
+      ></div>
+
+      <div className="ar-container">
+        <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
+      </div>
+      <BackButton pathName="/earthThD" />
+    </section>
   );
 }
