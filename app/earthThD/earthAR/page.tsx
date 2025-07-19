@@ -104,12 +104,8 @@ export default function AREarth() {
       arButton.onmouseup = () => {
         arButton.style.transform = "translateY(0) scale(1)";
       };
-      const container = document.getElementById("ar-button-container");
-      if (container) {
-        container.appendChild(arButton);
-      }
 
-      // document.body.appendChild(arButton);
+      document.body.appendChild(arButton);
 
       // Load Earth model
       const loader = new GLTFLoader();
@@ -197,7 +193,7 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className="absolute bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center"
+        className="fixed bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center"
       ></div>
 
       <div className="ar-container">
