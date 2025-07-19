@@ -169,12 +169,10 @@ export default function AREarth() {
         rendererRef.current.dispose();
         rendererRef.current = null;
       }
-
-      const container = document.getElementById("ar-button-container");
-      if (container && container.firstChild) {
-        container.removeChild(container.firstChild);
+      const arButton = document.querySelector(".ar-button");
+      if (arButton) {
+        document.body.removeChild(arButton);
       }
-
       window.removeEventListener("resize", handleResize);
     };
   }, []);
