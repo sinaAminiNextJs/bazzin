@@ -95,7 +95,7 @@ export default function AREarth() {
       // Override default inline styles
       arButton.style.width = "100%";
       arButton.style.height = "3rem"; // h-12 equivalent
-      arButton.style.padding = "0"; // Optional: remove default padding
+      arButton.style.padding = "8px"; // Optional: remove default padding
       arButton.style.maxWidth = "none"; // In case it's limited
 
       // Optional: make it responsive/flexible
@@ -179,8 +179,8 @@ export default function AREarth() {
 
   if (loading) {
     return (
-      <div className="loading-container">
-        <div className="loading-spinner"></div>
+      <div className="flex w-full justify-center align-middle">
+        <div className="flex w-full justify-center align-middle"></div>
         <p>
           بارگزاری مدل واقعیت افزوده.
           <br /> صبور باشید.
@@ -191,8 +191,8 @@ export default function AREarth() {
 
   if (error) {
     return (
-      <div className="error-container">
-        <h2>Error</h2>
+      <div className="flex w-full justify-center align-middle">
+        <h2>خطا</h2>
         <p>{error}</p>
         <p>لطفا از دستگاه اندروید با مرورگر کروم استفاده کنید.</p>
       </div>
@@ -200,7 +200,7 @@ export default function AREarth() {
   }
 
   return (
-    <div className="ar-container">
+    <div className="w-full">
       <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
     </div>
   );
