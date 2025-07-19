@@ -97,7 +97,7 @@ export default function AREarth() {
         earthRef.current = earth;
 
         // Adjust earth properties
-        earth.scale.set(0.5, 0.5, 0.5);
+        earth.scale.set(0.3, 0.3, 0.3);
         earth.rotation.y = Math.PI / 4; // Slight rotation for better viewing
 
         // Add rotation animation
@@ -179,7 +179,7 @@ export default function AREarth() {
 
   return (
     <div className="ar-container">
-      <div id="ar-view" style={{ width: "50%", height: "100vh" }} />
+      <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
     </div>
   );
 }
