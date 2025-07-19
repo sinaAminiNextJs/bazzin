@@ -92,6 +92,7 @@ export default function AREarth() {
         requiredFeatures: ["hit-test"],
       });
       arButton.textContent = "واقعیت افزوده (AR)";
+      arButton.className = "ar-button";
       Object.assign(arButton.style, {
         width: "100%",
         height: "3rem",
@@ -127,8 +128,8 @@ export default function AREarth() {
         earthRef.current = earth;
 
         // Adjust earth properties
-        earth.scale.set(0.05, 0.05, 0.05);
-        earth.rotation.y = Math.PI / 4; // Slight rotation for better viewing
+        earth.scale.set(0.07, 0.07, 0.07);
+        earth.rotation.y = Math.PI / 2; // Slight rotation for better viewing
 
         // Add rotation animation
         const animate = () => {
@@ -176,22 +177,12 @@ export default function AREarth() {
         rendererRef.current = null;
       }
 
-      const arButton = document.querySelector(".ar-button");
-      if (arButton) {
-        document.body.removeChild(arButton);
-      }
-
       window.removeEventListener("resize", () => {});
     };
   }, []);
 
-  if (loading) {
-    <ARLoading />;
-  }
-
-  if (error) {
-    <ARError error={error} />;
-  }
+  if (loading) return <ARLoading />;
+  if (error) return <ARError error={error} />;
 
   return (
     <section className="relative overflow-hidden w-full text-white flex flex-col items-center bg-mybg/96">
