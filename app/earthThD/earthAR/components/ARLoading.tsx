@@ -17,7 +17,7 @@ export default function ARLoading() {
         />
       </div>
       <div className="flex flex-col w-full justify-center align-middle"></div>
-      <p>بارگزاری مدل واقعیت افزوده. صبور باشید.</p>
+      <p>بارگذاری مدل واقعیت افزوده. صبور باشید.</p>
       <BackButton pathName="/earthThD" />
     </section>
   );

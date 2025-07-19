@@ -1,46 +1,36 @@
 "use client";
-import BackButton from "@/app/components/BackButton";
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
-import ARError from "./components/ARError";
-import ARLoading from "./components/ARLoading";
 
 export default function AREarth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [arSupported, setArSupported] = useState<boolean | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const [arSupported, setArSupported] = useState<boolean | null>(null);
 
   useEffect(() => {
     // Check WebXR AR support
     const checkARSupport = async () => {
       if (!navigator.xr) {
         setArSupported(false);
-
-        setError(
-          "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
-        );
+        setError("WebXR not supported in your browser");
         return false;
       }
 
       try {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
+        setArSupported(supported);
         if (!supported) {
-          setArSupported(false);
-          setError(
-            "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
-          );
+          setError("AR not supported on your device");
         }
         return supported;
       } catch (err) {
         setArSupported(false);
-        setError(
-          "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
-        );
+        setError("Failed to check AR support");
         return false;
       }
     };
@@ -86,37 +76,12 @@ export default function AREarth() {
       const arButton = ARButton.createButton(renderer, {
         requiredFeatures: ["hit-test"],
       });
-      arButton.textContent = "واقعیت افزوده (AR)";
-      arButton.className = "ar-button";
-      Object.assign(arButton.style, {
-        position: "relative",
-        width: "100%",
-        height: "3rem",
-        backgroundColor: "#FFA500",
-        color: "#000",
-        borderRadius: "1rem",
-        border: "2px solid #FFC87A",
-        fontFamily: "iranyekan, sans-serif",
-        fontSize: "1.25rem",
-        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-        transition: "all 0.1s ease-in-out",
-        display: "block",
-        boxSizing: "border-box",
-        padding: "8px",
-      });
-      arButton.onmousedown = () => {
-        arButton.style.transform = "translateY(2px) scale(0.95)";
-      };
-      arButton.onmouseup = () => {
-        arButton.style.transform = "translateY(0) scale(1)";
-      };
+      arButton.style.position = "absolute";
+      arButton.style.bottom = "20px";
+      arButton.style.left = "50%";
+      arButton.style.transform = "translateX(-50%)";
+      arButton.style.zIndex = "10";
       document.body.appendChild(arButton);
-
-      // const container = document.getElementById("ar-button-container");
-      // if (container) {
-      //   alert(container);
-      //   container.appendChild(arButton);
-      // }
 
       // Load Earth model
       const loader = new GLTFLoader();
@@ -126,8 +91,8 @@ export default function AREarth() {
         earthRef.current = earth;
 
         // Adjust earth properties
-        earth.scale.set(0.07, 0.07, 0.07);
-        earth.rotation.y = Math.PI / 2; // Slight rotation for better viewing
+        earth.scale.set(0.5, 0.5, 0.5);
+        earth.rotation.y = Math.PI / 4; // Slight rotation for better viewing
 
         // Add rotation animation
         const animate = () => {
@@ -137,6 +102,14 @@ export default function AREarth() {
         };
 
         scene.add(earth);
+
+        // Handle window resize
+        const onResize = () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        };
+        window.addEventListener("resize", onResize);
 
         // Start AR session
         renderer.setAnimationLoop(() => {
@@ -153,7 +126,7 @@ export default function AREarth() {
         setLoading(false);
       } catch (err) {
         console.error("Error loading model:", err);
-        setError("بارگذاری مدل ناموفق بود.");
+        setError("Failed to load Earth model");
         setLoading(false);
       }
     };
@@ -161,42 +134,43 @@ export default function AREarth() {
     initScene();
 
     return () => {
-      // if (rendererRef.current) {
-      //   rendererRef.current.dispose();
-      //   rendererRef.current = null;
-      // }
-      // const arButton = document.querySelector(".ar-button");
-      // if (arButton) {
-      //   document.body.removeChild(arButton);
-      // }
+      // Cleanup
+      if (rendererRef.current) {
+        rendererRef.current.dispose();
+        rendererRef.current = null;
+      }
+
+      const arButton = document.querySelector(".ar-button");
+      if (arButton) {
+        document.body.removeChild(arButton);
+      }
+
+      window.removeEventListener("resize", () => {});
     };
   }, []);
 
-  if (loading) return <ARLoading />;
-  if (error) return <ARError error={error} />;
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading AR experience...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <h2>Error</h2>
+        <p>{error}</p>
+        <p>Please try Chrome on an ARCore-supported Android device.</p>
+      </div>
+    );
+  }
 
   return (
-    <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
-      {/* background */}
-      <div className="absolute top-0 left-0 -z-10 w-full h-screen">
-        <img
-          src="/clipart/earth.png"
-          alt="Earth illustration"
-          className="w-40 absolute top-20 -right-3"
-        />
-        <img
-          src="/clipart/earth.png"
-          alt="Earth illustration"
-          className="w-96 absolute -bottom-7 -left-44"
-        />
-      </div>
-      <div
-        id="ar-button-container"
-        className="fixed bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center"
-      ></div>
-
-      <div id="ar-view" className="w-full h-full" />
-      <BackButton pathName="/earthThD" />
-    </section>
+    <div className="ar-container">
+      <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
+    </div>
   );
 }
