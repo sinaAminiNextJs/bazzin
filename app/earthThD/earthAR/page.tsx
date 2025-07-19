@@ -17,7 +17,9 @@ export default function AREarth() {
     const checkARSupport = async () => {
       if (!navigator.xr) {
         setArSupported(false);
-        setError("WebXR not supported in your browser");
+        setError(
+          "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
+        );
         return false;
       }
 
@@ -25,12 +27,16 @@ export default function AREarth() {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
         setArSupported(supported);
         if (!supported) {
-          setError("AR not supported on your device");
+          setError(
+            "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
+          );
         }
         return supported;
       } catch (err) {
         setArSupported(false);
-        setError("Failed to check AR support");
+        setError(
+          "دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند. از موبایل و ترجیحا از مرورگر کروم استفاده کنید."
+        );
         return false;
       }
     };
@@ -126,7 +132,7 @@ export default function AREarth() {
         setLoading(false);
       } catch (err) {
         console.error("Error loading model:", err);
-        setError("Failed to load Earth model");
+        setError("بارگزاری مدل ناموفق بود.");
         setLoading(false);
       }
     };
@@ -153,7 +159,10 @@ export default function AREarth() {
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
-        <p>Loading AR experience...</p>
+        <p>
+          بارگزاری مدل واقعیت افزوده.
+          <br /> صبور باشید.
+        </p>
       </div>
     );
   }
@@ -163,14 +172,14 @@ export default function AREarth() {
       <div className="error-container">
         <h2>Error</h2>
         <p>{error}</p>
-        <p>Please try Chrome on an ARCore-supported Android device.</p>
+        <p>لطفا از دستگاه اندروید با مرورگر کروم استفاده کنید.</p>
       </div>
     );
   }
 
   return (
     <div className="ar-container">
-      <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
+      <div id="ar-view" style={{ width: "50%", height: "100vh" }} />
     </div>
   );
 }
