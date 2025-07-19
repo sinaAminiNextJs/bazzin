@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
+import { color } from "three/tsl";
 
 export default function AREarth() {
   const [loading, setLoading] = useState(true);
@@ -82,11 +83,19 @@ export default function AREarth() {
       const arButton = ARButton.createButton(renderer, {
         requiredFeatures: ["hit-test"],
       });
+      arButton.innerHTML = "نمایش زمین در AR";
       arButton.style.position = "absolute";
-      arButton.style.bottom = "20px";
+      arButton.style.bottom = "50%";
       arButton.style.left = "50%";
       arButton.style.transform = "translateX(-50%)";
       arButton.style.zIndex = "10";
+      arButton.style.width = "full";
+      arButton.style.height = "48px";
+      arButton.style.background = "#ffc585";
+      arButton.style.borderColor = "#fff7c4";
+      (arButton.style.fontFamily = "iranyekan"), "Tahoma, sans-serif"; // Better font for Persian text
+      arButton.style.fontSize = "20px";
+
       document.body.appendChild(arButton);
 
       // Load Earth model
