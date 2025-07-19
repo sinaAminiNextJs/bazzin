@@ -84,8 +84,6 @@ export default function AREarth() {
         requiredFeatures: ["hit-test"],
       });
       arButton.textContent = "واقعیت افزوده (AR)";
-      arButton.style.width = "100%";
-      arButton.style.height = "3rem"; // ~h-12
       arButton.style.backgroundColor = "#FFA500"; // your `bg-myorange`
       arButton.style.color = "#000"; // text-black
       arButton.style.borderRadius = "1rem"; // rounded-2xl
@@ -94,6 +92,15 @@ export default function AREarth() {
       arButton.style.fontSize = "1.25rem"; // text-xl
       arButton.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.6)";
       arButton.style.transition = "all 0.1s ease-in-out";
+      // Override default inline styles
+      arButton.style.width = "100%";
+      arButton.style.height = "3rem"; // h-12 equivalent
+      arButton.style.padding = "0"; // Optional: remove default padding
+      arButton.style.maxWidth = "none"; // In case it's limited
+
+      // Optional: make it responsive/flexible
+      arButton.style.display = "block";
+      arButton.style.boxSizing = "border-box";
 
       arButton.onmousedown = () => {
         arButton.style.transform = "translateY(2px) scale(0.95)";
@@ -112,7 +119,7 @@ export default function AREarth() {
         earthRef.current = earth;
 
         // Adjust earth properties
-        earth.scale.set(0.3, 0.3, 0.3);
+        earth.scale.set(0.1, 0.1, 0.1);
         earth.rotation.y = Math.PI / 4; // Slight rotation for better viewing
 
         // Add rotation animation
