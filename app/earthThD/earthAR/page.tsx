@@ -83,51 +83,24 @@ export default function AREarth() {
       const arButton = ARButton.createButton(renderer, {
         requiredFeatures: ["hit-test"],
       });
+      arButton.textContent = "واقعیت افزوده (AR)";
+      arButton.style.width = "100%";
+      arButton.style.height = "3rem"; // ~h-12
+      arButton.style.backgroundColor = "#FFA500"; // your `bg-myorange`
+      arButton.style.color = "#000"; // text-black
+      arButton.style.borderRadius = "1rem"; // rounded-2xl
+      arButton.style.border = "2px solid #FFC87A"; // border-myorangeLight
+      arButton.style.fontFamily = "iranyekan, sans-serif";
+      arButton.style.fontSize = "1.25rem"; // text-xl
+      arButton.style.boxShadow = "0 0 20px rgba(0, 0, 0, 0.6)";
+      arButton.style.transition = "all 0.1s ease-in-out";
 
-      // Set Persian text
-      arButton.innerHTML = "واقعیت افزوده (AR)";
-      Object.assign(arButton.style, {
-        position: "fixed",
-        bottom: "20px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: "1000",
-        width: "90%", // Similar to w-full but with max-width constraint
-        maxWidth: "400px", // Prevent becoming too wide on desktop
-        height: "48px", // h-12 equivalent
-        backgroundColor: "#ffc585", // bg-myorange equivalent
-        color: "#000", // text-black
-        borderRadius: "16px", // rounded-2xl equivalent
-        border: "2px solid #fff7c4", // border-2 border-myorangeLight
-        fontFamily: "iranyekan, Tahoma, sans-serif", // font-iranyekan
-        fontSize: "20px", // text-xl equivalent (1.25rem)
-        fontWeight: "500",
-        cursor: "pointer",
-        boxShadow: "0 0 20px rgba(0,0,0,0.8)", // shadow-[0px_0px_20px_black]
-        transition: "all 100ms ease", // transition-all duration-100
-        padding: "0 16px",
-        textAlign: "center",
-        direction: "rtl", // For Persian text
-      });
-
-      // Active state effects (active:translate-y-[2px] active:scale-95)
-      arButton.addEventListener("mousedown", () => {
-        arButton.style.transform =
-          "translateX(-50%) translateY(2px) scale(0.95)";
-      });
-      arButton.addEventListener("mouseup", () => {
-        arButton.style.transform = "translateX(-50%) translateY(0) scale(1)";
-      });
-      arButton.addEventListener("mouseleave", () => {
-        arButton.style.transform = "translateX(-50%)";
-      });
-
-      // Make sure font loads (add this to your HTML head)
-      const fontLink = document.createElement("link");
-      fontLink.href =
-        "https://cdn.fontcdn.ir/Font/Persian/IranYekan/iranyekan.css";
-      fontLink.rel = "stylesheet";
-      document.head.appendChild(fontLink);
+      arButton.onmousedown = () => {
+        arButton.style.transform = "translateY(2px) scale(0.95)";
+      };
+      arButton.onmouseup = () => {
+        arButton.style.transform = "translateY(0) scale(1)";
+      };
 
       document.body.appendChild(arButton);
 
