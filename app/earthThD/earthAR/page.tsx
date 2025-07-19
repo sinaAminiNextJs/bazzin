@@ -140,14 +140,6 @@ export default function AREarth() {
 
         scene.add(earth);
 
-        // Handle window resize
-        const onResize = () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        };
-        window.addEventListener("resize", onResize);
-
         // Start AR session
         renderer.setAnimationLoop(() => {
           animate();
@@ -171,10 +163,14 @@ export default function AREarth() {
     initScene();
 
     return () => {
-      // Cleanup
       if (rendererRef.current) {
         rendererRef.current.dispose();
         rendererRef.current = null;
+      }
+
+      const container = document.getElementById("ar-button-container");
+      if (container && container.firstChild) {
+        container.removeChild(container.firstChild);
       }
 
       window.removeEventListener("resize", handleResize);
@@ -201,7 +197,7 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className="w-full h-full flex justify-center align-middle"
+        className="w-full h-full flex justify-center items-center"
       />
       <div id="ar-view" className="w-full h-full" />
       <BackButton pathName="/earthThD" />
