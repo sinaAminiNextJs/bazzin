@@ -3,7 +3,7 @@ import BackButton from "@/app/components/BackButton";
 
 export default function ARError({ error }: { error: string }) {
   return (
-    <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center p-8 pb-20 bg-mybg/96 text-justify">
+    <section className="relative overflow-hidden w-full text-white min-h-screen flex flex-col items-center justify-center p-8 pb-20 bg-mybg/96 text-justify">
       <div className="absolute top-0 left-0 -z-10 w-full h-screen">
         <img
           src="/clipart/earth.png"
@@ -18,7 +18,6 @@ export default function ARError({ error }: { error: string }) {
       </div>
       <h2>خطا</h2>
       <p>{error}</p>
-      <p>لطفا از دستگاه اندروید با مرورگر کروم استفاده کنید.</p>
       <BackButton pathName="/earthThD" />
     </section>
   );

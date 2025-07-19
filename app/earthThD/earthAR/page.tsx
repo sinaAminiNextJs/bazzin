@@ -197,8 +197,9 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className="w-full h-full flex justify-center items-center"
-      />
+        className="w-full min-h-[4rem] flex justify-center items-center z-50"
+      ></div>
+
       <div id="ar-view" className="w-full h-full" />
       <BackButton pathName="/earthThD" />
     </section>
