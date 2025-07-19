@@ -177,7 +177,7 @@ export default function AREarth() {
         rendererRef.current = null;
       }
 
-      window.removeEventListener("resize", () => {});
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
