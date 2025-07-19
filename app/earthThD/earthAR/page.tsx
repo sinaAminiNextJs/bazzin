@@ -82,6 +82,8 @@ export default function AREarth() {
       arButton.textContent = "واقعیت افزوده (AR)";
       Object.assign(arButton.style, {
         position: "absolute",
+        botton: "50vh",
+        minWidth: "80vw",
         width: "100%",
         height: "3rem",
         backgroundColor: "#FFA500",
@@ -112,8 +114,8 @@ export default function AREarth() {
         earthRef.current = earth;
 
         // Adjust earth properties
-        earth.scale.set(0.5, 0.5, 0.5);
-        earth.rotation.y = Math.PI / 4; // Slight rotation for better viewing
+        earth.scale.set(0.07, 0.07, 0.07);
+        earth.rotation.y = Math.PI / 2; // Slight rotation for better viewing
 
         // Add rotation animation
         const animate = () => {
