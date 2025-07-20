@@ -2,6 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { ARButton } from "three/addons/webxr/ARButton.js";
 import ARLoading from "./components/ARLoading";
 import ARError from "./components/ARError";
 import BackButton from "@/app/components/BackButton";
@@ -11,13 +12,12 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
-
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
+  // Check for AR support once
   useEffect(() => {
-    // Check for AR support once
     const checkARSupport = async () => {
       if (!navigator.xr) {
         setArSupported(false);
@@ -38,6 +38,7 @@ export default function AREarth() {
     checkARSupport();
   }, []);
 
+  // Init AR only after user clicks
   useEffect(() => {
     if (!hasStarted) return;
 
@@ -65,49 +66,58 @@ export default function AREarth() {
       const container = document.getElementById("ar-view");
       if (container) container.appendChild(renderer.domElement);
 
-      // **اینجا مهمه: درخواست شروع جلسه AR**
-      try {
-        const session = await (navigator.xr as any).requestSession(
-          "immersive-ar",
-          {
-            requiredFeatures: ["hit-test"],
-          }
-        );
-        await renderer.xr.setSession(session);
-      } catch (err) {
-        setError("شروع جلسه AR انجام نشد یا کاربر اجازه نداد.");
-        setLoading(false);
-        return;
-      }
+      // Add AR button
+      const arButton = ARButton.createButton(renderer);
+      const btnContainer = document.getElementById("ar-button-container");
+      if (btnContainer) btnContainer.appendChild(arButton);
+      arButton.textContent = "واقعیت افزوده";
+      Object.assign(arButton.style, {
+        top: "0px",
+        minWidth: "80vw",
+        width: "100%",
+        height: "3rem",
+        backgroundColor: "#FFA500",
+        color: "#000",
+        borderRadius: "1rem",
+        border: "2px solid #FFC87A",
+        fontFamily: "iranyekan, sans-serif",
+        fontSize: "1.25rem",
+        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+        transition: "all 0.1s ease-in-out",
+        display: "block",
+        boxSizing: "border-box",
+        padding: "8px",
+      });
 
-      // Lights
-      const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-      directionalLight.position.set(1, 1, 1);
-      scene.add(ambientLight, directionalLight);
+      // Wait for AR session to start
+      renderer.xr.addEventListener("sessionstart", async () => {
+        // Lights
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(ambientLight, directionalLight);
 
-      // Load earth model
-      const loader = new GLTFLoader();
-      try {
-        const gltf = await loader.loadAsync("/ar-earth/earth.glb");
-        const earth = gltf.scene;
-        earth.scale.set(0.07, 0.07, 0.07);
-        earth.rotation.y = Math.PI / 2;
-        scene.add(earth);
-        earthRef.current = earth;
-      } catch (err) {
-        console.error("مدل بارگذاری نشد:", err);
-        setError("خطا در بارگذاری مدل زمین");
-        setLoading(false);
-        return;
-      }
-
-      // Animate
-      renderer.setAnimationLoop(() => {
-        if (earthRef.current) {
-          earthRef.current.rotation.y += 0.002;
+        // Load earth model
+        const loader = new GLTFLoader();
+        try {
+          const gltf = await loader.loadAsync("/ar-earth/earth.glb");
+          const earth = gltf.scene;
+          earth.scale.set(0.07, 0.07, 0.07);
+          earth.rotation.y = Math.PI / 2;
+          scene.add(earth);
+          earthRef.current = earth;
+        } catch (err) {
+          console.error("مدل بارگذاری نشد:", err);
+          setError("خطا در بارگذاری مدل زمین");
         }
-        renderer.render(scene, camera);
+
+        // Animate
+        renderer.setAnimationLoop(() => {
+          if (earthRef.current) {
+            earthRef.current.rotation.y += 0.002;
+          }
+          renderer.render(scene, camera);
+        });
       });
 
       window.addEventListener("resize", () => {
@@ -145,6 +155,7 @@ export default function AREarth() {
         />
       </div>
 
+      {/* Start AR Button */}
       {!hasStarted && arSupported && !loading && (
         <button
           onClick={() => setHasStarted(true)}
@@ -154,9 +165,17 @@ export default function AREarth() {
         </button>
       )}
 
+      {/* Error */}
       {error && <ARError error={error} />}
       {loading && <ARLoading />}
 
+      {/* AR button will be inserted here */}
+      <div
+        id="ar-button-container"
+        className="fixed bottom-[50vh] left-0 w-full z-50 flex justify-center items-center"
+      />
+
+      {/* WebGL Renderer output */}
       <div className="ar-container">
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
       </div>
