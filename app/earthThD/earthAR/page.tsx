@@ -14,8 +14,12 @@ export default function AREarth() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  let container = document.getElementById("ar-button-container");
-
+  useEffect(() => {
+    console.log("Component mounted");
+    console.log(document.body.innerHTML); // to debug if element exists
+    const container = document.getElementById("ar-button-container");
+    console.log(container); // will be null if not found
+  }, []);
   useEffect(() => {
     // Check WebXR AR support
     const checkARSupport = async () => {
@@ -82,32 +86,33 @@ export default function AREarth() {
       const arButton = ARButton.createButton(renderer, {
         requiredFeatures: ["hit-test"],
       });
+      const container = document.getElementById("ar-button-container");
       if (container) {
         container.appendChild(arButton);
       }
       // document.body.appendChild(arButton);
-      arButton.textContent = "واقعیت افزوده (AR)";
-      arButton.removeAttribute("style"); // Remove inline styles
+      // arButton.textContent = "واقعیت افزوده (AR)";
+      // arButton.removeAttribute("style"); // Remove inline styles
 
-      Object.assign(arButton.style, {
-        // position: "absolute",
-        top: "0px",
-        // botton: "50vh",
-        minWidth: "80vw",
-        width: "100%",
-        height: "3rem",
-        backgroundColor: "#FFA500",
-        color: "#000",
-        borderRadius: "1rem",
-        border: "2px solid #FFC87A",
-        fontFamily: "iranyekan, sans-serif",
-        fontSize: "1.25rem",
-        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-        transition: "all 0.1s ease-in-out",
-        display: "block",
-        boxSizing: "border-box",
-        padding: "8px",
-      });
+      // Object.assign(arButton.style, {
+      //   position: "absolute",
+      //   top: "0px",
+      //   botton: "50vh",
+      //   minWidth: "80vw",
+      //   width: "100%",
+      //   height: "3rem",
+      //   backgroundColor: "#FFA500",
+      //   color: "#000",
+      //   borderRadius: "1rem",
+      //   border: "2px solid #FFC87A",
+      //   fontFamily: "iranyekan, sans-serif",
+      //   fontSize: "1.25rem",
+      //   boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+      //   transition: "all 0.1s ease-in-out",
+      //   display: "block",
+      //   boxSizing: "border-box",
+      //   padding: "8px",
+      // });
       arButton.onmousedown = () => {
         arButton.style.transform = "translateY(2px) scale(0.95)";
       };
@@ -181,8 +186,8 @@ export default function AREarth() {
     };
   }, []);
 
-  if (loading) return <ARLoading />;
-  if (error) return <ARError error={error} />;
+  // if (loading) return <ARLoading />;
+  // if (error) return <ARError error={error} />;
 
   return (
     <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
@@ -202,9 +207,7 @@ export default function AREarth() {
       <div
         id="ar-button-container"
         className="fixed top-0 left-0 w-full px-4 z-50 flex justify-center bg-amber-500"
-      >
-        hiiiii im here{container ? "yes" : "no"}
-      </div>
+      ></div>
 
       <div className="ar-container">
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
