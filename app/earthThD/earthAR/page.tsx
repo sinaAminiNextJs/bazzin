@@ -90,7 +90,7 @@ export default function AREarth() {
       arButton.removeAttribute("style"); // Remove inline styles
 
       Object.assign(arButton.style, {
-        position: "absolute",
+        // position: "absolute",
         top: "0px",
         // botton: "50vh",
         minWidth: "80vw",
