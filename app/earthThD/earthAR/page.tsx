@@ -51,12 +51,7 @@ export default function AREarth() {
     // ساخت دکمه AR
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
-      domOverlay: {
-        root: document.body,
-        text: "ورود به حالت واقعیت افزوده", // اینجا خطا می‌دهد
-      } as { root: HTMLElement; text: string }, // نوع را به صورت دستی مشخص می‌کنیم
     });
-    arButton.textContent = "شروع واقعیت افزوده";
     Object.assign(arButton.style, {
       minWidth: "80vw",
       padding: "1rem 2rem",
@@ -71,7 +66,7 @@ export default function AREarth() {
       zIndex: "1000",
     });
 
-    document.getElementById("ar-button-container")?.appendChild(arButton);
+    document.body.appendChild(arButton);
 
     const btnContainer = document.getElementById("ar-button-container");
     if (btnContainer) {
@@ -198,11 +193,6 @@ export default function AREarth() {
           className="w-96 absolute -bottom-7 -left-44"
         />
       </div>
-
-      <div
-        id="ar-button-container"
-        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
-      ></div>
 
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
