@@ -51,6 +51,10 @@ export default function AREarth() {
     // ساخت دکمه AR
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
+      domOverlay: {
+        root: document.body,
+        text: "ورود به حالت واقعیت افزوده", // اینجا خطا می‌دهد
+      } as { root: HTMLElement; text: string }, // نوع را به صورت دستی مشخص می‌کنیم
     });
     arButton.textContent = "شروع واقعیت افزوده";
     Object.assign(arButton.style, {
@@ -104,6 +108,7 @@ export default function AREarth() {
       0.01,
       20
     );
+    camera.position.set(0, 0, 3); // 3 واحد فاصله از مدل
 
     const renderer = rendererRef.current!;
     renderer.setSize(window.innerWidth, window.innerHeight);
