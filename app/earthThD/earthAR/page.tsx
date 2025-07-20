@@ -72,9 +72,7 @@ export default function AREarth() {
       if (btnContainer) btnContainer.appendChild(arButton);
       arButton.textContent = "واقعیت افزوده";
       Object.assign(arButton.style, {
-        top: "0px",
         minWidth: "80vw",
-        width: "100%",
         height: "3rem",
         backgroundColor: "#FFA500",
         color: "#000",
@@ -84,9 +82,11 @@ export default function AREarth() {
         fontSize: "1.25rem",
         boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
         transition: "all 0.1s ease-in-out",
-        display: "block",
         boxSizing: "border-box",
         padding: "8px",
+      });
+      arButton.addEventListener("click", async () => {
+        setHasStarted(true);
       });
 
       // Wait for AR session to start
@@ -154,16 +154,6 @@ export default function AREarth() {
           className="w-96 absolute -bottom-7 -left-44"
         />
       </div>
-
-      {/* Start AR Button */}
-      {!hasStarted && arSupported && !loading && (
-        <button
-          onClick={() => setHasStarted(true)}
-          className="mt-32 text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl px-8 shadow-[0px_0px_20px_black]"
-        >
-          شروع واقعیت افزوده (AR)
-        </button>
-      )}
 
       {/* Error */}
       {error && <ARError error={error} />}
