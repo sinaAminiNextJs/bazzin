@@ -58,6 +58,7 @@ export default function AREarth() {
     });
     arButton.textContent = "شروع واقعیت افزوده";
     Object.assign(arButton.style, {
+      minWidth: "80vw",
       padding: "1rem 2rem",
       backgroundColor: "#ffc585",
       color: "#000",
