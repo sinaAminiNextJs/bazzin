@@ -53,9 +53,8 @@ export default function AREarth() {
       requiredFeatures: ["hit-test"],
     });
     arButton.textContent = "شروع واقعیت افزوده";
-
+    arButton.style.all = "unset";
     Object.assign(arButton.style, {
-      all: "unset",
       padding: "1rem 2rem",
       backgroundColor: "#ffc585",
       color: "#000",
