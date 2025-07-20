@@ -51,6 +51,7 @@ export default function AREarth() {
     // ساخت دکمه AR
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
+      optionalFeatures: ["dom‑overlay", "dom‑overlay‑for‑handheld‑ar"],
     });
     arButton.textContent = "شروع واقعیت افزوده AR";
     // استایل دلخواه دکمه
