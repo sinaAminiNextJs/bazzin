@@ -55,10 +55,8 @@ export default function AREarth() {
 
     // استایل دلخواه دکمه
     Object.assign(arButton.style, {
-      position: "fixed",
-      bottom: "20px",
-      left: "50%",
-      transform: "translateX(-50%)",
+      marginLeft: "auto",
+      marginRight: "auto",
       minWidth: "80vw",
       height: "3rem",
       backgroundColor: "#FFA500",
@@ -199,7 +197,7 @@ export default function AREarth() {
 
       <div
         id="ar-button-container"
-        className="fixed bottom-[50vh] left-0 w-full flex justify-center z-50"
+        className="fixed top-[50vh] left-0 w-full "
       />
 
       {loading && <ARLoading />}
