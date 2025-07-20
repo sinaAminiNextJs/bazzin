@@ -52,17 +52,17 @@ export default function AREarth() {
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
     });
-
+    arButton.textContent = "شروع واقعیت افزوده AR";
     // استایل دلخواه دکمه
     Object.assign(arButton.style, {
       marginLeft: "auto",
       marginRight: "auto",
-      minWidth: "100px",
+      minWidth: "200px",
       height: "3rem",
-      backgroundColor: "#FFA500",
+      backgroundColor: "#ffc585",
       color: "#000",
       borderRadius: "1rem",
-      border: "2px solid #FFC87A",
+      border: "2px solid #fff7c4",
       fontFamily: "iranyekan, sans-serif",
       fontSize: "1.25rem",
       boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
@@ -197,7 +197,7 @@ export default function AREarth() {
 
       <div
         id="ar-button-container"
-        className="fixed top-[50vh] left-0 w-full mx-10 py-10 bg-amber-950 "
+        className="fixed top-[50vh] left-0 w-[90vw] mx-auto bg-amber-950 "
       />
 
       {loading && <ARLoading />}
@@ -207,7 +207,7 @@ export default function AREarth() {
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
       </div>
 
-      <BackButton pathName="/earthThD" />
+      <BackButton pathName="/menu" />
     </section>
   );
 }
