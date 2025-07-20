@@ -55,6 +55,7 @@ export default function AREarth() {
     arButton.textContent = "شروع واقعیت افزوده AR";
     // استایل دلخواه دکمه
     Object.assign(arButton.style, {
+      display: "block",
       marginLeft: "auto",
       marginRight: "auto",
       minWidth: "200px",
