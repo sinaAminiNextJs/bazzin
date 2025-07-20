@@ -197,7 +197,7 @@ export default function AREarth() {
 
       <div
         id="ar-button-container"
-        className="fixed top-[50vh] mx-auto w-2xl bg-amber-200"
+        className="fixed top-[50vh] mx-auto bg-amber-200"
       >
         hi
       </div>
