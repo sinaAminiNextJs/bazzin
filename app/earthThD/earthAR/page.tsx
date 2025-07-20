@@ -85,9 +85,12 @@ export default function AREarth() {
       }
       // document.body.appendChild(arButton);
       arButton.textContent = "واقعیت افزوده (AR)";
+      arButton.removeAttribute("style"); // Remove inline styles
+
       Object.assign(arButton.style, {
         position: "absolute",
-        botton: "50vh",
+        top: "0px",
+        // botton: "50vh",
         minWidth: "80vw",
         width: "100%",
         height: "3rem",
