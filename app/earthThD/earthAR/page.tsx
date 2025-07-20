@@ -50,11 +50,8 @@ export default function AREarth() {
 
     // ساخت دکمه AR
     const arButton = ARButton.createButton(renderer, {
-      requiredFeatures: ["hit‑test"],
-      optionalFeatures: ["dom‑overlay", "dom‑overlay‑for‑handheld‑ar"],
-      domOverlay: { root: document.body },
-    }) as HTMLButtonElement;
-
+      requiredFeatures: ["hit-test"],
+    });
     arButton.textContent = "شروع واقعیت افزوده AR";
     // استایل دلخواه دکمه
     Object.assign(arButton.style, {
@@ -201,7 +198,9 @@ export default function AREarth() {
       <div
         id="ar-button-container"
         className="fixed top-[50vh] mx-auto w-2xl bg-amber-200"
-      ></div>
+      >
+        hi
+      </div>
 
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
