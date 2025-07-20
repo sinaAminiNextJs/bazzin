@@ -53,8 +53,13 @@ export default function AREarth() {
       requiredFeatures: ["hit-test"],
     });
     Object.assign(arButton.style, {
-      minWidth: "80vw",
-      padding: "1rem 2rem",
+      opacity: "1",
+      bottom: "16px",
+      minWidth: "fit-content",
+      paddingRight: "32px",
+      paddingLeft: "32px",
+      paddingTop: "8px",
+      paddingBottom: "8px",
       backgroundColor: "#ffc585",
       color: "#000",
       borderRadius: "1rem",
@@ -63,7 +68,7 @@ export default function AREarth() {
       fontSize: "1.25rem",
       boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
       cursor: "pointer",
-      zIndex: "1000",
+      // zIndex: "1000",
     });
 
     document.body.appendChild(arButton);
