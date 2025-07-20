@@ -18,26 +18,26 @@ export default function AREarth() {
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
   // 1. فقط یکبار پشتیبانی AR چک شود
-  // useEffect(() => {
-  //   const checkARSupport = async () => {
-  //     if (!navigator.xr) {
-  //       setArSupported(false);
-  //       setError("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
-  //       return;
-  //     }
-  //     try {
-  //       const supported = await navigator.xr.isSessionSupported("immersive-ar");
-  //       setArSupported(supported);
-  //       if (!supported) {
-  //         setError("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
-  //       }
-  //     } catch (err) {
-  //       setArSupported(false);
-  //       setError("بررسی پشتیبانی AR با خطا مواجه شد.");
-  //     }
-  //   };
-  //   checkARSupport();
-  // }, []);
+  useEffect(() => {
+    const checkARSupport = async () => {
+      if (!navigator.xr) {
+        setArSupported(false);
+        setError("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
+        return;
+      }
+      try {
+        const supported = await navigator.xr.isSessionSupported("immersive-ar");
+        setArSupported(supported);
+        if (!supported) {
+          setError("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
+        }
+      } catch (err) {
+        setArSupported(false);
+        setError("بررسی پشتیبانی AR با خطا مواجه شد.");
+      }
+    };
+    checkARSupport();
+  }, []);
 
   // 2. ایجاد و اضافه کردن دکمه AR فقط یکبار و اگر پشتیبانی باشد
   useEffect(() => {
