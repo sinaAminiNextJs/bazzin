@@ -131,6 +131,7 @@ export default function AREarth() {
         const earth = gltf.scene;
         earth.scale.set(0.07, 0.07, 0.07);
         earth.rotation.y = Math.PI / 2;
+        earth.position.z = -2;
         scene.add(earth);
         earthRef.current = earth;
 
