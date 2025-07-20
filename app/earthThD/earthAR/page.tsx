@@ -53,7 +53,7 @@ export default function AREarth() {
       requiredFeatures: ["hit‑test"],
       optionalFeatures: ["dom‑overlay", "dom‑overlay‑for‑handheld‑ar"],
       domOverlay: { root: document.body },
-    });
+    }) as HTMLButtonElement;
 
     arButton.textContent = "شروع واقعیت افزوده AR";
     // استایل دلخواه دکمه
