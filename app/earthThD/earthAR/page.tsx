@@ -14,12 +14,7 @@ export default function AREarth() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  useEffect(() => {
-    console.log("Component mounted");
-    console.log(document.body.innerHTML); // to debug if element exists
-    const container = document.getElementById("ar-button-container");
-    console.log(container); // will be null if not found
-  }, []);
+
   useEffect(() => {
     // Check WebXR AR support
     const checkARSupport = async () => {
@@ -90,29 +85,26 @@ export default function AREarth() {
       if (container) {
         container.appendChild(arButton);
       }
-      // document.body.appendChild(arButton);
-      // arButton.textContent = "واقعیت افزوده (AR)";
-      // arButton.removeAttribute("style"); // Remove inline styles
-
-      // Object.assign(arButton.style, {
-      //   position: "absolute",
-      //   top: "0px",
-      //   botton: "50vh",
-      //   minWidth: "80vw",
-      //   width: "100%",
-      //   height: "3rem",
-      //   backgroundColor: "#FFA500",
-      //   color: "#000",
-      //   borderRadius: "1rem",
-      //   border: "2px solid #FFC87A",
-      //   fontFamily: "iranyekan, sans-serif",
-      //   fontSize: "1.25rem",
-      //   boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-      //   transition: "all 0.1s ease-in-out",
-      //   display: "block",
-      //   boxSizing: "border-box",
-      //   padding: "8px",
-      // });
+      arButton.textContent = "واقعیت افزوده (AR)";
+      Object.assign(arButton.style, {
+        position: "absolute",
+        top: "0px",
+        botton: "50vh",
+        minWidth: "80vw",
+        width: "100%",
+        height: "3rem",
+        backgroundColor: "#FFA500",
+        color: "#000",
+        borderRadius: "1rem",
+        border: "2px solid #FFC87A",
+        fontFamily: "iranyekan, sans-serif",
+        fontSize: "1.25rem",
+        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+        transition: "all 0.1s ease-in-out",
+        display: "block",
+        boxSizing: "border-box",
+        padding: "8px",
+      });
       arButton.onmousedown = () => {
         arButton.style.transform = "translateY(2px) scale(0.95)";
       };
@@ -206,7 +198,7 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className="fixed bottom-0 left-0 w-full px-4 z-50 flex justify-center bg-amber-500"
+        className="fixed bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center bg-amber-500"
       ></div>
 
       <div className="ar-container">
