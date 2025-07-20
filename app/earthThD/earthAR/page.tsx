@@ -69,6 +69,7 @@ export default function AREarth() {
       // Add AR button
       const arButton = ARButton.createButton(renderer);
       arButton.style.display = "none"; // مخفی می‌کنیم
+      document.body.appendChild(arButton);
       arButton.click(); // شبیه کلیک خودکار روی ARButton
 
       // Wait for AR session to start
