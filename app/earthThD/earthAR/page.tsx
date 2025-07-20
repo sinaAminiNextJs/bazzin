@@ -2,7 +2,6 @@
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { ARButton } from "three/addons/webxr/ARButton.js";
 import ARLoading from "./components/ARLoading";
 import ARError from "./components/ARError";
 import BackButton from "@/app/components/BackButton";
@@ -11,12 +10,14 @@ export default function AREarth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
-  const [hasStarted, setHasStarted] = useState(false);
+  const [sessionStarted, setSessionStarted] = useState(false);
+
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const sessionRef = useRef<XRSession | null | undefined>(null);
 
-  // Check for AR support once
+  // چک کردن پشتیبانی AR فقط یک بار
   useEffect(() => {
     const checkARSupport = async () => {
       if (!navigator.xr) {
@@ -38,89 +39,109 @@ export default function AREarth() {
     checkARSupport();
   }, []);
 
-  // Init AR only after user clicks
+  // مقداردهی صحنه و شروع رندر بعد از شروع جلسه AR
   useEffect(() => {
-    if (!hasStarted) return;
+    if (!sessionStarted) return;
 
-    const initAR = async () => {
-      setLoading(true);
+    setLoading(true);
 
-      const scene = new THREE.Scene();
-      sceneRef.current = scene;
+    // صحنه و رندرر
+    const scene = new THREE.Scene();
+    sceneRef.current = scene;
 
-      const camera = new THREE.PerspectiveCamera(
-        70,
-        window.innerWidth / window.innerHeight,
-        0.01,
-        20
-      );
+    const camera = new THREE.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      0.01,
+      20
+    );
 
-      const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.xr.enabled = true;
+    rendererRef.current = renderer;
+
+    const container = document.getElementById("ar-view");
+    if (container) container.appendChild(renderer.domElement);
+
+    // چراغ‌ها
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(ambientLight, directionalLight);
+
+    // بارگذاری مدل زمین
+    const loader = new GLTFLoader();
+    loader
+      .loadAsync("/ar-earth/earth.glb")
+      .then((gltf) => {
+        const earth = gltf.scene;
+        earth.scale.set(0.07, 0.07, 0.07);
+        earth.rotation.y = Math.PI / 2;
+        scene.add(earth);
+        earthRef.current = earth;
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("خطا در بارگذاری مدل زمین:", err);
+        setError("خطا در بارگذاری مدل زمین");
+        setLoading(false);
       });
+
+    // انیمیشن چرخش زمین و رندرینگ
+    renderer.setAnimationLoop(() => {
+      if (earthRef.current) {
+        earthRef.current.rotation.y += 0.002;
+      }
+      renderer.render(scene, camera);
+    });
+
+    // تغییر سایز ویو
+    const onResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.xr.enabled = true;
-      rendererRef.current = renderer;
-
-      const container = document.getElementById("ar-view");
-      if (container) container.appendChild(renderer.domElement);
-
-      // Add AR button
-      const arButton = ARButton.createButton(renderer);
-      arButton.style.display = "none"; // مخفی می‌کنیم
-      document.body.appendChild(arButton);
-      arButton.click(); // شبیه کلیک خودکار روی ARButton
-
-      // Wait for AR session to start
-      renderer.xr.addEventListener("sessionstart", async () => {
-        // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(ambientLight, directionalLight);
-
-        // Load earth model
-        const loader = new GLTFLoader();
-        try {
-          const gltf = await loader.loadAsync("/ar-earth/earth.glb");
-          const earth = gltf.scene;
-          earth.scale.set(0.07, 0.07, 0.07);
-          earth.rotation.y = Math.PI / 2;
-          scene.add(earth);
-          earthRef.current = earth;
-        } catch (err) {
-          console.error("مدل بارگذاری نشد:", err);
-          setError("خطا در بارگذاری مدل زمین");
-        }
-
-        // Animate
-        renderer.setAnimationLoop(() => {
-          if (earthRef.current) {
-            earthRef.current.rotation.y += 0.002;
-          }
-          renderer.render(scene, camera);
-        });
-      });
-
-      window.addEventListener("resize", () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-
-      setLoading(false);
     };
+    window.addEventListener("resize", onResize);
 
-    initAR();
-
+    // پاکسازی هنگام خروج
     return () => {
+      window.removeEventListener("resize", onResize);
       if (rendererRef.current) {
+        rendererRef.current.setAnimationLoop(null);
         rendererRef.current.dispose();
         rendererRef.current = null;
       }
+      if (container) {
+        container.innerHTML = "";
+      }
+      if (sessionRef.current) {
+        sessionRef.current.end();
+        sessionRef.current = null;
+      }
     };
-  }, [hasStarted]);
+  }, [sessionStarted]);
+
+  // تابعی که در هنگام کلیک دکمه اجرا می‌شود و AR Session را شروع می‌کند
+  const startARSession = async () => {
+    try {
+      setLoading(true);
+      // درخواست شروع جلسه AR با ویژگی hit-test (می‌توانید ویژگی‌ها را تغییر دهید)
+      const session = await navigator.xr?.requestSession("immersive-ar", {
+        requiredFeatures: ["hit-test"],
+      });
+      if (sessionRef) {
+        sessionRef.current = session;
+      }
+      // اکنون که session گرفته شد، شروع صحنه و رندر
+      setSessionStarted(true);
+      setLoading(false);
+    } catch (err) {
+      console.error("شروع جلسه AR با خطا مواجه شد:", err);
+      setError("شروع واقعیت افزوده امکان‌پذیر نیست.");
+      setLoading(false);
+    }
+  };
 
   return (
     <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
@@ -138,21 +159,20 @@ export default function AREarth() {
         />
       </div>
 
-      {/* Start AR Button */}
-      {!hasStarted && arSupported && !loading && (
+      {/* دکمه شروع AR */}
+      {!sessionStarted && arSupported && !loading && (
         <button
-          onClick={() => setHasStarted(true)}
+          onClick={startARSession}
           className="mt-32 text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl px-8 shadow-[0px_0px_20px_black]"
         >
           شروع واقعیت افزوده (AR)
         </button>
       )}
 
-      {/* Error */}
       {error && <ARError error={error} />}
       {loading && <ARLoading />}
 
-      {/* WebGL Renderer output */}
+      {/* کانتینر رندر WebGL */}
       <div className="ar-container">
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
       </div>
