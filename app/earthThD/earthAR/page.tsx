@@ -28,7 +28,9 @@ export default function AREarth() {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
         setArSupported(supported);
         if (!supported) {
-          setError("AR not supported on your device");
+          setError(
+            "دستگاه شما از واقعیت افزوده پشتیبانی نمیکند. از موبایل و مرورگر کروم استفاده کنید."
+          );
         }
         return supported;
       } catch (err) {
@@ -199,8 +201,10 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className=" left-0 w-full px-4 z-50 flex justify-center bg-amber-500"
-      ></div>
+        className="fixed top-0 left-0 w-full px-4 z-50 flex justify-center bg-amber-500"
+      >
+        hiiiii im here
+      </div>
 
       <div className="ar-container">
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
