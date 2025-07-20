@@ -57,7 +57,7 @@ export default function AREarth() {
     Object.assign(arButton.style, {
       marginLeft: "auto",
       marginRight: "auto",
-      minWidth: "80vw",
+      minWidth: "100px",
       height: "3rem",
       backgroundColor: "#FFA500",
       color: "#000",
@@ -197,7 +197,7 @@ export default function AREarth() {
 
       <div
         id="ar-button-container"
-        className="fixed top-[50vh] left-0 w-full "
+        className="fixed top-[50vh] left-0 w-full mx-10 py-10 bg-amber-950 "
       />
 
       {loading && <ARLoading />}
