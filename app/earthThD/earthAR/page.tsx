@@ -52,14 +52,11 @@ export default function AREarth() {
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
     });
-    arButton.textContent = "شروع واقعیت افزوده AR";
-    // استایل دلخواه دکمه
+    arButton.textContent = "شروع واقعیت افزوده";
+
     Object.assign(arButton.style, {
-      display: "block",
-      marginLeft: "auto",
-      marginRight: "auto",
-      minWidth: "200px",
-      height: "3rem",
+      all: "unset",
+      padding: "1rem 2rem",
       backgroundColor: "#ffc585",
       color: "#000",
       borderRadius: "1rem",
@@ -68,8 +65,10 @@ export default function AREarth() {
       fontSize: "1.25rem",
       boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
       cursor: "pointer",
-      zIndex: 1000,
+      zIndex: "1000",
     });
+
+    document.getElementById("ar-button-container")?.appendChild(arButton);
 
     const btnContainer = document.getElementById("ar-button-container");
     if (btnContainer) {
@@ -198,9 +197,9 @@ export default function AREarth() {
 
       <div
         id="ar-button-container"
-        className="fixed top-[50vh] mx-auto bg-amber-200"
+        className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50"
       >
-        hi
+        .
       </div>
 
       {loading && <ARLoading />}
