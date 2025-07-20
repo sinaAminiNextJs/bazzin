@@ -11,6 +11,7 @@ export default function AREarth() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
+  const [hasStarted, setHasStarted] = useState(false);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -40,6 +41,7 @@ export default function AREarth() {
       }
     };
 
+    if (!hasStarted) return;
     const initScene = async () => {
       const isARSupported = await checkARSupport();
       if (!isARSupported) {
@@ -87,9 +89,7 @@ export default function AREarth() {
       }
       arButton.textContent = "واقعیت افزوده (AR)";
       Object.assign(arButton.style, {
-        position: "absolute",
         top: "0px",
-        botton: "50vh",
         minWidth: "80vw",
         width: "100%",
         height: "3rem",
@@ -176,14 +176,14 @@ export default function AREarth() {
 
       window.removeEventListener("resize", () => {});
     };
-  }, []);
+  }, [hasStarted]);
 
   // if (loading) return <ARLoading />;
   // if (error) return <ARError error={error} />;
 
   return (
     <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
-      {/* background */}
+      {/* background images */}
       <div className="absolute top-0 left-0 -z-10 w-full h-screen">
         <img
           src="/clipart/earth.png"
@@ -196,14 +196,26 @@ export default function AREarth() {
           className="w-96 absolute -bottom-7 -left-44"
         />
       </div>
+
+      {!hasStarted && (
+        <button
+          onClick={() => setHasStarted(true)}
+          className="mt-32 text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl px-8 shadow-[0px_0px_20px_black]"
+        >
+          شروع واقعیت افزوده (AR)
+        </button>
+      )}
+
+      {/* AR button will be added here after hasStarted === true */}
       <div
         id="ar-button-container"
-        className="fixed bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center bg-amber-500"
-      ></div>
+        className="fixed bottom-[50vh] left-0 w-full z-50 flex justify-center items-center"
+      />
 
       <div className="ar-container">
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
       </div>
+
       <BackButton pathName="/earthThD" />
     </section>
   );
