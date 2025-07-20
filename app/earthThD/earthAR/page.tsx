@@ -14,7 +14,7 @@ export default function AREarth() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const container = document.getElementById("ar-button-container");
+  let container = document.getElementById("ar-button-container");
 
   useEffect(() => {
     // Check WebXR AR support
