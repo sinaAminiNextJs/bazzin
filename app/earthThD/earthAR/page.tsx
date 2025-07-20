@@ -67,29 +67,9 @@ export default function AREarth() {
       if (container) container.appendChild(renderer.domElement);
 
       // Add AR button
-      const arButton = ARButton.createButton(renderer, {
-        requiredFeatures: ["hit-test"],
-      });
-      const btnContainer = document.getElementById("ar-button-container");
-      if (btnContainer) btnContainer.appendChild(arButton);
-
-      Object.assign(arButton.style, {
-        top: "0px",
-        minWidth: "80vw",
-        width: "100%",
-        height: "3rem",
-        backgroundColor: "#FFA500",
-        color: "#000",
-        borderRadius: "1rem",
-        border: "2px solid #FFC87A",
-        fontFamily: "iranyekan, sans-serif",
-        fontSize: "1.25rem",
-        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-        transition: "all 0.1s ease-in-out",
-        display: "block",
-        boxSizing: "border-box",
-        padding: "8px",
-      });
+      const arButton = ARButton.createButton(renderer);
+      arButton.style.display = "none"; // مخفی می‌کنیم
+      arButton.click(); // شبیه کلیک خودکار روی ARButton
 
       // Wait for AR session to start
       renderer.xr.addEventListener("sessionstart", async () => {
@@ -170,12 +150,6 @@ export default function AREarth() {
       {/* Error */}
       {error && <ARError error={error} />}
       {loading && <ARLoading />}
-
-      {/* AR button will be inserted here */}
-      <div
-        id="ar-button-container"
-        className="fixed bottom-[50vh] left-0 w-full z-50 flex justify-center items-center"
-      />
 
       {/* WebGL Renderer output */}
       <div className="ar-container">
