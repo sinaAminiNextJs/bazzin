@@ -157,6 +157,20 @@ export default function AREarth() {
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
     window.addEventListener("resize", onResize);
+    renderer.xr.addEventListener("sessionend", () => {
+      renderer.setAnimationLoop(null);
+      if (earthRef.current && sceneRef.current) {
+        sceneRef.current.remove(earthRef.current);
+        earthRef.current = null;
+      }
+      if (container && renderer.domElement.parentNode === container) {
+        container.removeChild(renderer.domElement);
+      }
+      renderer.dispose();
+      rendererRef.current = null;
+      sceneRef.current = null;
+      setHasStarted(false);
+    });
 
     return () => {
       window.removeEventListener("resize", onResize);
@@ -185,7 +199,7 @@ export default function AREarth() {
 
       <div
         id="ar-button-container"
-        className="fixed bottom-20 left-0 w-full flex justify-center z-50"
+        className="fixed bottom-[50vh] left-0 w-full flex justify-center z-50"
       />
 
       {loading && <ARLoading />}
