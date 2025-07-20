@@ -14,6 +14,7 @@ export default function AREarth() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const container = document.getElementById("ar-button-container");
 
   useEffect(() => {
     // Check WebXR AR support
@@ -81,7 +82,6 @@ export default function AREarth() {
       const arButton = ARButton.createButton(renderer, {
         requiredFeatures: ["hit-test"],
       });
-      const container = document.getElementById("ar-button-container");
       if (container) {
         container.appendChild(arButton);
       }
@@ -203,7 +203,7 @@ export default function AREarth() {
         id="ar-button-container"
         className="fixed top-0 left-0 w-full px-4 z-50 flex justify-center bg-amber-500"
       >
-        hiiiii im here
+        hiiiii im here{container ? "yes" : "no"}
       </div>
 
       <div className="ar-container">
