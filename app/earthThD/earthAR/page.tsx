@@ -79,6 +79,11 @@ export default function AREarth() {
       const arButton = ARButton.createButton(renderer, {
         requiredFeatures: ["hit-test"],
       });
+      const container = document.getElementById("ar-button-container");
+      if (container) {
+        container.appendChild(arButton);
+      }
+      // document.body.appendChild(arButton);
       arButton.textContent = "واقعیت افزوده (AR)";
       Object.assign(arButton.style, {
         position: "absolute",
@@ -104,8 +109,6 @@ export default function AREarth() {
       arButton.onmouseup = () => {
         arButton.style.transform = "translateY(0) scale(1)";
       };
-
-      document.body.appendChild(arButton);
 
       // Load Earth model
       const loader = new GLTFLoader();
@@ -193,7 +196,7 @@ export default function AREarth() {
       </div>
       <div
         id="ar-button-container"
-        className="fixed bottom-[50vh] left-0 w-full px-4 z-50 flex justify-center"
+        className=" left-0 w-full px-4 z-50 flex justify-center"
       ></div>
 
       <div className="ar-container">
