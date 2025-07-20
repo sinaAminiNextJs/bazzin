@@ -12,11 +12,12 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
+
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
 
-  // Check for AR support once
+  // 1. فقط یکبار پشتیبانی AR چک شود
   useEffect(() => {
     const checkARSupport = async () => {
       if (!navigator.xr) {
@@ -38,100 +39,127 @@ export default function AREarth() {
     checkARSupport();
   }, []);
 
-  // Init AR only after user clicks
+  // 2. ایجاد و اضافه کردن دکمه AR فقط یکبار و اگر پشتیبانی باشد
+  useEffect(() => {
+    if (!arSupported) return;
+
+    // ساخت renderer فقط برای دکمه (ممکنه با initAR مجزا باشد)
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.xr.enabled = true;
+    rendererRef.current = renderer;
+
+    // ساخت دکمه AR
+    const arButton = ARButton.createButton(renderer, {
+      requiredFeatures: ["hit-test"],
+    });
+
+    // استایل دلخواه دکمه
+    Object.assign(arButton.style, {
+      position: "fixed",
+      bottom: "20px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      minWidth: "80vw",
+      height: "3rem",
+      backgroundColor: "#FFA500",
+      color: "#000",
+      borderRadius: "1rem",
+      border: "2px solid #FFC87A",
+      fontFamily: "iranyekan, sans-serif",
+      fontSize: "1.25rem",
+      boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+      cursor: "pointer",
+      zIndex: 1000,
+    });
+
+    const btnContainer = document.getElementById("ar-button-container");
+    if (btnContainer) {
+      btnContainer.appendChild(arButton);
+    } else {
+      document.body.appendChild(arButton);
+    }
+
+    // وقتی دکمه زده شد، state تغییر می‌کند
+    const onClick = () => {
+      setHasStarted(true);
+    };
+    arButton.addEventListener("click", onClick);
+
+    return () => {
+      arButton.removeEventListener("click", onClick);
+      if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
+      renderer.dispose();
+      rendererRef.current = null;
+    };
+  }, [arSupported]);
+
+  // 3. وقتی کاربر شروع کرد، بارگذاری و اجرای AR
   useEffect(() => {
     if (!hasStarted) return;
 
-    const initAR = async () => {
-      setLoading(true);
+    setLoading(true);
 
-      const scene = new THREE.Scene();
-      sceneRef.current = scene;
+    const scene = new THREE.Scene();
+    sceneRef.current = scene;
 
-      const camera = new THREE.PerspectiveCamera(
-        70,
-        window.innerWidth / window.innerHeight,
-        0.01,
-        20
-      );
+    const camera = new THREE.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      0.01,
+      20
+    );
 
-      const renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
-      });
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.xr.enabled = true;
-      rendererRef.current = renderer;
+    const renderer = rendererRef.current!;
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
-      const container = document.getElementById("ar-view");
-      if (container) container.appendChild(renderer.domElement);
+    const container = document.getElementById("ar-view");
+    if (container) container.appendChild(renderer.domElement);
 
-      // Add AR button
-      const arButton = ARButton.createButton(renderer);
-      const btnContainer = document.getElementById("ar-button-container");
-      if (btnContainer) btnContainer.appendChild(arButton);
-      arButton.textContent = "واقعیت افزوده";
-      Object.assign(arButton.style, {
-        minWidth: "80vw",
-        height: "3rem",
-        backgroundColor: "#FFA500",
-        color: "#000",
-        borderRadius: "1rem",
-        border: "2px solid #FFC87A",
-        fontFamily: "iranyekan, sans-serif",
-        fontSize: "1.25rem",
-        boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-        transition: "all 0.1s ease-in-out",
-        boxSizing: "border-box",
-        padding: "8px",
-      });
-      arButton.addEventListener("click", async () => {
-        setHasStarted(true);
-      });
+    // نورپردازی
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(1, 1, 1);
+    scene.add(ambientLight, directionalLight);
 
-      // Wait for AR session to start
-      renderer.xr.addEventListener("sessionstart", async () => {
-        // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(ambientLight, directionalLight);
+    // بارگذاری مدل زمین
+    const loader = new GLTFLoader();
+    loader.load(
+      "/ar-earth/earth.glb",
+      (gltf) => {
+        const earth = gltf.scene;
+        earth.scale.set(0.07, 0.07, 0.07);
+        earth.rotation.y = Math.PI / 2;
+        scene.add(earth);
+        earthRef.current = earth;
 
-        // Load earth model
-        const loader = new GLTFLoader();
-        try {
-          const gltf = await loader.loadAsync("/ar-earth/earth.glb");
-          const earth = gltf.scene;
-          earth.scale.set(0.07, 0.07, 0.07);
-          earth.rotation.y = Math.PI / 2;
-          scene.add(earth);
-          earthRef.current = earth;
-        } catch (err) {
-          console.error("مدل بارگذاری نشد:", err);
-          setError("خطا در بارگذاری مدل زمین");
-        }
+        setLoading(false);
 
-        // Animate
+        // شروع حلقه رندر و انیمیشن
         renderer.setAnimationLoop(() => {
           if (earthRef.current) {
             earthRef.current.rotation.y += 0.002;
           }
           renderer.render(scene, camera);
         });
-      });
+      },
+      undefined,
+      (error) => {
+        console.error("خطا در بارگذاری مدل:", error);
+        setError("خطا در بارگذاری مدل زمین");
+        setLoading(false);
+      }
+    );
 
-      window.addEventListener("resize", () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
-
-      setLoading(false);
+    // هندل resize
+    const onResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
     };
-
-    initAR();
+    window.addEventListener("resize", onResize);
 
     return () => {
+      window.removeEventListener("resize", onResize);
       if (rendererRef.current) {
         rendererRef.current.dispose();
         rendererRef.current = null;
@@ -155,17 +183,14 @@ export default function AREarth() {
         />
       </div>
 
-      {/* Error */}
-      {error && <ARError error={error} />}
-      {loading && <ARLoading />}
-
-      {/* AR button will be inserted here */}
       <div
         id="ar-button-container"
-        className="fixed bottom-[50vh] left-0 w-full z-50 flex justify-center items-center"
+        className="fixed bottom-20 left-0 w-full flex justify-center z-50"
       />
 
-      {/* WebGL Renderer output */}
+      {loading && <ARLoading />}
+      {error && <ARError error={error} />}
+
       <div className="ar-container">
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
       </div>
