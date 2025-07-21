@@ -12,6 +12,7 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
+  const [windowsDimention, setWindowsDimention] = useState([0, 0]);
 
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
@@ -19,6 +20,7 @@ export default function AREarth() {
 
   // 1. فقط یکبار پشتیبانی AR چک شود
   useEffect(() => {
+    setWindowsDimention([window.innerWidth, window.innerHeight]);
     const checkARSupport = async () => {
       if (!navigator.xr) {
         setArSupported(false);
@@ -68,7 +70,7 @@ export default function AREarth() {
       fontSize: "1.25rem",
       boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
       cursor: "pointer",
-      // zIndex: "1000",
+      zIndex: "11000",
     });
 
     document.body.appendChild(arButton);
@@ -112,7 +114,8 @@ export default function AREarth() {
     camera.position.set(0, 0, 3); // 3 واحد فاصله از مدل
 
     const renderer = rendererRef.current!;
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    console.log(windowsDimention[0], windowsDimention[1]);
+    renderer.setSize(windowsDimention[0], windowsDimention[1]);
 
     const container = document.getElementById("ar-view");
     if (container) container.appendChild(renderer.domElement);

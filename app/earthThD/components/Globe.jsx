@@ -29,9 +29,9 @@ export default function GlobeComponent({ isDay }) {
             .polygonStrokeColor(() => "rgba(0, 0, 0, 0.5)")
             .polygonLabel(
               ({ properties: d }) => `
-                <b>${d.ADMIN} (${d.ISO_A2}):</b> <br/>
-                قاره: <i>${d.CONTINENT}</i><br/>
-                جمعیت: <i>${d.POP_EST}</i>
+                <b>${d.NAME_FA} </b> <br/>
+                قاره <i>${d.CONTINENT_FA}</i><br/>
+                <i>${d.POP_EST_FA}</i>
               `
             )
             .onPolygonHover((hoverD) =>
