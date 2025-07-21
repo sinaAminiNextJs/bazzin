@@ -1,28 +1,39 @@
 const fs = require("fs");
-function formatPopulationFa(pop) {
-  const million = 1000000;
-  if (pop >= million) {
-    // گرد به بالا و خلاصه با "میلیون"
-    const millions = Math.round(pop / million);
-    return `${millions} میلیون نفر`;
-  }
-  // اگر کمتر از یک میلیون بود، فقط عدد را برمی‌گرداند
-  return pop.toString();
-}
-// فایل geojson رو بخون
-const rawData = fs.readFileSync("countries_clean.geojson", "utf8");
-const geojson = JSON.parse(rawData);
 
-// فقط ویژگی‌های مهم رو نگه داریم
-geojson.features = geojson.features.map((feature) => {
-  const filteredProps = { ...feature };
-  const newPop = formatPopulationFa(feature.POP_EST);
-  filteredProps.POP_EST_FA = newPop;
+// فایل‌ها رو بخونیم
+const sourceData = JSON.parse(fs.readFileSync("countries_source.json", "utf8"));
+const newData = JSON.parse(fs.readFileSync("countries.json", "utf8"));
+
+// یک تابع برای خلاصه کردن جمعیت
+function formatPopulationFa(number) {
+  return Math.round(number / 1_000_000) + " میلیون";
+}
+
+// فرض می‌گیریم که ترتیب کشورهای هر دو فایل یکیه
+const updatedFeatures = sourceData.features.map((oldFeature, index) => {
+  const newProps = newData.features[index];
+
+  // اضافه کردن جمعیت خلاصه شده فارسی
+  const pop = newProps.POP_EST || 0;
+  newProps.POP_EST_FA = formatPopulationFa(pop);
+
   return {
-    properties: filteredProps,
+    ...oldFeature, // حفظ type و geometry
+    properties: {
+      ...newProps,
+    },
   };
 });
 
-// ذخیره فایل خروجی
-fs.writeFileSync("countries_2.geojson", JSON.stringify(geojson, null, 2));
-console.log("فایل فیلتر شده ذخیره شد: countries_clean.geojson");
+const updatedGeoJSON = {
+  ...sourceData,
+  features: updatedFeatures,
+};
+
+// ذخیره فایل نهایی
+fs.writeFileSync(
+  "countries_merged.geojson",
+  JSON.stringify(updatedGeoJSON, null, 2),
+  "utf8"
+);
+console.log("✅ فایل نهایی ذخیره شد: countries_merged.geojson");

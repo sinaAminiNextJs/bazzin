@@ -11,13 +11,16 @@ export default function GlobeComponent({ isDay }) {
 
     // Dynamically import globe.gl
     import("globe.gl").then((Globe) => {
-      fetch("/datasets/countries.json")
+      fetch("/datasets/countries.geojson")
         .then((res) => res.json())
         .then((countries) => {
           globeInstance.current = Globe.default()(globeEl.current)
             .globeImageUrl(isDay ? "/earth-day.webp" : "/night-earth.webp")
             .backgroundImageUrl(isDay ? "/day-sky.webp" : "/night-sky.webp")
             .lineHoverPrecision(0)
+            .polygonsData(
+              countries.features.filter((d) => d.properties.ISO_A2 !== "")
+            )
             .polygonAltitude(0.05)
             .polygonCapColor(
               (d) => d.properties.COLOR || "rgba(0, 200, 0, 0.6)"
@@ -26,7 +29,7 @@ export default function GlobeComponent({ isDay }) {
             .polygonStrokeColor(() => "rgba(0, 0, 0, 0.5)")
             .polygonLabel(
               ({ properties: d }) => `
-                <b>${d.NAME_FA} </b> <br/>
+                <b>${d.NAME_FA}</b> <br/>
                 قاره <i>${d.CONTINENT_FA}</i><br/>
                 <i>${d.POP_EST_FA}</i>
               `
