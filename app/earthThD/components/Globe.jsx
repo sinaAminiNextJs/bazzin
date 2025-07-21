@@ -18,9 +18,6 @@ export default function GlobeComponent({ isDay }) {
             .globeImageUrl(isDay ? "/earth-day.webp" : "/night-earth.webp")
             .backgroundImageUrl(isDay ? "/day-sky.webp" : "/night-sky.webp")
             .lineHoverPrecision(0)
-            .polygonsData(
-              countries.features.filter((d) => d.properties.ISO_A2 !== "")
-            )
             .polygonAltitude(0.05)
             .polygonCapColor(
               (d) => d.properties.COLOR || "rgba(0, 200, 0, 0.6)"
