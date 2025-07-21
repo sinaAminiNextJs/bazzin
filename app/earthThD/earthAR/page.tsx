@@ -9,11 +9,9 @@ import { ARButton } from "three/addons/webxr/ARButton.js";
 import ARLoading from "./components/ARLoading";
 import ARError from "./components/ARError";
 import BackButton from "@/app/components/BackButton";
-import useARButton from "./hooks/useARButton";
 
 // شروع تابع اصلی کامپوننت
 export default function AREarth() {
-  useARButton();
   // state‌ها برای مدیریت وضعیت‌های مختلف
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -67,10 +65,11 @@ export default function AREarth() {
     rendererRef.current = renderer;
 
     // ساخت دکمه شروع AR
-    const arButton = ARButton.createButton(renderer, {
+    var arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
+      optionalFeatures: ["dom-overlay", "dom-overlay-for-handheld-ar"],
+      domOverlay: { root: document.body },
     });
-
     // اعمال استایل سفارشی به دکمه
     Object.assign(arButton.style, {
       opacity: "1",
