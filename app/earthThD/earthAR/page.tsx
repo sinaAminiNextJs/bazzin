@@ -12,7 +12,9 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
-  const [windowsDimention, setWindowsDimention] = useState([0, 0]);
+  const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
+    0, 0,
+  ]);
 
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
