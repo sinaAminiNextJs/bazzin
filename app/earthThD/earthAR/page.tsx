@@ -43,7 +43,7 @@ export default function AREarth() {
 
   // 2. ایجاد و اضافه کردن دکمه AR فقط یکبار و اگر پشتیبانی باشد
   useEffect(() => {
-    if (!arSupported) return;
+    if (arSupported !== true) return;
 
     // ساخت renderer فقط برای دکمه (ممکنه با initAR مجزا باشد)
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
