@@ -115,7 +115,8 @@ export default function AREarth() {
 
     const renderer = rendererRef.current!;
     console.log(windowsDimention[0], windowsDimention[1]);
-    renderer.setSize(windowsDimention[0], windowsDimention[1]);
+    console.log(window.innerWidth, window.innerHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
 
     const container = document.getElementById("ar-view");
     if (container) container.appendChild(renderer.domElement);
