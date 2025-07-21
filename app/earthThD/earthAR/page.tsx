@@ -12,6 +12,7 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
+  const xrSessionRef = useRef<XRSession | null>(null);
   const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
     0, 0,
   ]);
@@ -148,6 +149,41 @@ export default function AREarth() {
             earthRef.current.rotation.y += 0.002;
           }
           renderer.render(scene, camera);
+        });
+        const showStopButton = () => {
+          const stopButton = document.createElement("button");
+          stopButton.innerText = "خروج از AR";
+          Object.assign(stopButton.style, {
+            position: "absolute",
+            bottom: "80px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            backgroundColor: "#ff4d4d",
+            color: "#fff",
+            padding: "10px 20px",
+            fontSize: "1rem",
+            borderRadius: "8px",
+            border: "none",
+            zIndex: 11000,
+            cursor: "pointer",
+          });
+
+          stopButton.addEventListener("click", () => {
+            xrSessionRef.current?.end();
+          });
+
+          document.body.appendChild(stopButton);
+
+          // پاک‌سازی موقع خروج
+          xrSessionRef.current?.addEventListener("end", () => {
+            stopButton.remove();
+          });
+        };
+
+        renderer.xr.addEventListener("sessionstart", () => {
+          const session = renderer.xr.getSession();
+          xrSessionRef.current = session;
+          showStopButton(); // تابعی برای ساختن دکمه خروج
         });
       },
       undefined,
