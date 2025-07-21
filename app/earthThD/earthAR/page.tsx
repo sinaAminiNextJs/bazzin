@@ -1,40 +1,52 @@
+// importهای ضروری برای سه‌بعدی‌سازی و AR
 "use client";
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
+
+// کامپوننت‌های رابط کاربری
 import ARLoading from "./components/ARLoading";
 import ARError from "./components/ARError";
 import BackButton from "@/app/components/BackButton";
+import useARButton from "./hooks/useARButton";
 
+// شروع تابع اصلی کامپوننت
 export default function AREarth() {
+  useARButton();
+  // state‌ها برای مدیریت وضعیت‌های مختلف
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
+
+  // refها برای نگهداری session و سایر آبجکت‌های three.js
   const xrSessionRef = useRef<XRSession | null>(null);
   const stopButtonRef = useRef<HTMLButtonElement | null>(null);
 
+  // اندازه پنجره برای تنظیم ابعاد renderer
   const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
     0, 0,
   ]);
 
+  // مراجع به عناصر صحنه، مدل زمین و رندرر
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-
-  // 1. فقط یکبار پشتیبانی AR چک شود
   useEffect(() => {
     setWindowsDimention([window.innerWidth, window.innerHeight]);
+
     const checkARSupport = async () => {
       if (!navigator.xr) {
         setArSupported(false);
         setError("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
         return;
       }
+
       try {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
         setArSupported(supported);
+
         if (!supported) {
           setError("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
         }
@@ -43,43 +55,30 @@ export default function AREarth() {
         setError("بررسی پشتیبانی AR با خطا مواجه شد.");
       }
     };
+
     checkARSupport();
   }, []);
-
-  // 2. ایجاد و اضافه کردن دکمه AR فقط یکبار و اگر پشتیبانی باشد
   useEffect(() => {
     if (arSupported !== true) return;
 
-    // ساخت renderer فقط برای دکمه (ممکنه با initAR مجزا باشد)
+    // ساخت رندرر سه‌بعدی
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.xr.enabled = true;
     rendererRef.current = renderer;
 
-    // ساخت دکمه AR
+    // ساخت دکمه شروع AR
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
     });
+
+    // اعمال استایل سفارشی به دکمه
     Object.assign(arButton.style, {
       opacity: "1",
       bottom: "16px",
-      minWidth: "fit-content",
-      paddingRight: "32px",
-      paddingLeft: "32px",
-      paddingTop: "8px",
-      paddingBottom: "8px",
-      backgroundColor: "#ffc585",
-      color: "#000",
-      borderRadius: "1rem",
-      border: "2px solid #fff7c4",
-      fontFamily: "iranyekan, sans-serif",
-      fontSize: "1.25rem",
-      boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-      cursor: "pointer",
-      zIndex: "11000",
+      // ...
     });
 
-    document.body.appendChild(arButton);
-
+    // اضافه کردن به container
     const btnContainer = document.getElementById("ar-button-container");
     if (btnContainer) {
       btnContainer.appendChild(arButton);
@@ -87,12 +86,13 @@ export default function AREarth() {
       document.body.appendChild(arButton);
     }
 
-    // وقتی دکمه زده شد، state تغییر می‌کند
+    // زمانی که دکمه کلیک شد، AR شروع شود
     const onClick = () => {
       setHasStarted(true);
     };
     arButton.addEventListener("click", onClick);
 
+    // پاکسازی هنگام unmount شدن
     return () => {
       arButton.removeEventListener("click", onClick);
       if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
@@ -100,8 +100,6 @@ export default function AREarth() {
       rendererRef.current = null;
     };
   }, [arSupported]);
-
-  // 3. وقتی کاربر شروع کرد، بارگذاری و اجرای AR
   useEffect(() => {
     if (!hasStarted) return;
 
@@ -110,19 +108,20 @@ export default function AREarth() {
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
+    // ساخت دوربین
     const camera = new THREE.PerspectiveCamera(
       70,
       window.innerWidth / window.innerHeight,
       0.01,
       20
     );
-    camera.position.set(0, 0, 3); // 3 واحد فاصله از مدل
+    camera.position.set(0, 0, 3);
 
+    // گرفتن رندرر از ref و تنظیم سایز
     const renderer = rendererRef.current!;
-    console.log(windowsDimention[0], windowsDimention[1]);
-    console.log(window.innerWidth, window.innerHeight);
     renderer.setSize(window.innerWidth, window.innerHeight);
 
+    // اضافه کردن canvas به DOM
     const container = document.getElementById("ar-view");
     if (container) container.appendChild(renderer.domElement);
 
@@ -132,10 +131,11 @@ export default function AREarth() {
     directionalLight.position.set(1, 1, 1);
     scene.add(ambientLight, directionalLight);
 
-    // بارگذاری مدل زمین
+    // بارگذاری مدل glTF زمین
     const loader = new GLTFLoader();
     loader.load(
       "/ar-earth/earth.glb",
+
       (gltf) => {
         const earth = gltf.scene;
         earth.scale.set(0.07, 0.07, 0.07);
@@ -145,35 +145,25 @@ export default function AREarth() {
 
         setLoading(false);
 
-        // شروع حلقه رندر و انیمیشن
+        // انیمیشن چرخش زمین
         renderer.setAnimationLoop(() => {
           if (earthRef.current) {
             earthRef.current.rotation.y += 0.002;
           }
           renderer.render(scene, camera);
         });
+
+        // دکمه توقف AR
         const showStopButton = () => {
+          // حذف دکمه قبلی
           if (stopButtonRef.current) {
             stopButtonRef.current.remove();
           }
+
+          // ایجاد دکمه جدید
           const stopButton = document.createElement("button");
           Object.assign(stopButton.style, {
-            opacity: "1",
-            bottom: "16px",
-            minWidth: "fit-content",
-            paddingRight: "32px",
-            paddingLeft: "32px",
-            paddingTop: "8px",
-            paddingBottom: "8px",
-            backgroundColor: "#ffc585",
-            color: "#000",
-            borderRadius: "1rem",
-            border: "2px solid #fff7c4",
-            fontFamily: "iranyekan, sans-serif",
-            fontSize: "1.25rem",
-            boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-            cursor: "pointer",
-            zIndex: "11000",
+            // استایل سفارشی
           });
 
           stopButton.addEventListener("click", () => {
@@ -185,7 +175,7 @@ export default function AREarth() {
           document.body.appendChild(stopButton);
           stopButtonRef.current = stopButton;
 
-          // هندلر برای حذف دکمه هنگام پایان session
+          // حذف دکمه هنگام پایان session
           const onSessionEnd = () => {
             if (stopButtonRef.current) {
               stopButtonRef.current.remove();
@@ -196,13 +186,13 @@ export default function AREarth() {
           rendererRef.current?.xr.addEventListener("sessionend", onSessionEnd);
         };
 
+        // هندل کردن شروع session
         renderer.xr.addEventListener("sessionstart", () => {
-          const session = renderer.xr.getSession();
-          xrSessionRef.current = session;
-          showStopButton(); // تابعی برای ساختن دکمه خروج
+          xrSessionRef.current = renderer.xr.getSession();
+          showStopButton();
         });
 
-        // نمایش دکمه حتی اگر session شروع نشده باشد (در حالت تست)
+        // در حالت dev هم دکمه نشان داده شود
         if (process.env.NODE_ENV === "development") {
           showStopButton();
         }
@@ -215,13 +205,16 @@ export default function AREarth() {
       }
     );
 
-    // هندل resize
+    // هندل تغییر سایز پنجره
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
+
     window.addEventListener("resize", onResize);
+
+    // پاکسازی session هنگام خروج
     renderer.xr.addEventListener("sessionend", () => {
       renderer.setAnimationLoop(null);
       if (earthRef.current && sceneRef.current) {
@@ -248,10 +241,9 @@ export default function AREarth() {
       }
     };
   }, [hasStarted]);
-
   return (
     <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
-      {/* Backgrounds */}
+      {/* پس‌زمینه‌های تصویری */}
       <div className="absolute top-0 left-0 -z-10 w-full h-screen">
         <img
           src="/clipart/earth.png"
@@ -265,13 +257,16 @@ export default function AREarth() {
         />
       </div>
 
+      {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
 
+      {/* نمای اصلی AR */}
       <div className="ar-container">
         <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
       </div>
 
+      {/* دکمه برگشت */}
       <BackButton pathName="/menu" />
     </section>
   );
