@@ -13,6 +13,8 @@ export default function AREarth() {
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
   const xrSessionRef = useRef<XRSession | null>(null);
+  const stopButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
     0, 0,
   ]);
@@ -151,33 +153,47 @@ export default function AREarth() {
           renderer.render(scene, camera);
         });
         const showStopButton = () => {
+          if (stopButtonRef.current) {
+            stopButtonRef.current.remove();
+          }
           const stopButton = document.createElement("button");
-          stopButton.innerText = "خروج از AR";
           Object.assign(stopButton.style, {
-            position: "absolute",
-            bottom: "80px",
-            left: "50%",
-            transform: "translateX(-50%)",
-            backgroundColor: "#ff4d4d",
-            color: "#fff",
-            padding: "10px 20px",
-            fontSize: "1rem",
-            borderRadius: "8px",
-            border: "none",
-            zIndex: 11000,
+            opacity: "1",
+            bottom: "16px",
+            minWidth: "fit-content",
+            paddingRight: "32px",
+            paddingLeft: "32px",
+            paddingTop: "8px",
+            paddingBottom: "8px",
+            backgroundColor: "#ffc585",
+            color: "#000",
+            borderRadius: "1rem",
+            border: "2px solid #fff7c4",
+            fontFamily: "iranyekan, sans-serif",
+            fontSize: "1.25rem",
+            boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
             cursor: "pointer",
+            zIndex: "11000",
           });
 
           stopButton.addEventListener("click", () => {
-            xrSessionRef.current?.end();
+            if (rendererRef.current?.xr.getSession()) {
+              rendererRef.current.xr.getSession()?.end();
+            }
           });
 
           document.body.appendChild(stopButton);
+          stopButtonRef.current = stopButton;
 
-          // پاک‌سازی موقع خروج
-          xrSessionRef.current?.addEventListener("end", () => {
-            stopButton.remove();
-          });
+          // هندلر برای حذف دکمه هنگام پایان session
+          const onSessionEnd = () => {
+            if (stopButtonRef.current) {
+              stopButtonRef.current.remove();
+              stopButtonRef.current = null;
+            }
+          };
+
+          rendererRef.current?.xr.addEventListener("sessionend", onSessionEnd);
         };
 
         renderer.xr.addEventListener("sessionstart", () => {
@@ -185,6 +201,11 @@ export default function AREarth() {
           xrSessionRef.current = session;
           showStopButton(); // تابعی برای ساختن دکمه خروج
         });
+
+        // نمایش دکمه حتی اگر session شروع نشده باشد (در حالت تست)
+        if (process.env.NODE_ENV === "development") {
+          showStopButton();
+        }
       },
       undefined,
       (error) => {
@@ -221,6 +242,9 @@ export default function AREarth() {
       if (rendererRef.current) {
         rendererRef.current.dispose();
         rendererRef.current = null;
+      }
+      if (stopButtonRef.current) {
+        stopButtonRef.current.remove();
       }
     };
   }, [hasStarted]);
