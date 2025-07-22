@@ -5,24 +5,9 @@ import AREarth from "./components/AREarth";
 // شروع تابع اصلی کامپوننت
 export default function ARPage() {
   return (
-    <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
+    <section>
       {/* پس‌زمینه‌های تصویری */}
 
-      <div
-        id="background-images"
-        className="absolute top-0 left-0 -z-10 w-full h-screen"
-      >
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-40 absolute top-20 -right-3"
-        />
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-96 absolute -bottom-7 -left-44"
-        />
-      </div>
       {/* نمای اصلی AR */}
       <AREarth />
       <div id="ar-view" className="w-full h-full" />
