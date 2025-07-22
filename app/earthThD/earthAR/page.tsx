@@ -120,7 +120,7 @@ export default function AREarth() {
 
     // ساخت دوربین
     const camera = new THREE.PerspectiveCamera(
-      70,
+      85,
       window.innerWidth / window.innerHeight,
       0.01,
       20
