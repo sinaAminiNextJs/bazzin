@@ -71,7 +71,7 @@ export default function AREarth() {
     });
     // اعمال استایل سفارشی به دکمه
     Object.assign(arButton.style, {
-      minWidth: "fit content",
+      minWidth: "fit-content",
       opacity: "1",
       position: "absolute",
       bottom: "20px",
@@ -105,9 +105,9 @@ export default function AREarth() {
     // پاکسازی هنگام unmount شدن
     return () => {
       arButton.removeEventListener("click", onClick);
-      if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
-      renderer.dispose();
-      rendererRef.current = null;
+      // if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
+      // renderer.dispose();
+      // rendererRef.current = null;
     };
   }, [arSupported]);
   useEffect(() => {
@@ -188,8 +188,8 @@ export default function AREarth() {
           // حذف دکمه هنگام پایان session
           const onSessionEnd = () => {
             if (stopButtonRef.current) {
-              stopButtonRef.current.remove();
-              stopButtonRef.current = null;
+              // stopButtonRef.current.remove();
+              // stopButtonRef.current = null;
             }
           };
 
@@ -226,18 +226,19 @@ export default function AREarth() {
 
     // پاکسازی session هنگام خروج
     renderer.xr.addEventListener("sessionend", () => {
-      renderer.setAnimationLoop(null);
-      if (earthRef.current && sceneRef.current) {
-        sceneRef.current.remove(earthRef.current);
-        earthRef.current = null;
-      }
-      if (container && renderer.domElement.parentNode === container) {
-        container.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-      rendererRef.current = null;
-      sceneRef.current = null;
-      setHasStarted(false);
+      window.location.reload();
+      // renderer.setAnimationLoop(null);
+      // if (earthRef.current && sceneRef.current) {
+      //   sceneRef.current.remove(earthRef.current);
+      //   earthRef.current = null;
+      // }
+      // if (container && renderer.domElement.parentNode === container) {
+      //   container.removeChild(renderer.domElement);
+      // }
+      // renderer.dispose();
+      // rendererRef.current = null;
+      // sceneRef.current = null;
+      // setHasStarted(false);
     });
 
     return () => {
@@ -252,7 +253,7 @@ export default function AREarth() {
     };
   }, [hasStarted]);
   return (
-    <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
+    <section>
       {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
