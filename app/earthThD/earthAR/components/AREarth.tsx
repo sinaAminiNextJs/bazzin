@@ -262,11 +262,11 @@ export default function AREarth() {
       {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
-      <div id="ar-view" className="w-full h-full z-10" />
+      <div id="ar-view" className="w-full h-full z-50" />
       {/* دکمه AR */}
       <div
         id="ar-button-container"
-        className="w-full fixed bottom-0 left-0 z-10"
+        className="w-full fixed bottom-0 left-0 z-50"
       ></div>
     </section>
   );
