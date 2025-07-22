@@ -93,7 +93,8 @@ export default function AREarth() {
     if (btnContainer) {
       btnContainer.appendChild(arButton);
     } else {
-      document.body.appendChild(arButton);
+      alert("مشکلی در نمایش دکمه شروع پیش آمده");
+      // document.body.appendChild(arButton);
     }
 
     // زمانی که دکمه کلیک شد، AR شروع شود

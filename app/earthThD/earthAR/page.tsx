@@ -21,7 +21,9 @@ export default function ARPage() {
         />
       </div>
       <AREarth />
+      <div id="ar-button-container" className="w-full"></div>
       {/* دکمه برگشت */}
+
       <BackButton pathName="/menu" />
     </section>
   );
