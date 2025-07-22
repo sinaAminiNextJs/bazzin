@@ -73,8 +73,19 @@ export default function AREarth() {
     // اعمال استایل سفارشی به دکمه
     Object.assign(arButton.style, {
       opacity: "1",
-      bottom: "16px",
-      // ...
+      position: "absolute",
+      bottom: "20px",
+      left: "20px",
+      padding: "8px 32px",
+      backgroundColor: "#ffc585",
+      color: "#000",
+      borderRadius: "1rem",
+      border: "2px solid #fff7c4",
+      fontFamily: "iranyekan, sans-serif",
+      fontSize: "1.25rem",
+      boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+      cursor: "pointer",
+      zIndex: "11000",
     });
 
     // اضافه کردن به container
@@ -243,18 +254,20 @@ export default function AREarth() {
   return (
     <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
       {/* پس‌زمینه‌های تصویری */}
-      <div className="absolute top-0 left-0 -z-10 w-full h-screen">
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-40 absolute top-20 -right-3"
-        />
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-96 absolute -bottom-7 -left-44"
-        />
-      </div>
+      {hasStarted && (
+        <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+          <img
+            src="/clipart/earth.png"
+            alt="Earth"
+            className="w-40 absolute top-20 -right-3"
+          />
+          <img
+            src="/clipart/earth.png"
+            alt="Earth"
+            className="w-96 absolute -bottom-7 -left-44"
+          />
+        </div>
+      )}
 
       {/* لودینگ و خطا */}
       {loading && <ARLoading />}
