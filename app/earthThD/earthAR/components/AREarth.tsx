@@ -258,25 +258,16 @@ export default function AREarth() {
     };
   }, [hasStarted]);
   return (
-    <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
-      <div
-        id="background-images"
-        className="absolute top-0 left-0 -z-10 w-full h-screen"
-      >
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-40 absolute top-20 -right-3"
-        />
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-96 absolute -bottom-7 -left-44"
-        />
-      </div>
+    <section>
       {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
+      <div id="ar-view" className="w-full h-full" />
+      {/* دکمه AR */}
+      <div
+        id="ar-button-container"
+        className="w-full fixed bottom-0 left-0"
+      ></div>
     </section>
   );
 }
