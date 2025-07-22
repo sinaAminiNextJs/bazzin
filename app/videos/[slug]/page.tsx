@@ -17,6 +17,9 @@ export default function videoPlay() {
     { name: "ماچارتا و کدوبلو", slug: "vid-2", src: "ybh9ll7" },
     { name: "سگهای نگهبان", slug: "vid-3", src: "s1095fx" },
     { name: "دیانا و روما", slug: "vid-4", src: "oqbtbo0" },
+    { name: "نقشه خمیری", slug: "vid-5", src: "fptu854" },
+    { name: "آموزش قاره ها", slug: "vid-6", src: "maiit4f" },
+    { name: "نقشه خوانی برای کودکان", slug: "vid-7", src: "acqf9z8" },
   ];
 
   const videoData: videoType | undefined = videoList.find(

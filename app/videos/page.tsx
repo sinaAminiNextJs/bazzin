@@ -14,28 +14,22 @@ export default function About() {
 
   const videoList: videoType[] = [
     {
-      name: "دختر کفشدوزکی",
-      slug: "vid-1",
+      name: "نقشه خمیری",
+      slug: "vid-5",
       thumbnail:
-        "https://static.cdn.asset.aparat.com/avt/42342126-4757-l__6626.jpg?width=450&quality=90&secret=1L1f6yesc21UsFzjBWcFfg",
+        "https://static.cdn.asset.aparat.com/avt/65438429-9870-l__9191.jpg?width=450&quality=90&secret=m1fc9SbPk4Gceg4zAm9ynQ",
     },
     {
-      name: "ماچارتا و کدوبلو",
-      slug: "vid-2",
+      name: "آموزش قاره ها",
+      slug: "vid-6",
       thumbnail:
-        "https://static.cdn.asset.aparat.com/avt/65056752-3785-l__6531.jpg?width=300&quality=90&secret=EHqo4CvWgRTJ_qOGP5ngqw",
+        "https://static.cdn.asset.aparat.com/avt/65438390-3079-l__5375.jpg?width=450&quality=90&secret=pU0-S_hEyBHULbb3bi0aEw",
     },
     {
-      name: "سگهای نگهبان",
-      slug: "vid-3",
+      name: "نقشه خوانی برای کودکان",
+      slug: "vid-7",
       thumbnail:
-        "https://static.cdn.asset.aparat.com/avt/56347394-4976-l__5554.jpg?width=300&quality=90&secret=Pc7QBz7O6LI4p2DLJU9paA",
-    },
-    {
-      name: "دیانا و روما",
-      slug: "vid-4",
-      thumbnail:
-        "https://static.cdn.asset.aparat.com/avt/62482285-6849-l__6618.jpg?width=300&quality=90&secret=99NRxzMsOIFMtz_e-TtL9Q",
+        "https://static.cdn.asset.aparat.com/avt/65438275-4740-l__7619.jpg?width=450&quality=90&secret=rd2L8dRgYD-4_ksQXaN1EA",
     },
     {
       name: "دختر کفشدوزکی",
