@@ -106,9 +106,9 @@ export default function AREarth() {
     // پاکسازی هنگام unmount شدن
     return () => {
       arButton.removeEventListener("click", onClick);
-      // if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
-      // renderer.dispose();
-      // rendererRef.current = null;
+      if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
+      renderer.dispose();
+      rendererRef.current = null;
     };
   }, [arSupported]);
   useEffect(() => {
@@ -189,8 +189,8 @@ export default function AREarth() {
           // حذف دکمه هنگام پایان session
           const onSessionEnd = () => {
             if (stopButtonRef.current) {
-              // stopButtonRef.current.remove();
-              // stopButtonRef.current = null;
+              stopButtonRef.current.remove();
+              stopButtonRef.current = null;
             }
           };
 
@@ -227,19 +227,19 @@ export default function AREarth() {
 
     // پاکسازی session هنگام خروج
     renderer.xr.addEventListener("sessionend", () => {
+      renderer.setAnimationLoop(null);
+      if (earthRef.current && sceneRef.current) {
+        sceneRef.current.remove(earthRef.current);
+        earthRef.current = null;
+      }
+      if (container && renderer.domElement.parentNode === container) {
+        container.removeChild(renderer.domElement);
+      }
+      renderer.dispose();
+      rendererRef.current = null;
+      sceneRef.current = null;
+      setHasStarted(false);
       window.location.reload();
-      // renderer.setAnimationLoop(null);
-      // if (earthRef.current && sceneRef.current) {
-      //   sceneRef.current.remove(earthRef.current);
-      //   earthRef.current = null;
-      // }
-      // if (container && renderer.domElement.parentNode === container) {
-      //   container.removeChild(renderer.domElement);
-      // }
-      // renderer.dispose();
-      // rendererRef.current = null;
-      // sceneRef.current = null;
-      // setHasStarted(false);
     });
 
     return () => {
