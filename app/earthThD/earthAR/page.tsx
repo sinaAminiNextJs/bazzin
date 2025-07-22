@@ -21,6 +21,13 @@ export default function ARPage() {
         />
       </div>
       <AREarth />
+
+      {/* نمای اصلی AR */}
+      <div className="ar-container">
+        <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
+      </div>
+      {/* دکمه AR */}
+
       <div
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0"

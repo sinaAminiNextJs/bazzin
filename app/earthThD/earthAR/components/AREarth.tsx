@@ -258,11 +258,6 @@ export default function AREarth() {
       {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
-
-      {/* نمای اصلی AR */}
-      <div className="ar-container">
-        <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
-      </div>
     </section>
   );
 }
