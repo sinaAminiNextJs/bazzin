@@ -8,7 +8,10 @@ export default function ARPage() {
     <section className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
       {/* پس‌زمینه‌های تصویری */}
 
-      <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+      <div
+        id="background-images"
+        className="absolute top-0 left-0 -z-10 w-full h-screen"
+      >
         <img
           src="/clipart/earth.png"
           alt="Earth"
@@ -20,20 +23,15 @@ export default function ARPage() {
           className="w-96 absolute -bottom-7 -left-44"
         />
       </div>
-      <AREarth />
-
       {/* نمای اصلی AR */}
-      <div className="ar-container">
-        <div id="ar-view" style={{ width: "100%", height: "100vh" }} />
-      </div>
+      <AREarth />
+      <div id="ar-view" className="w-full h-full" />
       {/* دکمه AR */}
-
       <div
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0"
       ></div>
       {/* دکمه برگشت */}
-
       <BackButton pathName="/menu" />
     </section>
   );

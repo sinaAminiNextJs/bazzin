@@ -199,6 +199,8 @@ export default function AREarth() {
 
         // هندل کردن شروع session
         renderer.xr.addEventListener("sessionstart", () => {
+          const bg = document.getElementById("background-images");
+          if (bg) bg.style.display = "none";
           xrSessionRef.current = renderer.xr.getSession();
           showStopButton();
         });
