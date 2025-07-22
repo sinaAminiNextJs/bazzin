@@ -57,7 +57,9 @@ export default function AREarth() {
   }, []);
   useEffect(() => {
     if (arSupported !== true) return;
-
+    // حذف بکگراند
+    const bg = document.getElementById("background-images");
+    if (bg) bg.style.display = "none";
     // ساخت رندرر سه‌بعدی
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.xr.enabled = true;
@@ -199,8 +201,6 @@ export default function AREarth() {
 
         // هندل کردن شروع session
         renderer.xr.addEventListener("sessionstart", () => {
-          const bg = document.getElementById("background-images");
-          if (bg) bg.style.display = "none";
           xrSessionRef.current = renderer.xr.getSession();
           showStopButton();
         });
