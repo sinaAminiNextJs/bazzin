@@ -73,7 +73,7 @@ export default function AREarth() {
     Object.assign(arButton.style, {
       minWidth: "fit-content",
       opacity: "1",
-      position: "absolute",
+      position: "fixed",
       bottom: "20px",
       left: "20px",
       padding: "8px 32px",
