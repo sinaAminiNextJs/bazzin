@@ -55,6 +55,24 @@ export default function About() {
       thumbnail:
         "https://static.cdn.asset.aparat.com/avt/62482285-6849-l__6618.jpg?width=300&quality=90&secret=99NRxzMsOIFMtz_e-TtL9Q",
     },
+    {
+      name: "دالیا و کتاب قرمز",
+      slug: "vid-8",
+      thumbnail:
+        "https://static.cdn.asset.aparat.com/avt/64471948-8199-l__9760.jpg?width=900&quality=90&secret=4A4SQi-3gwMAVHmah1UrMg",
+    },
+    {
+      name: "بیرون از لانه",
+      slug: "vid-9",
+      thumbnail:
+        "https://static.cdn.asset.aparat.com/avt/64453491-5157-l__6456.jpg?width=300&quality=90&secret=E3kGHfeXUXdU44oZMtaOXQ",
+    },
+    {
+      name: "آنجلو در جنگل رازآلود",
+      slug: "vid-10",
+      thumbnail:
+        "https://static.cdn.asset.aparat.com/avt/64437495-6168-l__1050.jpg?width=300&quality=90&secret=NyyX1wqzlX9O61gwFDZZTQ",
+    },
   ];
 
   return (

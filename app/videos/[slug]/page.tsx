@@ -20,6 +20,9 @@ export default function videoPlay() {
     { name: "نقشه خمیری", slug: "vid-5", src: "fptu854" },
     { name: "آموزش قاره ها", slug: "vid-6", src: "maiit4f" },
     { name: "نقشه خوانی برای کودکان", slug: "vid-7", src: "acqf9z8" },
+    { name: "دالیا و کتاب قرمز", slug: "vid-8", src: "chj35cp" },
+    { name: "بیرون از لانه", slug: "vid-9", src: "lmhrdu4" },
+    { name: "آنجلو در جنگل رازآلود", slug: "vid-10", src: "wlov22s" },
   ];
 
   const videoData: videoType | undefined = videoList.find(

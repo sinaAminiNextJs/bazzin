@@ -1,0 +1,1501 @@
+{
+  "Moldova": {
+    "CAPITAL_FA": "کیشیناو",
+    "LANGUAGE_FA": "رومانیایی",
+    "CURRENCY_FA": "لئو مولداوی",
+    "FLAG": "https://flagcdn.com/md.svg"
+  },
+  "Comoros": {
+    "CAPITAL_FA": "مورونی",
+    "LANGUAGE_FA": "عربی، فرانسوی، کومیورین",
+    "CURRENCY_FA": "فرانک کومیور",
+    "FLAG": "https://flagcdn.com/km.svg"
+  },
+  "Malaysia": {
+    "CAPITAL_FA": "کوالالامپور",
+    "LANGUAGE_FA": "انگلیسی، مالایی",
+    "CURRENCY_FA": "رینگیت مالزی",
+    "FLAG": "https://flagcdn.com/my.svg"
+  },
+  "Algeria": {
+    "CAPITAL_FA": "الجزیره",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "دینار الجزایر",
+    "FLAG": "https://flagcdn.com/dz.svg"
+  },
+  "Norfolk Island": {
+    "CAPITAL_FA": "کینگستون",
+    "LANGUAGE_FA": "انگلیسی، نورفوک",
+    "CURRENCY_FA": "دلار استرالیا",
+    "FLAG": "https://flagcdn.com/nf.svg"
+  },
+  "Slovenia": {
+    "CAPITAL_FA": "لیوبلیانا",
+    "LANGUAGE_FA": "اسلوونیایی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/si.svg"
+  },
+  "Guyana": {
+    "CAPITAL_FA": "جورج‌تاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار گیانا",
+    "FLAG": "https://flagcdn.com/gy.svg"
+  },
+  "South Georgia": {
+    "CAPITAL_FA": "کینگ ادوارد پوینت",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "پوند بریتانیا",
+    "FLAG": "https://flagcdn.com/gs.svg"
+  },
+  "Christmas Island": {
+    "CAPITAL_FA": "فلاينگ فیش کاو",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار استرالیا",
+    "FLAG": "https://flagcdn.com/cx.svg"
+  },
+  "France": {
+    "CAPITAL_FA": "پاریس",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/fr.svg"
+  },
+  "Denmark": {
+    "CAPITAL_FA": "کپنهاگ",
+    "LANGUAGE_FA": "دانمارکی",
+    "CURRENCY_FA": "کرون دانمارک",
+    "FLAG": "https://flagcdn.com/dk.svg"
+  },
+  "Kazakhstan": {
+    "CAPITAL_FA": "آستانه",
+    "LANGUAGE_FA": "قزاقی، روسی",
+    "CURRENCY_FA": "تنگه قزاقستان",
+    "FLAG": "https://flagcdn.com/kz.svg"
+  },
+  "Vanuatu": {
+    "CAPITAL_FA": "پورت ویلا",
+    "LANGUAGE_FA": "بیسلاما، انگلیسی، فرانسوی",
+    "CURRENCY_FA": "واتو وانوآتو",
+    "FLAG": "https://flagcdn.com/vu.svg"
+  },
+  "Ukraine": {
+    "CAPITAL_FA": "کی‌یف",
+    "LANGUAGE_FA": "اوکراینی",
+    "CURRENCY_FA": "هریونیا اوکراین",
+    "FLAG": "https://flagcdn.com/ua.svg"
+  },
+  "Liechtenstein": {
+    "CAPITAL_FA": "وادوز",
+    "LANGUAGE_FA": "آلمانی",
+    "CURRENCY_FA": "فرانک سوئیس",
+    "FLAG": "https://flagcdn.com/li.svg"
+  },
+  "Austria": {
+    "CAPITAL_FA": "وین",
+    "LANGUAGE_FA": "آلمانی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/at.svg"
+  },
+  "Kuwait": {
+    "CAPITAL_FA": "کویت سیتی",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "دینار کویت",
+    "FLAG": "https://flagcdn.com/kw.svg"
+  },
+  "Andorra": {
+    "CAPITAL_FA": "آندورا لا ولا",
+    "LANGUAGE_FA": "کاتالانی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/ad.svg"
+  },
+  "Botswana": {
+    "CAPITAL_FA": "گابورون",
+    "LANGUAGE_FA": "انگلیسی، تسوانا",
+    "CURRENCY_FA": "پولا بوتسوانا",
+    "FLAG": "https://flagcdn.com/bw.svg"
+  },
+
+  "Faroe Islands": {
+    "CAPITAL_FA": "تورشافن",
+    "LANGUAGE_FA": "دانمارکی، فاروئه‌ای",
+    "CURRENCY_FA": "کرون دانمارک، کرون فاروئه‌ای",
+    "FLAG": "https://flagcdn.com/fo.svg"
+  },
+  "United Arab Emirates": {
+    "CAPITAL_FA": "ابوظبی",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "درهم امارات متحده عربی",
+    "FLAG": "https://flagcdn.com/ae.svg"
+  },
+  "Cameroon": {
+    "CAPITAL_FA": "یاوندé",
+    "LANGUAGE_FA": "انگلیسی، فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/cm.svg"
+  },
+  "Russia": {
+    "CAPITAL_FA": "مسکو",
+    "LANGUAGE_FA": "روسی",
+    "CURRENCY_FA": "روبل روسی",
+    "FLAG": "https://flagcdn.com/ru.svg"
+  },
+  "Jamaica": {
+    "CAPITAL_FA": "کینگستون",
+    "LANGUAGE_FA": "انگلیسی، پاتوا جاماییکایی",
+    "CURRENCY_FA": "دلار جاماییکا",
+    "FLAG": "https://flagcdn.com/jm.svg"
+  },
+  "Palestine": {
+    "CAPITAL_FA": "رام الله",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "پوند مصری، شیکل جدید اسرائیل، دینار اردنی",
+    "FLAG": "https://flagcdn.com/ps.svg"
+  },
+  "Djibouti": {
+    "CAPITAL_FA": "جیبوتی",
+    "LANGUAGE_FA": "عربی، فرانسوی",
+    "CURRENCY_FA": "فرانک جیبوتی",
+    "FLAG": "https://flagcdn.com/dj.svg"
+  },
+  "Kenya": {
+    "CAPITAL_FA": "نایروبی",
+    "LANGUAGE_FA": "انگلیسی، سواحیلی",
+    "CURRENCY_FA": "شیلینگ کنیا",
+    "FLAG": "https://flagcdn.com/ke.svg"
+  },
+  "Belize": {
+    "CAPITAL_FA": "بلموپان",
+    "LANGUAGE_FA": "کریول بلزی، انگلیسی، اسپانیایی",
+    "CURRENCY_FA": "دلار بلزی",
+    "FLAG": "https://flagcdn.com/bz.svg"
+  },
+  "French Polynesia": {
+    "CAPITAL_FA": "پاپه‌ته",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک CFP",
+    "FLAG": "https://flagcdn.com/pf.svg"
+  },
+  "Myanmar": {
+    "CAPITAL_FA": "نایپیداو",
+    "LANGUAGE_FA": "برمه‌ای",
+    "CURRENCY_FA": "کیات برمه",
+    "FLAG": "https://flagcdn.com/mm.svg"
+  },
+  "Gibraltar": {
+    "CAPITAL_FA": "جبل الطارق",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "پوند جبل الطارق",
+    "FLAG": "https://flagcdn.com/gi.svg"
+  },
+  "Singapore": {
+    "CAPITAL_FA": "سنگاپور",
+    "LANGUAGE_FA": "انگلیسی، چینی، مالایی، تامیل",
+    "CURRENCY_FA": "دلار سنگاپور",
+    "FLAG": "https://flagcdn.com/sg.svg"
+  },
+  "Slovakia": {
+    "CAPITAL_FA": "براتیسلاوا",
+    "LANGUAGE_FA": "اسلواکی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/sk.svg"
+  },
+  "Iceland": {
+    "CAPITAL_FA": "ریکیاویک",
+    "LANGUAGE_FA": "ایسلندی",
+    "CURRENCY_FA": "کرون ایسلند",
+    "FLAG": "https://flagcdn.com/is.svg"
+  },
+  "Bhutan": {
+    "CAPITAL_FA": "تیمفو",
+    "LANGUAGE_FA": "دزونگکا",
+    "CURRENCY_FA": "نگولتروم بوتان، روپیه هندوستان",
+    "FLAG": "https://flagcdn.com/bt.svg"
+  },
+  "North Macedonia": {
+    "CAPITAL_FA": "اسکوپیه",
+    "LANGUAGE_FA": "مقدونی",
+    "CURRENCY_FA": "دینار",
+    "FLAG": "https://flagcdn.com/mk.svg"
+  },
+  "United States Virgin Islands": {
+    "CAPITAL_FA": "شارلوت آمالیه",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/vi.svg"
+  },
+  "Guinea": {
+    "CAPITAL_FA": "کنکری",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک گینه",
+    "FLAG": "https://flagcdn.com/gn.svg"
+  },
+
+  "Hong Kong": {
+    "CAPITAL_FA": "شهر ویکتوریا",
+    "LANGUAGE_FA": "انگلیسی، چینی",
+    "CURRENCY_FA": "دلار هنگ کنگ",
+    "FLAG": "https://flagcdn.com/hk.svg"
+  },
+  "Malta": {
+    "CAPITAL_FA": "والتا",
+    "LANGUAGE_FA": "انگلیسی، مالتایی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/mt.svg"
+  },
+  "Afghanistan": {
+    "CAPITAL_FA": "کابل",
+    "LANGUAGE_FA": "دری، پشتو، ترکمنی",
+    "CURRENCY_FA": "افغانی افغانستان",
+    "FLAG": "https://upload.wikimedia.org/wikipedia/commons/5/5c/Flag_of_the_Taliban.svg"
+  },
+  "United States": {
+    "CAPITAL_FA": "واشنگتن دی سی",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/us.svg"
+  },
+  "Suriname": {
+    "CAPITAL_FA": "پاراماریبو",
+    "LANGUAGE_FA": "هلندی",
+    "CURRENCY_FA": "دلار سورینام",
+    "FLAG": "https://flagcdn.com/sr.svg"
+  },
+  "Guernsey": {
+    "CAPITAL_FA": "سن پیتر پورت",
+    "LANGUAGE_FA": "انگلیسی، فرانسوی، گورنسیایی",
+    "CURRENCY_FA": "پوند بریتانیا، پوند گورنسی",
+    "FLAG": "https://flagcdn.com/gg.svg"
+  },
+  "Curaçao": {
+    "CAPITAL_FA": "ویلمستاد",
+    "LANGUAGE_FA": "انگلیسی، هلندی، پاپیامنتو",
+    "CURRENCY_FA": "گلدر آنتیل هلند",
+    "FLAG": "https://flagcdn.com/cw.svg"
+  },
+  "Vatican City": {
+    "CAPITAL_FA": "شهر واتیکان",
+    "LANGUAGE_FA": "ایتالیایی، لاتین",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/va.svg"
+  },
+  "Papua New Guinea": {
+    "CAPITAL_FA": "پورت مورسبی",
+    "LANGUAGE_FA": "انگلیسی، هیری موتو، توک پیزین",
+    "CURRENCY_FA": "کینا پاپوآ گینه نو",
+    "FLAG": "https://flagcdn.com/pg.svg"
+  },
+  "Malawi": {
+    "CAPITAL_FA": "لیلونگه",
+    "LANGUAGE_FA": "انگلیسی، چوا",
+    "CURRENCY_FA": "کواچا مالاوی",
+    "FLAG": "https://flagcdn.com/mw.svg"
+  },
+  "Hungary": {
+    "CAPITAL_FA": "بوداپست",
+    "LANGUAGE_FA": "مجارستانی",
+    "CURRENCY_FA": "فورینت مجارستانی",
+    "FLAG": "https://flagcdn.com/hu.svg"
+  },
+  "Cambodia": {
+    "CAPITAL_FA": "پنوم‌پن",
+    "LANGUAGE_FA": "خمری",
+    "CURRENCY_FA": "ریال کامبوج، دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/kh.svg"
+  },
+  "Ecuador": {
+    "CAPITAL_FA": "کیتو",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/ec.svg"
+  },
+  "Canada": {
+    "CAPITAL_FA": "اتاوا",
+    "LANGUAGE_FA": "انگلیسی، فرانسوی",
+    "CURRENCY_FA": "دلار کانادا",
+    "FLAG": "https://flagcdn.com/ca.svg"
+  },
+  "Norway": {
+    "CAPITAL_FA": "اوسلو",
+    "LANGUAGE_FA": "نروژی نی‌نورشک، نروژی بوکمال، سامی",
+    "CURRENCY_FA": "کرون نروژ",
+    "FLAG": "https://flagcdn.com/no.svg"
+  },
+  "Cayman Islands": {
+    "CAPITAL_FA": "جورج تاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار جزایر کیمن",
+    "FLAG": "https://flagcdn.com/ky.svg"
+  },
+  "Martinique": {
+    "CAPITAL_FA": "فورت-دِ-فرانس",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/mq.svg"
+  },
+  "Sint Maarten": {
+    "CAPITAL_FA": "فیلیپسبرگ",
+    "LANGUAGE_FA": "انگلیسی، فرانسوی، هلندی",
+    "CURRENCY_FA": "گلدر آنتیل هلند",
+    "FLAG": "https://flagcdn.com/sx.svg"
+  },
+  "Mali": {
+    "CAPITAL_FA": "باماکو",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای غربی",
+    "FLAG": "https://flagcdn.com/ml.svg"
+  },
+  "Samoa": {
+    "CAPITAL_FA": "آپیا",
+    "LANGUAGE_FA": "انگلیسی، ساموایی",
+    "CURRENCY_FA": "تلا ساموایی",
+    "FLAG": "https://flagcdn.com/ws.svg"
+  },
+  "Fiji": {
+    "CAPITAL_FA": "سوا",
+    "LANGUAGE_FA": "انگلیسی، فیجیایی، فیجی هندی",
+    "CURRENCY_FA": "دلار فیجی",
+    "FLAG": "https://flagcdn.com/fj.svg"
+  },
+  "Colombia": {
+    "CAPITAL_FA": "بوگوتا",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "پزوی کلمبیا",
+    "FLAG": "https://flagcdn.com/co.svg"
+  },
+  "Cuba": {
+    "CAPITAL_FA": "هاوانا",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "پزوی تبدیل‌شونده کوبا، پزوی کوبا",
+    "FLAG": "https://flagcdn.com/cu.svg"
+  },
+  "Thailand": {
+    "CAPITAL_FA": "بانکوک",
+    "LANGUAGE_FA": "تای",
+    "CURRENCY_FA": "بات تای",
+    "FLAG": "https://flagcdn.com/th.svg"
+  },
+  "Mongolia": {
+    "CAPITAL_FA": "اولان باتر",
+    "LANGUAGE_FA": "مغولی",
+    "CURRENCY_FA": "تگرگ مغولی",
+    "FLAG": "https://flagcdn.com/mn.svg"
+  },
+  "Réunion": {
+    "CAPITAL_FA": "سن دنی",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/re.svg"
+  },
+  "Guinea-Bissau": {
+    "CAPITAL_FA": "بیسائو",
+    "LANGUAGE_FA": "پرتغالی، کریول گینه بالایی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای غربی",
+    "FLAG": "https://flagcdn.com/gw.svg"
+  },
+  "Argentina": {
+    "CAPITAL_FA": "بوئنوس آیرس",
+    "LANGUAGE_FA": "گویارنی، اسپانیایی",
+    "CURRENCY_FA": "پزوی آرژانتین",
+    "FLAG": "https://flagcdn.com/ar.svg"
+  },
+  "Mexico": {
+    "CAPITAL_FA": "شهر مکزیک",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "پزوی مکزیک",
+    "FLAG": "https://flagcdn.com/mx.svg"
+  },
+  "Turkmenistan": {
+    "CAPITAL_FA": "عشق آباد",
+    "LANGUAGE_FA": "روسی، ترکمنی",
+    "CURRENCY_FA": "مانات ترکمنستان",
+    "FLAG": "https://flagcdn.com/tm.svg"
+  },
+  "French Southern and Antarctic Lands": {
+    "CAPITAL_FA": "پورت-آو-فرانس",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/tf.svg"
+  },
+  "Ethiopia": {
+    "CAPITAL_FA": "آدیس آبابا",
+    "LANGUAGE_FA": "آمهاریکا",
+    "CURRENCY_FA": "بیر اتیوپی",
+    "FLAG": "https://flagcdn.com/et.svg"
+  },
+  "Gabon": {
+    "CAPITAL_FA": "لیبرویل",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/ga.svg"
+  },
+
+  "South Korea": {
+    "CAPITAL_FA": "سئول",
+    "LANGUAGE_FA": "کره‌ای",
+    "CURRENCY_FA": "وون کره جنوبی",
+    "FLAG": "https://flagcdn.com/kr.svg"
+  },
+  "Togo": {
+    "CAPITAL_FA": "لومه",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای غربی",
+    "FLAG": "https://flagcdn.com/tg.svg"
+  },
+  "Ghana": {
+    "CAPITAL_FA": "اکرا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "سدی غنا",
+    "FLAG": "https://flagcdn.com/gh.svg"
+  },
+  "Zambia": {
+    "CAPITAL_FA": "لوساکا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "کواچا زامبیا",
+    "FLAG": "https://flagcdn.com/zm.svg"
+  },
+  "New Zealand": {
+    "CAPITAL_FA": "ولینگتون",
+    "LANGUAGE_FA": "انگلیسی، مائوری، زبان اشاره نیوزیلند",
+    "CURRENCY_FA": "دلار نیوزیلند",
+    "FLAG": "https://flagcdn.com/nz.svg"
+  },
+  "Laos": {
+    "CAPITAL_FA": "ویانتین",
+    "LANGUAGE_FA": "لائویی",
+    "CURRENCY_FA": "کپ لائوس",
+    "FLAG": "https://flagcdn.com/la.svg"
+  },
+  "Burundi": {
+    "CAPITAL_FA": "گیتگا",
+    "LANGUAGE_FA": "فرانسوی، کیروندی",
+    "CURRENCY_FA": "فرانک بوروندی",
+    "FLAG": "https://flagcdn.com/bi.svg"
+  },
+  "Pakistan": {
+    "CAPITAL_FA": "اسلام‌آباد",
+    "LANGUAGE_FA": "انگلیسی، اردو",
+    "CURRENCY_FA": "روپیه پاکستانی",
+    "FLAG": "https://flagcdn.com/pk.svg"
+  },
+  "Armenia": {
+    "CAPITAL_FA": "ایروان",
+    "LANGUAGE_FA": "ارمنی",
+    "CURRENCY_FA": "درام ارمنی",
+    "FLAG": "https://flagcdn.com/am.svg"
+  },
+  "Czechia": {
+    "CAPITAL_FA": "پراگ",
+    "LANGUAGE_FA": "چکی، اسلواکی",
+    "CURRENCY_FA": "کرون چک",
+    "FLAG": "https://flagcdn.com/cz.svg"
+  },
+  "San Marino": {
+    "CAPITAL_FA": "شهر سن مارینو",
+    "LANGUAGE_FA": "ایتالیایی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/sm.svg"
+  },
+  "São Tomé and Príncipe": {
+    "CAPITAL_FA": "سائو تومه",
+    "LANGUAGE_FA": "پرتغالی",
+    "CURRENCY_FA": "دوبرا سائو تومه و پرنسیپ",
+    "FLAG": "https://flagcdn.com/st.svg"
+  },
+  "Niue": {
+    "CAPITAL_FA": "آلوفی",
+    "LANGUAGE_FA": "انگلیسی، نیوئه‌ای",
+    "CURRENCY_FA": "دلار نیوزیلند",
+    "FLAG": "https://flagcdn.com/nu.svg"
+  },
+  "Bahamas": {
+    "CAPITAL_FA": "ناسائو",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار باهاما، دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/bs.svg"
+  },
+  "Finland": {
+    "CAPITAL_FA": "هلسینکی",
+    "LANGUAGE_FA": "فنلاندی، سوئدی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/fi.svg"
+  },
+  "Guatemala": {
+    "CAPITAL_FA": "شهر گواتمالا",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "کوتزال گواتمالا",
+    "FLAG": "https://flagcdn.com/gt.svg"
+  },
+  "Sierra Leone": {
+    "CAPITAL_FA": "فری‌تاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "لئون",
+    "FLAG": "https://flagcdn.com/sl.svg"
+  },
+  "Luxembourg": {
+    "CAPITAL_FA": "لوکزامبورگ",
+    "LANGUAGE_FA": "آلمانی، فرانسوی، لوکزامبورگی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/lu.svg"
+  },
+  "Tuvalu": {
+    "CAPITAL_FA": "فنافوتی",
+    "LANGUAGE_FA": "انگلیسی، تووالوئی",
+    "CURRENCY_FA": "دلار استرالیا، دلار تووالوئی",
+    "FLAG": "https://flagcdn.com/tv.svg"
+  },
+  "Eritrea": {
+    "CAPITAL_FA": "اسمرا",
+    "LANGUAGE_FA": "عربی، انگلیسی، تیگرینیا",
+    "CURRENCY_FA": "ناکفای اریتره",
+    "FLAG": "https://flagcdn.com/er.svg"
+  },
+  "Jersey": {
+    "CAPITAL_FA": "سن هلیه",
+    "LANGUAGE_FA": "انگلیسی، فرانسوی، ژریزیایی",
+    "CURRENCY_FA": "پوند بریتانیا، پوند جرزی",
+    "FLAG": "https://flagcdn.com/je.svg"
+  },
+  "Honduras": {
+    "CAPITAL_FA": "تگوسیگالپا",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "لمپیرای هندوراس",
+    "FLAG": "https://flagcdn.com/hn.svg"
+  },
+  "Western Sahara": {
+    "CAPITAL_FA": "العیون",
+    "LANGUAGE_FA": "بربری، حسنیه‌ای، اسپانیایی",
+    "CURRENCY_FA": "دینار الجزایر، درهم مراکش، اوگیویای موریتانی",
+    "FLAG": "https://flagcdn.com/eh.svg"
+  },
+  "Senegal": {
+    "CAPITAL_FA": "دکار",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای غربی",
+    "FLAG": "https://flagcdn.com/sn.svg"
+  },
+  "Svalbard and Jan Mayen": {
+    "CAPITAL_FA": "لانگیربین",
+    "LANGUAGE_FA": "نروژی",
+    "CURRENCY_FA": "کرون نروژ",
+    "FLAG": "https://flagcdn.com/sj.svg"
+  },
+  "Nepal": {
+    "CAPITAL_FA": "کاتماندو",
+    "LANGUAGE_FA": "نیپالی",
+    "CURRENCY_FA": "روپیه نپال",
+    "FLAG": "https://flagcdn.com/np.svg"
+  },
+  "Antigua and Barbuda": {
+    "CAPITAL_FA": "سن جانز",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/ag.svg"
+  },
+  "Cape Verde": {
+    "CAPITAL_FA": "پریا",
+    "LANGUAGE_FA": "پرتغالی",
+    "CURRENCY_FA": "اسکودو کیپ ورد",
+    "FLAG": "https://flagcdn.com/cv.svg"
+  },
+  "Bangladesh": {
+    "CAPITAL_FA": "داکا",
+    "LANGUAGE_FA": "بنگالی",
+    "CURRENCY_FA": "تاکای بنگلادش",
+    "FLAG": "https://flagcdn.com/bd.svg"
+  },
+  "Kyrgyzstan": {
+    "CAPITAL_FA": "بیشکک",
+    "LANGUAGE_FA": "قرقیزی، روسی",
+    "CURRENCY_FA": "سام قرقیزستان",
+    "FLAG": "https://flagcdn.com/kg.svg"
+  },
+  "Anguilla": {
+    "CAPITAL_FA": "دره",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/ai.svg"
+  },
+  "Nigeria": {
+    "CAPITAL_FA": "ابوجا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "نایرا نیجریه",
+    "FLAG": "https://flagcdn.com/ng.svg"
+  },
+  "Spain": {
+    "CAPITAL_FA": "مادرید",
+    "LANGUAGE_FA": "اسپانیایی، کاتالانی، باسکی، گالیسی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/es.svg"
+  },
+  "British Virgin Islands": {
+    "CAPITAL_FA": "رود تاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/vg.svg"
+  },
+  "Marshall Islands": {
+    "CAPITAL_FA": "ماجورو",
+    "LANGUAGE_FA": "انگلیسی، مارشالی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/mh.svg"
+  },
+  "Mayotte": {
+    "CAPITAL_FA": "مامودزو",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/yt.svg"
+  },
+  "Qatar": {
+    "CAPITAL_FA": "دوحه",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "ریال قطری",
+    "FLAG": "https://flagcdn.com/qa.svg"
+  },
+  "Venezuela": {
+    "CAPITAL_FA": "کاراکاس",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "بولیوار ونزوئلا",
+    "FLAG": "https://flagcdn.com/ve.svg"
+  },
+  "Tunisia": {
+    "CAPITAL_FA": "تونس",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "دینار تونسی",
+    "FLAG": "https://flagcdn.com/tn.svg"
+  },
+  "Monaco": {
+    "CAPITAL_FA": "موناکو",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/mc.svg"
+  },
+  "United States Minor Outlying Islands": {
+    "CAPITAL_FA": "واشنگتن دی سی",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/um.svg"
+  },
+  "Central African Republic": {
+    "CAPITAL_FA": "بانگی",
+    "LANGUAGE_FA": "فرانسوی، سانگو",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/cf.svg"
+  },
+  "Macau": {
+    "LANGUAGE_FA": "پرتغالی، چینی",
+    "CURRENCY_FA": "پاتاکای ماکائو",
+    "FLAG": "https://flagcdn.com/mo.svg"
+  },
+  "Latvia": {
+    "CAPITAL_FA": "ریگا",
+    "LANGUAGE_FA": "لتونیایی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/lv.svg"
+  },
+  "Uzbekistan": {
+    "CAPITAL_FA": "تاشکند",
+    "LANGUAGE_FA": "روسی، ازبکی",
+    "CURRENCY_FA": "سوم ازبکستان",
+    "FLAG": "https://flagcdn.com/uz.svg"
+  },
+  "Brazil": {
+    "CAPITAL_FA": "برازیلیا",
+    "LANGUAGE_FA": "پرتغالی",
+    "CURRENCY_FA": "رئال برزیل",
+    "FLAG": "https://flagcdn.com/br.svg"
+  },
+  "Cyprus": {
+    "CAPITAL_FA": "نیکوزیا",
+    "LANGUAGE_FA": "یونانی، ترکی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/cy.svg"
+  },
+  "North Korea": {
+    "CAPITAL_FA": "پیونگ یانگ",
+    "LANGUAGE_FA": "کره‌ای",
+    "CURRENCY_FA": "وون کره شمالی",
+    "FLAG": "https://flagcdn.com/kp.svg"
+  },
+  "Dominica": {
+    "CAPITAL_FA": "رزو",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/dm.svg"
+  },
+  "Bosnia and Herzegovina": {
+    "CAPITAL_FA": "سارایوو",
+    "LANGUAGE_FA": "بوسنیایی، کرواتی، صربی",
+    "CURRENCY_FA": "مارک تبدیل‌شونده بوسنی و هرزگوین",
+    "FLAG": "https://flagcdn.com/ba.svg"
+  },
+  "Cocos (Keeling) Islands": {
+    "CAPITAL_FA": "جزیره وست",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار استرالیا",
+    "FLAG": "https://flagcdn.com/cc.svg"
+  },
+  "Sri Lanka": {
+    "CAPITAL_FA": "سری جایاواردنِپورا کوتته",
+    "LANGUAGE_FA": "سینهالی، تامیل",
+    "CURRENCY_FA": "روپیه سریلانکا",
+    "FLAG": "https://flagcdn.com/lk.svg"
+  },
+  "Republic of the Congo": {
+    "CAPITAL_FA": "برازاویل",
+    "LANGUAGE_FA": "فرانسوی، کیکونگو، لینگالا",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/cg.svg"
+  },
+  "Israel": {
+    "CAPITAL_FA": "اورشلیم",
+    "LANGUAGE_FA": "عربی، عبری",
+    "CURRENCY_FA": "شکل جدید شیکل اسرائیل",
+    "FLAG": "https://flagcdn.com/il.svg"
+  },
+  "Namibia": {
+    "CAPITAL_FA": "ویندهوک",
+    "LANGUAGE_FA": "آفریکانس، آلمانی، انگلیسی، هِرورو، خوئخو، کوآنگالی، لُوزی، ندوگا، تسوانا",
+    "CURRENCY_FA": "دلار نامیبیا، رند آفریقای جنوبی",
+    "FLAG": "https://flagcdn.com/na.svg"
+  },
+  "Micronesia": {
+    "CAPITAL_FA": "پالیکیر",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/fm.svg"
+  },
+  "Heard Island and McDonald Islands": {
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "",
+    "FLAG": "https://flagcdn.com/hm.svg"
+  },
+  "South Sudan": {
+    "CAPITAL_FA": "جوبا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "پوند سودان جنوبی",
+    "FLAG": "https://flagcdn.com/ss.svg"
+  },
+  "Rwanda": {
+    "CAPITAL_FA": "کیگالی",
+    "LANGUAGE_FA": "انگلیسی، فرانسوی، کینیارواندا",
+    "CURRENCY_FA": "فرانک رواندا",
+    "FLAG": "https://flagcdn.com/rw.svg"
+  },
+  "Uganda": {
+    "CAPITAL_FA": "کامپالا",
+    "LANGUAGE_FA": "انگلیسی، سواحیلی",
+    "CURRENCY_FA": "شیلینگ اوگاندا",
+    "FLAG": "https://flagcdn.com/ug.svg"
+  },
+  "Portugal": {
+    "CAPITAL_FA": "لیسبون",
+    "LANGUAGE_FA": "پرتغالی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/pt.svg"
+  },
+  "Bolivia": {
+    "CAPITAL_FA": "سوکره",
+    "LANGUAGE_FA": "آیمارا، گوارانی، کچوا، اسپانیایی",
+    "CURRENCY_FA": "بولیویانو بولیوی",
+    "FLAG": "https://flagcdn.com/bo.svg"
+  },
+  "Lesotho": {
+    "CAPITAL_FA": "ماسرو",
+    "LANGUAGE_FA": "انگلیسی، سوتو",
+    "CURRENCY_FA": "لوتی لسوتو، رند آفریقای جنوبی",
+    "FLAG": "https://flagcdn.com/ls.svg"
+  },
+  "Chad": {
+    "CAPITAL_FA": "انجامنا",
+    "LANGUAGE_FA": "عربی، فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/td.svg"
+  },
+  "Saint Helena, Ascension and Tristan da Cunha": {
+    "CAPITAL_FA": "جیمزتاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "پوند استرلینگ، پوند سنت هلنا",
+    "FLAG": "https://flagcdn.com/sh.svg"
+  },
+  "Cook Islands": {
+    "CAPITAL_FA": "آواروا",
+    "LANGUAGE_FA": "انگلیسی، مائوری جزایر کوک",
+    "CURRENCY_FA": "دلار جزایر کوک، دلار نیوزیلند",
+    "FLAG": "https://flagcdn.com/ck.svg"
+  },
+  "Saint Pierre and Miquelon": {
+    "CAPITAL_FA": "سن‌پی‌یر",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/pm.svg"
+  },
+  "Lithuania": {
+    "CAPITAL_FA": "ویلنیوس",
+    "LANGUAGE_FA": "لیتوانیایی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/lt.svg"
+  },
+  "Montenegro": {
+    "CAPITAL_FA": "پودگوریتسا",
+    "LANGUAGE_FA": "مونته‌نگرویی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/me.svg"
+  },
+  "Oman": {
+    "CAPITAL_FA": "مسقط",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "ریال عمان",
+    "FLAG": "https://flagcdn.com/om.svg"
+  },
+  "Sudan": {
+    "CAPITAL_FA": "خارطوم",
+    "LANGUAGE_FA": "عربی، انگلیسی",
+    "CURRENCY_FA": "پوند سودانی",
+    "FLAG": "https://flagcdn.com/sd.svg"
+  },
+  "Brunei": {
+    "CAPITAL_FA": "بندر سری بگاوان",
+    "LANGUAGE_FA": "مالایی",
+    "CURRENCY_FA": "دلار برونئی، دلار سنگاپور",
+    "FLAG": "https://flagcdn.com/bn.svg"
+  },
+  "DR Congo": {
+    "CAPITAL_FA": "کینشاسا",
+    "LANGUAGE_FA": "فرانسوی، کیکونگو، لینگالا، تیسیلوبا، سواحیلی",
+    "CURRENCY_FA": "فرانک کنگو",
+    "FLAG": "https://flagcdn.com/cd.svg"
+  },
+  "Greece": {
+    "CAPITAL_FA": "آتن",
+    "LANGUAGE_FA": "یونانی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/gr.svg"
+  },
+  "Albania": {
+    "CAPITAL_FA": "تیرانا",
+    "LANGUAGE_FA": "آلبانیایی",
+    "CURRENCY_FA": "لک آلبانی",
+    "FLAG": "https://flagcdn.com/al.svg"
+  },
+  "Tanzania": {
+    "CAPITAL_FA": "دودوما",
+    "LANGUAGE_FA": "انگلیسی، سواحیلی",
+    "CURRENCY_FA": "شیلینگ تانزانیایی",
+    "FLAG": "https://flagcdn.com/tz.svg"
+  },
+  "Georgia": {
+    "CAPITAL_FA": "تفلیس",
+    "LANGUAGE_FA": "گرجی",
+    "CURRENCY_FA": "لاری",
+    "FLAG": "https://flagcdn.com/ge.svg"
+  },
+  "Japan": {
+    "CAPITAL_FA": "توکیو",
+    "LANGUAGE_FA": "ژاپنی",
+    "CURRENCY_FA": "ین ژاپنی",
+    "FLAG": "https://flagcdn.com/jp.svg"
+  },
+  "Saudi Arabia": {
+    "CAPITAL_FA": "ریاض",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "ریال سعودی",
+    "FLAG": "https://flagcdn.com/sa.svg"
+  },
+  "Croatia": {
+    "CAPITAL_FA": "زاگرب",
+    "LANGUAGE_FA": "کرواتی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/hr.svg"
+  },
+  "Solomon Islands": {
+    "CAPITAL_FA": "هونیارا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار جزایر سلیمان",
+    "FLAG": "https://flagcdn.com/sb.svg"
+  },
+  "Yemen": {
+    "CAPITAL_FA": "صنعاء",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "ریال یمن",
+    "FLAG": "https://flagcdn.com/ye.svg"
+  },
+  "Somalia": {
+    "CAPITAL_FA": "موگادیشو",
+    "LANGUAGE_FA": "عربی، سومالیایی",
+    "CURRENCY_FA": "شیلینگ سومالی",
+    "FLAG": "https://flagcdn.com/so.svg"
+  },
+  "Grenada": {
+    "CAPITAL_FA": "سن جورج",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/gd.svg"
+  },
+  "Tonga": {
+    "CAPITAL_FA": "نوکوالوفا",
+    "LANGUAGE_FA": "انگلیسی، تونگایی",
+    "CURRENCY_FA": "پآنگا تونگا",
+    "FLAG": "https://flagcdn.com/to.svg"
+  },
+  "Nicaragua": {
+    "CAPITAL_FA": "ماناگوا",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "کوردوبای نیکاراگوئه",
+    "FLAG": "https://flagcdn.com/ni.svg"
+  },
+  "Paraguay": {
+    "CAPITAL_FA": "آسونسیون",
+    "LANGUAGE_FA": "گوارانی، اسپانیایی",
+    "CURRENCY_FA": "گوارانی پاراگوئه",
+    "FLAG": "https://flagcdn.com/py.svg"
+  },
+  "India": {
+    "CAPITAL_FA": "دهلی نو",
+    "LANGUAGE_FA": "انگلیسی، هندی، تامیل",
+    "CURRENCY_FA": "روپیه هند",
+    "FLAG": "https://flagcdn.com/in.svg"
+  },
+  "United Kingdom": {
+    "CAPITAL_FA": "لندن",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "پوند بریتانیا",
+    "FLAG": "https://flagcdn.com/gb.svg"
+  },
+  "Eswatini": {
+    "CAPITAL_FA": "مبابانه",
+    "LANGUAGE_FA": "انگلیسی، سوازی",
+    "CURRENCY_FA": "لیلانگنی سوازی، رند آفریقای جنوبی",
+    "FLAG": "https://flagcdn.com/sz.svg"
+  },
+  "Madagascar": {
+    "CAPITAL_FA": "آنتاناناریوو",
+    "LANGUAGE_FA": "فرانسوی، مالاگاسی",
+    "CURRENCY_FA": "آریاری مالاگاسی",
+    "FLAG": "https://flagcdn.com/mg.svg"
+  },
+  "Equatorial Guinea": {
+    "CAPITAL_FA": "مالابو",
+    "LANGUAGE_FA": "فرانسوی، پرتغالی، اسپانیایی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/gq.svg"
+  },
+  "Jordan": {
+    "CAPITAL_FA": "عمان",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "دینار اردنی",
+    "FLAG": "https://flagcdn.com/jo.svg"
+  },
+  "Guadeloupe": {
+    "CAPITAL_FA": "باس تر",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/gp.svg"
+  },
+  "Belarus": {
+    "CAPITAL_FA": "مینسک",
+    "LANGUAGE_FA": "بلاروسی، روسی",
+    "CURRENCY_FA": "روبل بلاروس",
+    "FLAG": "https://flagcdn.com/by.svg"
+  },
+  "Maldives": {
+    "CAPITAL_FA": "ماله",
+    "LANGUAGE_FA": "مالدیوی",
+    "CURRENCY_FA": "روفیای مالدیوی",
+    "FLAG": "https://flagcdn.com/mv.svg"
+  },
+  "Timor-Leste": {
+    "CAPITAL_FA": "دیلی",
+    "LANGUAGE_FA": "پرتغالی، تِتوم",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/tl.svg"
+  },
+  "Serbia": {
+    "CAPITAL_FA": "بلگراد",
+    "LANGUAGE_FA": "صربی",
+    "CURRENCY_FA": "دینار صربستان",
+    "FLAG": "https://flagcdn.com/rs.svg"
+  },
+  "Ireland": {
+    "CAPITAL_FA": "دوبلین",
+    "LANGUAGE_FA": "انگلیسی، ایرلندی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/ie.svg"
+  },
+  "Chile": {
+    "CAPITAL_FA": "سانتیاگو",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "پزوی شیلی",
+    "FLAG": "https://flagcdn.com/cl.svg"
+  },
+  "Iraq": {
+    "CAPITAL_FA": "بغداد",
+    "LANGUAGE_FA": "عربی، آرامی، سورانی",
+    "CURRENCY_FA": "دینار عراقی",
+    "FLAG": "https://flagcdn.com/iq.svg"
+  },
+  "Philippines": {
+    "CAPITAL_FA": "مانیلا",
+    "LANGUAGE_FA": "انگلیسی، فیلیپینی",
+    "CURRENCY_FA": "پزوی فیلیپین",
+    "FLAG": "https://flagcdn.com/ph.svg"
+  },
+  "South Africa": {
+    "CAPITAL_FA": "پرتوریا",
+    "LANGUAGE_FA": "آفریکانس، انگلیسی، ندبل جنوبی، سوتو شمالی، سوتو جنوبی، سوازی، تسوانا، تسونگا، وندا، ایکوسا، زولو",
+    "CURRENCY_FA": "رند آفریقای جنوبی",
+    "FLAG": "https://flagcdn.com/za.svg"
+  },
+  "Benin": {
+    "CAPITAL_FA": "پورتو نوو",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/bj.svg"
+  },
+  "Bulgaria": {
+    "CAPITAL_FA": "صوفیا",
+    "LANGUAGE_FA": "بلغاری",
+    "CURRENCY_FA": "لوا بلغاری",
+    "FLAG": "https://flagcdn.com/bg.svg"
+  },
+  "Indonesia": {
+    "CAPITAL_FA": "جاکارتا",
+    "LANGUAGE_FA": "اندونزیایی",
+    "CURRENCY_FA": "روپیه اندونزی",
+    "FLAG": "https://flagcdn.com/id.svg"
+  },
+  "Mauritania": {
+    "CAPITAL_FA": "نوک‌شوت",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "اوگویای موریتانی",
+    "FLAG": "https://flagcdn.com/mr.svg"
+  },
+  "Seychelles": {
+    "CAPITAL_FA": "ویکتوریا",
+    "LANGUAGE_FA": "کریول سیشلی، انگلیسی، فرانسوی",
+    "CURRENCY_FA": "روپیه سیشلی",
+    "FLAG": "https://flagcdn.com/sc.svg"
+  },
+  "Romania": {
+    "CAPITAL_FA": "بوخارست",
+    "LANGUAGE_FA": "رومانیایی",
+    "CURRENCY_FA": "لئو رومانی",
+    "FLAG": "https://flagcdn.com/ro.svg"
+  },
+  "Turkey": {
+    "CAPITAL_FA": "آنکارا",
+    "LANGUAGE_FA": "ترکی",
+    "CURRENCY_FA": "لیر ترکیه",
+    "FLAG": "https://flagcdn.com/tr.svg"
+  },
+  "Burkina Faso": {
+    "CAPITAL_FA": "وگادوگو",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA آفریقای مرکزی",
+    "FLAG": "https://flagcdn.com/bf.svg"
+  },
+  "Bermuda": {
+    "CAPITAL_FA": "همیلتون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار برمودا",
+    "FLAG": "https://flagcdn.com/bm.svg"
+  },
+  "New Caledonia": {
+    "CAPITAL_FA": "نومئا",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک سی اف پی",
+    "FLAG": "https://flagcdn.com/nc.svg"
+  },
+  "Antarctica": {
+    "LANGUAGE_FA": "",
+    "CURRENCY_FA": "",
+    "FLAG": "https://flagcdn.com/aq.svg"
+  },
+  "Egypt": {
+    "CAPITAL_FA": "قاهره",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "پوند مصری",
+    "FLAG": "https://flagcdn.com/eg.svg"
+  },
+  "Vietnam": {
+    "CAPITAL_FA": "هانوی",
+    "LANGUAGE_FA": "ویتنامی",
+    "CURRENCY_FA": "دونگ ویتنام",
+    "FLAG": "https://flagcdn.com/vn.svg"
+  },
+  "Puerto Rico": {
+    "CAPITAL_FA": "سان خوان",
+    "LANGUAGE_FA": "انگلیسی، اسپانیایی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/pr.svg"
+  },
+  "Trinidad and Tobago": {
+    "CAPITAL_FA": "پورت آو اسپین",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ترینیداد و توباگو",
+    "FLAG": "https://flagcdn.com/tt.svg"
+  },
+  "Falkland Islands": {
+    "CAPITAL_FA": "استنلی",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "پوند جزایر فالکلند",
+    "FLAG": "https://flagcdn.com/fk.svg"
+  },
+  "Angola": {
+    "CAPITAL_FA": "لواندا",
+    "LANGUAGE_FA": "پرتغالی",
+    "CURRENCY_FA": "کوانزای آنگولا",
+    "FLAG": "https://flagcdn.com/ao.svg"
+  },
+  "China": {
+    "CAPITAL_FA": "پکن",
+    "LANGUAGE_FA": "چینی",
+    "CURRENCY_FA": "یوآن چینی",
+    "FLAG": "https://flagcdn.com/cn.svg"
+  },
+  "Montserrat": {
+    "CAPITAL_FA": "پلیموث",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/ms.svg"
+  },
+  "Turks and Caicos Islands": {
+    "CAPITAL_FA": "کاکبورن تاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/tc.svg"
+  },
+  "Åland Islands": {
+    "CAPITAL_FA": "ماریهامن",
+    "LANGUAGE_FA": "سوئدی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/ax.svg"
+  },
+  "Costa Rica": {
+    "CAPITAL_FA": "سان خوزه",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "کولون کاستاریکا",
+    "FLAG": "https://flagcdn.com/cr.svg"
+  },
+  "Uruguay": {
+    "CAPITAL_FA": "مونته‌ویدئو",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "پزوی اروگوئه",
+    "FLAG": "https://flagcdn.com/uy.svg"
+  },
+  "Morocco": {
+    "CAPITAL_FA": "رباط",
+    "LANGUAGE_FA": "عربی، بربری",
+    "CURRENCY_FA": "درهم مراکش",
+    "FLAG": "https://flagcdn.com/ma.svg"
+  },
+  "Bouvet Island": {
+    "LANGUAGE_FA": "نروژی",
+    "CURRENCY_FA": "",
+    "FLAG": "https://flagcdn.com/bv.svg"
+  },
+  "Estonia": {
+    "CAPITAL_FA": "تالین",
+    "LANGUAGE_FA": "استونیایی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/ee.svg"
+  },
+  "Saint Lucia": {
+    "CAPITAL_FA": "کاستریس",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/lc.svg"
+  },
+  "Taiwan": {
+    "CAPITAL_FA": "تایپه",
+    "LANGUAGE_FA": "چینی",
+    "CURRENCY_FA": "دلار جدید تایوان",
+    "FLAG": "https://flagcdn.com/tw.svg"
+  },
+  "Haiti": {
+    "CAPITAL_FA": "پورتو پرنس",
+    "LANGUAGE_FA": "فرانسوی، کریول هائیتی",
+    "CURRENCY_FA": "گورد هائیتی",
+    "FLAG": "https://flagcdn.com/ht.svg"
+  },
+  "Tajikistan": {
+    "CAPITAL_FA": "دوشنبه",
+    "LANGUAGE_FA": "روسی، تاجیکی",
+    "CURRENCY_FA": "سومونی تاجیکستان",
+    "FLAG": "https://flagcdn.com/tj.svg"
+  },
+  "Niger": {
+    "CAPITAL_FA": "نیامی",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA غرب آفریقا",
+    "FLAG": "https://flagcdn.com/ne.svg"
+  },
+  "Lebanon": {
+    "CAPITAL_FA": "بیروت",
+    "LANGUAGE_FA": "عربی، فرانسوی",
+    "CURRENCY_FA": "پوند لبنانی",
+    "FLAG": "https://flagcdn.com/lb.svg"
+  },
+  "Australia": {
+    "CAPITAL_FA": "کانبرا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار استرالیا",
+    "FLAG": "https://flagcdn.com/au.svg"
+  },
+  "Liberia": {
+    "CAPITAL_FA": "مانرویا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار لیبریا",
+    "FLAG": "https://flagcdn.com/lr.svg"
+  },
+  "Italy": {
+    "CAPITAL_FA": "رم",
+    "LANGUAGE_FA": "ایتالیایی، کاتالانی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/it.svg"
+  },
+  "Northern Mariana Islands": {
+    "CAPITAL_FA": "سایپن",
+    "LANGUAGE_FA": "کارولینیایی، چامورو، انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/mp.svg"
+  },
+  "Saint Martin": {
+    "CAPITAL_FA": "ماریکوت",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/mf.svg"
+  },
+  "Nauru": {
+    "CAPITAL_FA": "یارن",
+    "LANGUAGE_FA": "انگلیسی، نائورویی",
+    "CURRENCY_FA": "دلار استرالیا",
+    "FLAG": "https://flagcdn.com/nr.svg"
+  },
+  "Switzerland": {
+    "CAPITAL_FA": "برن",
+    "LANGUAGE_FA": "فرانسوی، آلمانی سوئیسی، ایتالیایی، رومانش",
+    "CURRENCY_FA": "فرانک سوئیسی",
+    "FLAG": "https://flagcdn.com/ch.svg"
+  },
+  "Peru": {
+    "CAPITAL_FA": "لیما",
+    "LANGUAGE_FA": "آیمارا، کچوا، اسپانیایی",
+    "CURRENCY_FA": "سول پرویی",
+    "FLAG": "https://flagcdn.com/pe.svg"
+  },
+  "Libya": {
+    "CAPITAL_FA": "طرابلس",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "دینار لیبی",
+    "FLAG": "https://flagcdn.com/ly.svg"
+  },
+  "Germany": {
+    "CAPITAL_FA": "برلین",
+    "LANGUAGE_FA": "آلمانی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/de.svg"
+  },
+  "Kosovo": {
+    "CAPITAL_FA": "پریشتینا",
+    "LANGUAGE_FA": "آلبانیایی، صربی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/xk.svg"
+  },
+  "Guam": {
+    "CAPITAL_FA": "هاگاتنیا",
+    "LANGUAGE_FA": "چامورو، انگلیسی، اسپانیایی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/gu.svg"
+  },
+  "Bahrain": {
+    "CAPITAL_FA": "منامه",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "دینار بحرینی",
+    "FLAG": "https://flagcdn.com/bh.svg"
+  },
+  "Wallis and Futuna": {
+    "CAPITAL_FA": "ماتا-اوتو",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک سی اف پی",
+    "FLAG": "https://flagcdn.com/wf.svg"
+  },
+  "Iran": {
+    "CAPITAL_FA": "تهران",
+    "LANGUAGE_FA": "فارسی (فارسی)",
+    "CURRENCY_FA": "ریال ایرانی",
+    "FLAG": "https://flagcdn.com/ir.svg"
+  },
+  "Panama": {
+    "CAPITAL_FA": "شهر پاناما",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "بالبوا پانامایی، دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/pa.svg"
+  },
+  "Tokelau": {
+    "CAPITAL_FA": "فاکائوفو",
+    "LANGUAGE_FA": "انگلیسی، ساموایی، توکلائویی",
+    "CURRENCY_FA": "دلار نیوزیلند",
+    "FLAG": "https://flagcdn.com/tk.svg"
+  },
+  "Syria": {
+    "CAPITAL_FA": "دمشق",
+    "LANGUAGE_FA": "عربی",
+    "CURRENCY_FA": "پوند سوریه",
+    "FLAG": "https://flagcdn.com/sy.svg"
+  },
+  "Saint Kitts and Nevis": {
+    "CAPITAL_FA": "باستره",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/kn.svg"
+  },
+  "Gambia": {
+    "CAPITAL_FA": "بانجول",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دالاسی",
+    "FLAG": "https://flagcdn.com/gm.svg"
+  },
+  "Caribbean Netherlands": {
+    "CAPITAL_FA": "کرالندیک",
+    "LANGUAGE_FA": "انگلیسی، هلندی، پاپیامنتو",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/bq.svg"
+  },
+  "British Indian Ocean Territory": {
+    "CAPITAL_FA": "دیگو گارسیا",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/io.svg"
+  },
+  "Netherlands": {
+    "CAPITAL_FA": "آمستردام",
+    "LANGUAGE_FA": "هلندی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/nl.svg"
+  },
+  "El Salvador": {
+    "CAPITAL_FA": "سان سالوادور",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/sv.svg"
+  },
+  "Ivory Coast": {
+    "CAPITAL_FA": "یاموسوکرو",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "فرانک س CFA غرب آفریقا",
+    "FLAG": "https://flagcdn.com/ci.svg"
+  },
+  "Kiribati": {
+    "CAPITAL_FA": "تاراوای جنوبی",
+    "LANGUAGE_FA": "انگلیسی، گیلبرتزی",
+    "CURRENCY_FA": "دلار استرالیا، دلار کیریباتی",
+    "FLAG": "https://flagcdn.com/ki.svg"
+  },
+  "Saint Barthélemy": {
+    "CAPITAL_FA": "گوستاویا",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/bl.svg"
+  },
+  "American Samoa": {
+    "CAPITAL_FA": "پاگو پاگو",
+    "LANGUAGE_FA": "انگلیسی، ساموایی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/as.svg"
+  },
+  "Aruba": {
+    "CAPITAL_FA": "اورانجستاد",
+    "LANGUAGE_FA": "هلندی، پاپیامنتو",
+    "CURRENCY_FA": "فلورین آروبا",
+    "FLAG": "https://flagcdn.com/aw.svg"
+  },
+  "French Guiana": {
+    "CAPITAL_FA": "کایِن",
+    "LANGUAGE_FA": "فرانسوی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/gf.svg"
+  },
+  "Palau": {
+    "CAPITAL_FA": "نگرولمود",
+    "LANGUAGE_FA": "انگلیسی، پالائوایی",
+    "CURRENCY_FA": "دلار ایالات متحده",
+    "FLAG": "https://flagcdn.com/pw.svg"
+  },
+  "Saint Vincent and the Grenadines": {
+    "CAPITAL_FA": "کینگستاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار کارائیب شرقی",
+    "FLAG": "https://flagcdn.com/vc.svg"
+  },
+  "Poland": {
+    "CAPITAL_FA": "وارساو",
+    "LANGUAGE_FA": "لهستانی",
+    "CURRENCY_FA": "زلوته لهستان",
+    "FLAG": "https://flagcdn.com/pl.svg"
+  },
+  "Barbados": {
+    "CAPITAL_FA": "بریجتاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار باربادوس",
+    "FLAG": "https://flagcdn.com/bb.svg"
+  },
+  "Isle of Man": {
+    "CAPITAL_FA": "داگلاس",
+    "LANGUAGE_FA": "انگلیسی، منکس",
+    "CURRENCY_FA": "پوند بریتانیا، پوند منکس",
+    "FLAG": "https://flagcdn.com/im.svg"
+  },
+  "Greenland": {
+    "CAPITAL_FA": "نوک",
+    "LANGUAGE_FA": "گرینلندی",
+    "CURRENCY_FA": "کرونا",
+    "FLAG": "https://flagcdn.com/gl.svg"
+  },
+  "Zimbabwe": {
+    "CAPITAL_FA": "هاراره",
+    "LANGUAGE_FA": "چیبارووه، انگلیسی، کالانگا، کویسان، ندائو، ندِبله شمالی، چوا، شونا، سوتو، تنگا، تسوانا، تسونگا، وندا، ایکسوسا، زبان اشاره زیمبابوه",
+    "CURRENCY_FA": "دلار زیمبابوه",
+    "FLAG": "https://flagcdn.com/zw.svg"
+  },
+  "Pitcairn Islands": {
+    "CAPITAL_FA": "آدامزتاون",
+    "LANGUAGE_FA": "انگلیسی",
+    "CURRENCY_FA": "دلار نیوزیلند",
+    "FLAG": "https://flagcdn.com/pn.svg"
+  },
+  "Sweden": {
+    "CAPITAL_FA": "استکهلم",
+    "LANGUAGE_FA": "سوئدی",
+    "CURRENCY_FA": "کرونای سوئد",
+    "FLAG": "https://flagcdn.com/se.svg"
+  },
+  "Dominican Republic": {
+    "CAPITAL_FA": "سانتو دومینگو",
+    "LANGUAGE_FA": "اسپانیایی",
+    "CURRENCY_FA": "پزوی دومینیکن",
+    "FLAG": "https://flagcdn.com/do.svg"
+  },
+  "Belgium": {
+    "CAPITAL_FA": "بروکسل",
+    "LANGUAGE_FA": "آلمانی، فرانسوی، هلندی",
+    "CURRENCY_FA": "یورو",
+    "FLAG": "https://flagcdn.com/be.svg"
+  },
+  "Mozambique": {
+    "CAPITAL_FA": "مپوتو",
+    "LANGUAGE_FA": "پرتغالی",
+    "CURRENCY_FA": "متیکال موزامبیک",
+    "FLAG": "https://flagcdn.com/mz.svg"
+  },
+  "Mauritius": {
+    "CAPITAL_FA": "پورت لوئیس",
+    "LANGUAGE_FA": "انگلیسی، فرانسوی، کریدول موریس",
+    "CURRENCY_FA": "روپیه موریس",
+    "FLAG": "https://flagcdn.com/mu.svg"
+  },
+  "Azerbaijan": {
+    "CAPITAL_FA": "باکو",
+    "LANGUAGE_FA": "آذربایجانی",
+    "CURRENCY_FA": "منات آذربایجان",
+    "FLAG": "https://flagcdn.com/az.svg"
+  }
+}
