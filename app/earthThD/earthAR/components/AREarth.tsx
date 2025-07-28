@@ -451,7 +451,7 @@ export default function AREarth() {
 
         // ابتدا session را ایجاد می‌کنیم
         const xrSession = await navigator.xr!.requestSession("immersive-ar", {
-          requiredFeatures: ["hit-test", "plane-detection"],
+          requiredFeatures: ["local-floor", "hit-test", "plane-detection"],
         });
         let hitTestSource = null;
 
@@ -463,12 +463,16 @@ export default function AREarth() {
         }
 
         // دریافت reference space
-        const referenceSpace = renderer.xr.getReferenceSpace();
+        const referenceSpace = await renderer.xr.getReferenceSpace();
         if (referenceSpace) {
           // ایجاد hit test source
           hitTestSource = await xrSession.requestHitTestSource({
             space: referenceSpace,
-            offsetRay: new XRRay({ y: 0.5 }),
+            offsetRay: new XRRay(new THREE.Vector3(0, 0, 0), {
+              x: 0,
+              y: -1,
+              z: 0,
+            }),
           });
           hitTestSourceRef.current = hitTestSource;
         } else {
@@ -545,7 +549,7 @@ export default function AREarth() {
         };
       } catch (error) {
         console.error("AR initialization failed:", error);
-        setError("Failed to initialize AR");
+        setError(`Failed to initialize AR: ${error}`);
         setLoading(false);
       }
     };
