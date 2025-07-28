@@ -386,7 +386,7 @@ export default function AREarth() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const hitTestSourceRef = useRef<XRHitTestSource | null>(null); // Store the hitTestSource in a ref
+  const hitTestSourceRef = useRef<XRHitTestSource | undefined>(undefined); // Store the hitTestSource in a ref
 
   useEffect(() => {
     // Check AR support
@@ -450,22 +450,30 @@ export default function AREarth() {
         const loader = new GLTFLoader();
 
         // ابتدا session را ایجاد می‌کنیم
-        const session = (await navigator.xr?.requestSession("immersive-ar", {
+        const xrSession = await navigator.xr!.requestSession("immersive-ar", {
           requiredFeatures: ["hit-test", "plane-detection"],
-        })) as XRSession;
+        });
+        let hitTestSource = null;
 
-        if (!session) {
-          throw new Error("Could not start AR session");
+        if (
+          !xrSession ||
+          typeof xrSession.requestHitTestSource !== "function"
+        ) {
+          throw new Error("WebXR Hit Test not supported");
         }
 
         // دریافت reference space
-        const referenceSpace = await renderer.xr.getReferenceSpace();
-
-        // ایجاد hit test source
-        const hitTestSource = await session.requestHitTestSource({
-          space: referenceSpace,
-        });
-        hitTestSourceRef.current = hitTestSource;
+        const referenceSpace = renderer.xr.getReferenceSpace();
+        if (referenceSpace) {
+          // ایجاد hit test source
+          hitTestSource = await xrSession.requestHitTestSource({
+            space: referenceSpace,
+            offsetRay: new XRRay({ y: 0.5 }),
+          });
+          hitTestSourceRef.current = hitTestSource;
+        } else {
+          console.error("Failed to get reference space");
+        }
 
         // حالا مدل را بارگذاری می‌کنیم
         loader.load(
@@ -487,7 +495,7 @@ export default function AREarth() {
                 hitTestSourceRef.current
               );
 
-              if (hitTestResults.length > 0) {
+              if (hitTestResults.length > 0 && referenceSpace) {
                 const hit = hitTestResults[0];
                 const pose = hit.getPose(referenceSpace);
 
