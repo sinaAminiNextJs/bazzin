@@ -451,7 +451,7 @@ export default function AREarth() {
 
         // ابتدا session را ایجاد می‌کنیم
         const xrSession = await navigator.xr!.requestSession("immersive-ar", {
-          requiredFeatures: ["local-floor", "hit-test", "plane-detection"],
+          requiredFeatures: ["local-floor", "hit-test"],
         });
         let hitTestSource = null;
 
