@@ -106,12 +106,12 @@ export default function AREarth() {
     const handleTouchMoveRotation = (event: any) => {
       if (event.touches.length === 1) {
         const dx = event.touches[0].clientX - touchStartPos.x;
-        const dy = event.touches[0].clientY - touchStartPos.y;
+        // const dy = event.touches[0].clientY - touchStartPos.y;
 
         // چرخش مدل زمین بر اساس حرکت انگشت
         if (earthRef.current) {
           earthRef.current.rotation.y += dx * 0.005; // حساسیت چرخش
-          earthRef.current.rotation.x += dy * 0.005; // حساسیت چرخش
+          // earthRef.current.rotation.x += dy * 0.005; // حساسیت چرخش
         }
 
         // بروزرسانی موقعیت اولیه انگشت
@@ -215,7 +215,7 @@ export default function AREarth() {
       0.01,
       20
     );
-    camera.position.set(0, 0, 3);
+    camera.position.set(0, 0, 5);
 
     // گرفتن رندرر از ref و تنظیم سایز
     const renderer = rendererRef.current!;
@@ -244,7 +244,11 @@ export default function AREarth() {
         earthRef.current = earth;
 
         setLoading(false);
-
+        // تنظیم موقعیت مدل نسبت به دوربین فقط یک بار
+        if (earthRef.current) {
+          // موقعیت مدل را نسبت به دوربین تنظیم می‌کنیم (3 واحد جلوتر)
+          earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
+        }
         // انیمیشن چرخش زمین
         renderer.setAnimationLoop(() => {
           if (earthRef.current) {
