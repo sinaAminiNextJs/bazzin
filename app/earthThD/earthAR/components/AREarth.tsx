@@ -196,46 +196,187 @@ export default function AREarth() {
     };
   }, [arSupported]);
 
+  // useEffect(() => {
+  //   if (!hasStarted) return;
+
+  //   // حذف بکگراند
+  //   const bg = document.getElementById("background-images");
+  //   if (bg) bg.style.display = "none";
+
+  //   setLoading(true);
+
+  //   const scene = new THREE.Scene();
+  //   sceneRef.current = scene;
+
+  //   // ساخت دوربین
+  //   const camera = new THREE.PerspectiveCamera(
+  //     90,
+  //     window.innerWidth / window.innerHeight,
+  //     0.01,
+  //     20
+  //   );
+  //   camera.position.set(0, 0, 5);
+
+  //   // گرفتن رندرر از ref و تنظیم سایز
+  //   const renderer = rendererRef.current!;
+  //   renderer.setSize(window.innerWidth, window.innerHeight);
+
+  //   // اضافه کردن canvas به DOM
+  //   const container = document.getElementById("ar-view");
+  //   if (container) container.appendChild(renderer.domElement);
+
+  //   // نورپردازی
+  //   const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+  //   const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+  //   directionalLight.position.set(1, 1, 1);
+  //   scene.add(ambientLight, directionalLight);
+
+  //   // بارگذاری مدل glTF زمین
+  //   const loader = new GLTFLoader();
+  //   loader.load(
+  //     "/ar-earth/earth.glb",
+
+  //     (gltf) => {
+  //       const earth = gltf.scene;
+  //       earth.scale.set(0.07, 0.07, 0.07);
+  //       earth.rotation.y = Math.PI / 2;
+  //       scene.add(earth);
+  //       earthRef.current = earth;
+
+  //       setLoading(false);
+
+  //       // تنظیم موقعیت مدل نسبت به دوربین فقط یک بار
+  //       if (earthRef.current) {
+  //         // موقعیت مدل را نسبت به دوربین تنظیم می‌کنیم (3 واحد جلوتر)
+  //         earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
+  //       }
+  //       // انیمیشن چرخش زمین
+  //       renderer.setAnimationLoop(() => {
+  //         if (earthRef.current) {
+  //           earthRef.current.rotation.y += 0.002;
+  //         }
+  //         renderer.render(scene, camera);
+  //       });
+
+  //       // دکمه توقف AR
+  //       const showStopButton = () => {
+  //         // حذف دکمه قبلی
+  //         if (stopButtonRef.current) {
+  //           stopButtonRef.current.remove();
+  //         }
+
+  //         // ایجاد دکمه جدید
+  //         const stopButton = document.createElement("button");
+  //         Object.assign(stopButton.style, {
+  //           // استایل سفارشی
+  //         });
+
+  //         stopButton.addEventListener("click", () => {
+  //           if (rendererRef.current?.xr.getSession()) {
+  //             rendererRef.current.xr.getSession()?.end();
+  //           }
+  //         });
+
+  //         document.body.appendChild(stopButton);
+  //         stopButtonRef.current = stopButton;
+
+  //         // حذف دکمه هنگام پایان session
+  //         const onSessionEnd = () => {
+  //           if (stopButtonRef.current) {
+  //             stopButtonRef.current.remove();
+  //             stopButtonRef.current = null;
+  //           }
+  //         };
+
+  //         rendererRef.current?.xr.addEventListener("sessionend", onSessionEnd);
+  //       };
+
+  //       // هندل کردن شروع session
+  //       renderer.xr.addEventListener("sessionstart", () => {
+  //         xrSessionRef.current = renderer.xr.getSession();
+  //         showStopButton();
+  //       });
+
+  //       // در حالت dev هم دکمه نشان داده شود
+  //       if (process.env.NODE_ENV === "development") {
+  //         showStopButton();
+  //       }
+  //     },
+  //     undefined,
+  //     (error) => {
+  //       console.error("خطا در بارگذاری مدل:", error);
+  //       setError("خطا در بارگذاری مدل زمین");
+  //       setLoading(false);
+  //     }
+  //   );
+
+  //   // هندل تغییر سایز پنجره
+  //   const onResize = () => {
+  //     camera.aspect = window.innerWidth / window.innerHeight;
+  //     camera.updateProjectionMatrix();
+  //     renderer.setSize(window.innerWidth, window.innerHeight);
+  //   };
+
+  //   window.addEventListener("resize", onResize);
+
+  //   // پاکسازی session هنگام خروج
+  //   renderer.xr.addEventListener("sessionend", () => {
+  //     renderer.setAnimationLoop(null);
+  //     if (earthRef.current && sceneRef.current) {
+  //       sceneRef.current.remove(earthRef.current);
+  //       earthRef.current = null;
+  //     }
+  //     if (container && renderer.domElement.parentNode === container) {
+  //       container.removeChild(renderer.domElement);
+  //     }
+  //     renderer.dispose();
+  //     rendererRef.current = null;
+  //     sceneRef.current = null;
+  //     setHasStarted(false);
+  //     window.location.reload();
+  //   });
+
+  //   return () => {
+  //     window.removeEventListener("resize", onResize);
+  //     if (rendererRef.current) {
+  //       rendererRef.current.dispose();
+  //       rendererRef.current = null;
+  //     }
+  //     if (stopButtonRef.current) {
+  //       stopButtonRef.current.remove();
+  //     }
+  //   };
+  // }, [hasStarted]);
+  const hitTestSourceRef = useRef<XRHitTestSource | null>(null); // Store the hitTestSource in a ref
   useEffect(() => {
     if (!hasStarted) return;
 
-    // حذف بکگراند
-    const bg = document.getElementById("background-images");
-    if (bg) bg.style.display = "none";
-
-    setLoading(true);
-
+    // Initial setup (camera, scene, lights, etc.)
     const scene = new THREE.Scene();
-    sceneRef.current = scene;
-
-    // ساخت دوربین
     const camera = new THREE.PerspectiveCamera(
       90,
       window.innerWidth / window.innerHeight,
       0.01,
       20
     );
-    camera.position.set(0, 0, 5);
-
-    // گرفتن رندرر از ref و تنظیم سایز
-    const renderer = rendererRef.current!;
+    camera.position.set(0, 0, 3);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.xr.enabled = true;
     renderer.setSize(window.innerWidth, window.innerHeight);
-
-    // اضافه کردن canvas به DOM
+    rendererRef.current = renderer;
     const container = document.getElementById("ar-view");
     if (container) container.appendChild(renderer.domElement);
 
-    // نورپردازی
+    // Lighting
     const ambientLight = new THREE.AmbientLight(0xffffff, 1);
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(1, 1, 1);
     scene.add(ambientLight, directionalLight);
 
-    // بارگذاری مدل glTF زمین
+    // Load the Earth model
     const loader = new GLTFLoader();
     loader.load(
       "/ar-earth/earth.glb",
-
       (gltf) => {
         const earth = gltf.scene;
         earth.scale.set(0.07, 0.07, 0.07);
@@ -243,106 +384,57 @@ export default function AREarth() {
         scene.add(earth);
         earthRef.current = earth;
 
+        // Request the XR session
+        const session = renderer.xr.getSession();
+        if (session) {
+          session.requestHitTestSource({ space: camera }).then((source) => {
+            hitTestSourceRef.current = source; // Store the hitTestSource in the ref
+          });
+
+          // Animation loop and hit-test logic
+          renderer.setAnimationLoop((time, frame) => {
+            if (earthRef.current && hitTestSourceRef.current) {
+              const hitTestResults = frame.getHitTestResults(
+                hitTestSourceRef.current
+              );
+              if (hitTestResults.length > 0) {
+                const hit = hitTestResults[0];
+                const position = hit.getPose(camera).transform.position;
+                earthRef.current.position.set(
+                  position.x,
+                  position.y,
+                  position.z
+                ); // Place model on surface
+              }
+              earthRef.current.rotation.y += 0.002;
+            }
+            renderer.render(scene, camera);
+          });
+        }
+
         setLoading(false);
-        // تنظیم موقعیت مدل نسبت به دوربین فقط یک بار
-        if (earthRef.current) {
-          // موقعیت مدل را نسبت به دوربین تنظیم می‌کنیم (3 واحد جلوتر)
-          earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
-        }
-        // انیمیشن چرخش زمین
-        renderer.setAnimationLoop(() => {
-          if (earthRef.current) {
-            earthRef.current.rotation.y += 0.002;
-          }
-          renderer.render(scene, camera);
-        });
-
-        // دکمه توقف AR
-        const showStopButton = () => {
-          // حذف دکمه قبلی
-          if (stopButtonRef.current) {
-            stopButtonRef.current.remove();
-          }
-
-          // ایجاد دکمه جدید
-          const stopButton = document.createElement("button");
-          Object.assign(stopButton.style, {
-            // استایل سفارشی
-          });
-
-          stopButton.addEventListener("click", () => {
-            if (rendererRef.current?.xr.getSession()) {
-              rendererRef.current.xr.getSession()?.end();
-            }
-          });
-
-          document.body.appendChild(stopButton);
-          stopButtonRef.current = stopButton;
-
-          // حذف دکمه هنگام پایان session
-          const onSessionEnd = () => {
-            if (stopButtonRef.current) {
-              stopButtonRef.current.remove();
-              stopButtonRef.current = null;
-            }
-          };
-
-          rendererRef.current?.xr.addEventListener("sessionend", onSessionEnd);
-        };
-
-        // هندل کردن شروع session
-        renderer.xr.addEventListener("sessionstart", () => {
-          xrSessionRef.current = renderer.xr.getSession();
-          showStopButton();
-        });
-
-        // در حالت dev هم دکمه نشان داده شود
-        if (process.env.NODE_ENV === "development") {
-          showStopButton();
-        }
       },
       undefined,
       (error) => {
-        console.error("خطا در بارگذاری مدل:", error);
-        setError("خطا در بارگذاری مدل زمین");
+        console.error("Error loading model:", error);
+        setError("Error loading Earth model");
         setLoading(false);
       }
     );
 
-    // هندل تغییر سایز پنجره
+    // Resize handling
     const onResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     };
-
     window.addEventListener("resize", onResize);
-
-    // پاکسازی session هنگام خروج
-    renderer.xr.addEventListener("sessionend", () => {
-      renderer.setAnimationLoop(null);
-      if (earthRef.current && sceneRef.current) {
-        sceneRef.current.remove(earthRef.current);
-        earthRef.current = null;
-      }
-      if (container && renderer.domElement.parentNode === container) {
-        container.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-      rendererRef.current = null;
-      sceneRef.current = null;
-      setHasStarted(false);
-      window.location.reload();
-    });
 
     return () => {
       window.removeEventListener("resize", onResize);
       if (rendererRef.current) {
         rendererRef.current.dispose();
         rendererRef.current = null;
-      }
-      if (stopButtonRef.current) {
-        stopButtonRef.current.remove();
       }
     };
   }, [hasStarted]);
