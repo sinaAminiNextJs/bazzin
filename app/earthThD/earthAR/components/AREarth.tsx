@@ -16,20 +16,19 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
-
-  // refها برای نگهداری session و سایر آبجکت‌های three.js
-  const xrSessionRef = useRef<XRSession | null>(null);
-  const stopButtonRef = useRef<HTMLButtonElement | null>(null);
-
   // اندازه پنجره برای تنظیم ابعاد renderer
   const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
     0, 0,
   ]);
 
+  // refها برای نگهداری session و سایر آبجکت‌های three.js
+  const xrSessionRef = useRef<XRSession | null>(null);
+  const stopButtonRef = useRef<HTMLButtonElement | null>(null);
   // مراجع به عناصر صحنه، مدل زمین و رندرر
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+
   useEffect(() => {
     setWindowsDimention([window.innerWidth, window.innerHeight]);
 
@@ -55,6 +54,91 @@ export default function AREarth() {
 
     checkARSupport();
   }, []);
+
+  let touchStartDistance = 0;
+  let touchStartPos = { x: 0, y: 0 };
+
+  useEffect(() => {
+    // اضافه کردن تعامل لمسی
+    const handleTouchStart = (event: any) => {
+      if (event.touches.length === 2) {
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        touchStartDistance = Math.sqrt(
+          Math.pow(touch2.clientX - touch1.clientX, 2) +
+            Math.pow(touch2.clientY - touch1.clientY, 2)
+        );
+      }
+    };
+
+    const handleTouchMove = (event: any) => {
+      if (event.touches.length === 2) {
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        const newDistance = Math.sqrt(
+          Math.pow(touch2.clientX - touch1.clientX, 2) +
+            Math.pow(touch2.clientY - touch1.clientY, 2)
+        );
+
+        // مقیاس مدل زمین بر اساس فاصله تغییر کند
+        if (earthRef.current) {
+          const scaleFactor = newDistance / touchStartDistance;
+          earthRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        }
+      }
+    };
+
+    const handleTouchEnd = (event: any) => {
+      if (event.touches.length < 2) {
+        touchStartDistance = 0;
+      }
+    };
+
+    const handleTouchStartRotation = (event: any) => {
+      if (event.touches.length === 1) {
+        touchStartPos = {
+          x: event.touches[0].clientX,
+          y: event.touches[0].clientY,
+        };
+      }
+    };
+
+    const handleTouchMoveRotation = (event: any) => {
+      if (event.touches.length === 1) {
+        const dx = event.touches[0].clientX - touchStartPos.x;
+        const dy = event.touches[0].clientY - touchStartPos.y;
+
+        // چرخش مدل زمین بر اساس حرکت انگشت
+        if (earthRef.current) {
+          earthRef.current.rotation.y += dx * 0.005; // حساسیت چرخش
+          earthRef.current.rotation.x += dy * 0.005; // حساسیت چرخش
+        }
+
+        // بروزرسانی موقعیت اولیه انگشت
+        touchStartPos = {
+          x: event.touches[0].clientX,
+          y: event.touches[0].clientY,
+        };
+      }
+    };
+
+    // اضافه کردن رویدادهای لمسی
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("touchstart", handleTouchStartRotation);
+    window.addEventListener("touchmove", handleTouchMoveRotation);
+
+    // پاکسازی رویدادها هنگام unmount
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchstart", handleTouchStartRotation);
+      window.removeEventListener("touchmove", handleTouchMoveRotation);
+    };
+  }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
+
   useEffect(() => {
     if (arSupported !== true) return;
 
@@ -111,6 +195,7 @@ export default function AREarth() {
       rendererRef.current = null;
     };
   }, [arSupported]);
+
   useEffect(() => {
     if (!hasStarted) return;
 
