@@ -553,6 +553,63 @@ export default function AREarth() {
     initAR();
   }, [arSupported, hasStarted]);
 
+  useEffect(() => {
+    if (arSupported !== true) return;
+
+    // ساخت رندرر سه‌بعدی
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.xr.enabled = true;
+    rendererRef.current = renderer;
+
+    // ساخت دکمه شروع AR
+    var arButton = ARButton.createButton(renderer, {
+      requiredFeatures: ["hit-test"],
+      optionalFeatures: ["dom-overlay", "dom-overlay-for-handheld-ar"],
+      domOverlay: { root: document.body },
+    });
+    // اعمال استایل سفارشی به دکمه
+    Object.assign(arButton.style, {
+      minWidth: "fit-content",
+      opacity: "1",
+      position: "fixed",
+      bottom: "20px",
+      left: "20px",
+      padding: "8px 32px",
+      backgroundColor: "#ffc585",
+      color: "#000",
+      borderRadius: "1rem",
+      border: "2px solid #fff7c4",
+      fontFamily: "iranyekan, sans-serif",
+      fontSize: "1.25rem",
+      boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+      cursor: "pointer",
+      zIndex: "11000",
+    });
+
+    // اضافه کردن به container
+    const btnContainer = document.getElementById("ar-button-container");
+    if (btnContainer) {
+      btnContainer.appendChild(arButton);
+    } else {
+      alert("مشکلی در نمایش دکمه شروع پیش آمده");
+      // document.body.appendChild(arButton);
+    }
+
+    // زمانی که دکمه کلیک شد، AR شروع شود
+    const onClick = () => {
+      setHasStarted(true);
+    };
+    arButton.addEventListener("click", onClick);
+
+    // پاکسازی هنگام unmount شدن
+    return () => {
+      arButton.removeEventListener("click", onClick);
+      if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
+      renderer.dispose();
+      rendererRef.current = null;
+    };
+  }, [arSupported]);
+
   return (
     <section>
       {/* لودینگ و خطا */}
