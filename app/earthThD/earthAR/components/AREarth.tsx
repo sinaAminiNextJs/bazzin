@@ -417,6 +417,10 @@ export default function AREarth() {
 
     const initAR = async () => {
       try {
+        // 1. بررسی پشتیبانی مرورگر
+        if (!navigator.xr) {
+          throw new Error("WebXR not supported");
+        }
         // ایجاد رندرر سه‌بعدی و فعال کردن WebXR
         const renderer = new THREE.WebGLRenderer({
           antialias: true,
@@ -450,8 +454,9 @@ export default function AREarth() {
         const loader = new GLTFLoader();
 
         // ابتدا session را ایجاد می‌کنیم
-        const xrSession = await navigator.xr!.requestSession("immersive-ar", {
-          requiredFeatures: ["local-floor", "hit-test"],
+        const xrSession = await navigator.xr.requestSession("immersive-ar", {
+          requiredFeatures: ["viewer", "hit-test"],
+          optionalFeatures: ["local-floor"],
         });
         let hitTestSource = null;
 
@@ -463,7 +468,13 @@ export default function AREarth() {
         }
 
         // دریافت reference space
-        const referenceSpace = await renderer.xr.getReferenceSpace();
+        let referenceSpace;
+        try {
+          referenceSpace = await xrSession.requestReferenceSpace("local-floor");
+        } catch (e) {
+          console.warn("Local-floor failed, using viewer:", e);
+          referenceSpace = await xrSession.requestReferenceSpace("viewer");
+        }
         if (referenceSpace) {
           // ایجاد hit test source
           hitTestSource = await xrSession.requestHitTestSource({
