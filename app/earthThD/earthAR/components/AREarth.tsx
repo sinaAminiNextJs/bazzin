@@ -540,14 +540,14 @@ export default function AREarth() {
 
         const cameraButton = document.getElementById("ar-start-button");
         // 1. درخواست دسترسی به دوربین
-        // const stream = await navigator.mediaDevices.getUserMedia({
-        //   video: true,
-        // });
-        // stream.getTracks().forEach((track) => track.stop());
-        // setPermissionGranted(true);
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+        stream.getTracks().forEach((track) => track.stop());
+        setPermissionGranted(true);
         let referenceSpace: any;
         // let userPermission = confirm("مجوز استفاده از دوربین را میدهید؟");
-        if (hasStarted) {
+        if (permissionGranted) {
           // cameraButton.style.display = "block";
           // cameraButton.addEventListener("click", async () => {
           // ابتدا session را ایجاد می‌کنیم
