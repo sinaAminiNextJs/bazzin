@@ -794,7 +794,7 @@ export default function AREarth() {
       window.location.reload();
       alert("10. finish");
     };
-  }, [arSupported]);
+  }, [arSupported, renderer]);
 
   return (
     <section>
