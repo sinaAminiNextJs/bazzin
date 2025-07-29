@@ -540,14 +540,19 @@ export default function AREarth() {
 
         const cameraButton = document.getElementById("ar-start-button");
         // 1. درخواست دسترسی به دوربین
+        // درخواست دسترسی به دوربین
         const stream = await navigator.mediaDevices.getUserMedia({
           video: true,
         });
-        stream.getTracks().forEach((track) => track.stop());
+        // اگر دسترسی داده شد، دستورات زیر اجرا می‌شود
+        stream.getTracks().forEach((track) => track.stop()); // بستن دسترسی به دوربین پس از درخواست
+        // تنظیم وضعیت دسترسی مجوز به دوربین
         setPermissionGranted(true);
         let referenceSpace: any;
         // let userPermission = confirm("مجوز استفاده از دوربین را میدهید؟");
         if (permissionGranted) {
+          alert("دسترسی به دوربین داده شد");
+
           // cameraButton.style.display = "block";
           // cameraButton.addEventListener("click", async () => {
           // ابتدا session را ایجاد می‌کنیم
