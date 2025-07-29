@@ -545,44 +545,57 @@ export default function AREarth() {
         directionalLight.position.set(1, 1, 1);
         scene.add(ambientLight, directionalLight);
 
-        // ابتدا session را ایجاد می‌کنیم
-        const xrSession = await navigator.xr.requestSession("immersive-ar", {
-          requiredFeatures: ["viewer", "hit-test"],
-          optionalFeatures: ["local-floor"],
-        });
-        alert("5." + { xrSession });
-        let hitTestSource = null;
+        const arButton = document.getElementById("ar-start-button");
+        let referenceSpace: any;
 
-        if (
-          !xrSession ||
-          typeof xrSession.requestHitTestSource !== "function"
-        ) {
-          throw new Error("WebXR Hit Test not supported");
-        }
+        if (arButton) {
+          arButton.addEventListener("click", async () => {
+            // ابتدا session را ایجاد می‌کنیم
+            const xrSession = await navigator.xr!.requestSession(
+              "immersive-ar",
+              {
+                requiredFeatures: ["viewer", "hit-test"],
+                optionalFeatures: ["local-floor"],
+              }
+            );
+            alert("5." + { xrSession });
+            let hitTestSource = null;
 
-        // دریافت reference space
-        let referenceSpace;
-        try {
-          referenceSpace = await xrSession.requestReferenceSpace("local-floor");
-          alert("6." + { referenceSpace });
-        } catch (e) {
-          console.warn("Local-floor failed, using viewer:", e);
-          referenceSpace = await xrSession.requestReferenceSpace("viewer");
-        }
-        if (referenceSpace) {
-          // ایجاد hit test source
-          hitTestSource = await xrSession.requestHitTestSource({
-            space: referenceSpace,
-            offsetRay: new XRRay(new THREE.Vector3(0, 0, 0), {
-              x: 0,
-              y: -1,
-              z: 0,
-            }),
+            if (
+              !xrSession ||
+              typeof xrSession.requestHitTestSource !== "function"
+            ) {
+              throw new Error("WebXR Hit Test not supported");
+            }
+
+            // دریافت reference space
+            try {
+              referenceSpace = await xrSession.requestReferenceSpace(
+                "local-floor"
+              );
+              alert("6." + { referenceSpace });
+            } catch (e) {
+              console.warn("Local-floor failed, using viewer:", e);
+              referenceSpace = await xrSession.requestReferenceSpace("viewer");
+            }
+            if (referenceSpace) {
+              // ایجاد hit test source
+              hitTestSource = await xrSession.requestHitTestSource({
+                space: referenceSpace,
+                offsetRay: new XRRay(new THREE.Vector3(0, 0, 0), {
+                  x: 0,
+                  y: -1,
+                  z: 0,
+                }),
+              });
+              hitTestSourceRef.current = hitTestSource;
+              alert("7." + { hitTestSource });
+            } else {
+              console.error("Failed to get reference space");
+            }
           });
-          hitTestSourceRef.current = hitTestSource;
-          alert("7." + { hitTestSource });
         } else {
-          console.error("Failed to get reference space");
+          alert("ایراد در مرجع فضا");
         }
         // بارگذاری مدل زمین
         const loader = new GLTFLoader();
@@ -784,6 +797,7 @@ export default function AREarth() {
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0 z-50"
       ></div>
+      <button id="ar-start-button">Start Camera</button>
     </section>
   );
 }
