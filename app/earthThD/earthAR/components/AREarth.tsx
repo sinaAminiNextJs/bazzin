@@ -576,6 +576,7 @@ export default function AREarth() {
               );
               alert("6." + { referenceSpace });
             } catch (e) {
+              alert("ارور." + { e });
               console.warn("Local-floor failed, using viewer:", e);
               referenceSpace = await xrSession.requestReferenceSpace("viewer");
             }
