@@ -501,6 +501,7 @@ export default function AREarth() {
       window.removeEventListener("touchmove", handleTouchMoveRotation);
     };
   }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
+
   useEffect(() => {
     if (!arSupported || !hasStarted) return;
 
@@ -510,11 +511,15 @@ export default function AREarth() {
         if (!navigator.xr) {
           throw new Error("WebXR not supported");
         }
+        alert("1.ساپورت");
+
         // ایجاد رندرر سه‌بعدی و فعال کردن WebXR
         const renderer = new THREE.WebGLRenderer({
           antialias: true,
           alpha: true,
         });
+        alert("2." + { renderer });
+
         renderer.xr.enabled = true;
         rendererRef.current = renderer;
 
@@ -525,6 +530,7 @@ export default function AREarth() {
 
         // ساخت صحنه و دوربین
         const scene = new THREE.Scene();
+        alert("3." + { scene });
         const camera = new THREE.PerspectiveCamera(
           90,
           window.innerWidth / window.innerHeight,
@@ -532,7 +538,7 @@ export default function AREarth() {
           20
         );
         sceneRef.current = scene;
-
+        alert("4." + { camera });
         // نورپردازی
         const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
@@ -544,6 +550,7 @@ export default function AREarth() {
           requiredFeatures: ["viewer", "hit-test"],
           optionalFeatures: ["local-floor"],
         });
+        alert("5." + { xrSession });
         let hitTestSource = null;
 
         if (
@@ -557,6 +564,7 @@ export default function AREarth() {
         let referenceSpace;
         try {
           referenceSpace = await xrSession.requestReferenceSpace("local-floor");
+          alert("6." + { referenceSpace });
         } catch (e) {
           console.warn("Local-floor failed, using viewer:", e);
           referenceSpace = await xrSession.requestReferenceSpace("viewer");
@@ -572,6 +580,7 @@ export default function AREarth() {
             }),
           });
           hitTestSourceRef.current = hitTestSource;
+          alert("7." + { hitTestSource });
         } else {
           console.error("Failed to get reference space");
         }
@@ -588,8 +597,7 @@ export default function AREarth() {
             scene.add(earth);
             earthRef.current = earth;
             setLoading(false);
-            alert("loader.load");
-
+            alert("8." + { earth });
             // راه‌اندازی انیمیشن
             renderer.setAnimationLoop((time, frame) => {
               if (!frame || !earthRef.current || !hitTestSourceRef.current)
@@ -598,8 +606,7 @@ export default function AREarth() {
               const hitTestResults = frame.getHitTestResults(
                 hitTestSourceRef.current
               );
-              alert("Hit test results: " + JSON.stringify(hitTestResults));
-
+              alert("9." + { hitTestResults });
               if (hitTestResults.length > 0 && referenceSpace) {
                 const hit = hitTestResults[0];
                 const pose = hit.getPose(referenceSpace);
@@ -762,6 +769,7 @@ export default function AREarth() {
       sceneRef.current = null;
       setHasStarted(false);
       window.location.reload();
+      alert("10. finish");
     };
   }, [arSupported]);
 
