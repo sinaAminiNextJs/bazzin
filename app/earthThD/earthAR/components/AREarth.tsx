@@ -548,55 +548,52 @@ export default function AREarth() {
         const cameraButton = document.getElementById("ar-start-button");
         let referenceSpace: any;
 
-        if (cameraButton) {
-          cameraButton.style.display = "block";
-          cameraButton.addEventListener("click", async () => {
-            // ابتدا session را ایجاد می‌کنیم
-            const xrSession = await navigator.xr!.requestSession(
-              "immersive-ar",
-              {
-                requiredFeatures: ["viewer", "hit-test"],
-                optionalFeatures: ["local-floor"],
-              }
-            );
-            alert("5." + { xrSession });
-            let hitTestSource = null;
-
-            if (
-              !xrSession ||
-              typeof xrSession.requestHitTestSource !== "function"
-            ) {
-              throw new Error("WebXR Hit Test not supported");
-            }
-
-            // دریافت reference space
-            try {
-              referenceSpace = await xrSession.requestReferenceSpace(
-                "local-floor"
-              );
-              alert("6." + { referenceSpace });
-            } catch (e) {
-              alert("ارور." + { e });
-              console.warn("Local-floor failed, using viewer:", e);
-              referenceSpace = await xrSession.requestReferenceSpace("viewer");
-            }
-            if (referenceSpace) {
-              // ایجاد hit test source
-              hitTestSource = await xrSession.requestHitTestSource({
-                space: referenceSpace,
-                offsetRay: new XRRay(new THREE.Vector3(0, 0, 0), {
-                  x: 0,
-                  y: -1,
-                  z: 0,
-                }),
-              });
-              hitTestSourceRef.current = hitTestSource;
-              alert("7." + { hitTestSource });
-            } else {
-              console.error("Failed to get reference space");
-              alert("Failed to get reference space");
-            }
+        if (hasStarted) {
+          // cameraButton.style.display = "block";
+          // cameraButton.addEventListener("click", async () => {
+          // ابتدا session را ایجاد می‌کنیم
+          const xrSession = await navigator.xr!.requestSession("immersive-ar", {
+            requiredFeatures: ["viewer", "hit-test"],
+            optionalFeatures: ["local-floor"],
           });
+          alert("5." + { xrSession });
+          let hitTestSource = null;
+
+          if (
+            !xrSession ||
+            typeof xrSession.requestHitTestSource !== "function"
+          ) {
+            throw new Error("WebXR Hit Test not supported");
+          }
+
+          // دریافت reference space
+          try {
+            referenceSpace = await xrSession.requestReferenceSpace(
+              "local-floor"
+            );
+            alert("6." + { referenceSpace });
+          } catch (e) {
+            alert("ارور." + { e });
+            console.warn("Local-floor failed, using viewer:", e);
+            referenceSpace = await xrSession.requestReferenceSpace("viewer");
+          }
+          if (referenceSpace) {
+            // ایجاد hit test source
+            hitTestSource = await xrSession.requestHitTestSource({
+              space: referenceSpace,
+              offsetRay: new XRRay(new THREE.Vector3(0, 0, 0), {
+                x: 0,
+                y: -1,
+                z: 0,
+              }),
+            });
+            hitTestSourceRef.current = hitTestSource;
+            alert("7." + { hitTestSource });
+          } else {
+            console.error("Failed to get reference space");
+            alert("Failed to get reference space");
+          }
+          // });
         } else {
           alert("ایراد در مرجع فضا");
         }
