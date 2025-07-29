@@ -771,15 +771,28 @@ export default function AREarth() {
     // زمانی که دکمه کلیک شد، AR شروع شود
     const onClick = async () => {
       setHasStarted(true);
-      // درخواست دسترسی به دوربین
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-      });
-      // اگر دسترسی داده شد، دستورات زیر اجرا می‌شود
-      stream.getTracks().forEach((track) => track.stop()); // بستن دسترسی به دوربین پس از درخواست
-      // تنظیم وضعیت دسترسی مجوز به دوربین
-      setPermissionGranted(true);
+
+      try {
+        // درخواست دسترسی به دوربین
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+
+        // اگر دسترسی داده شد، دستورات زیر اجرا می‌شود
+        stream.getTracks().forEach((track) => track.stop()); // بستن دسترسی به دوربین پس از درخواست
+
+        // تنظیم وضعیت دسترسی مجوز به دوربین
+        setPermissionGranted(true);
+        console.log("دوربین دسترسی داده شد!");
+
+        // اقدامات بعدی که می‌خواهید انجام دهید
+      } catch (error) {
+        // اگر خطایی در دسترسی به دوربین رخ داد
+        console.error("خطا در دریافت دسترسی دوربین:", error);
+        alert("دسترسی به دوربین داده نشد.");
+      }
     };
+
     arButton.addEventListener("click", onClick);
 
     // پاکسازی هنگام unmount شدن
@@ -793,7 +806,7 @@ export default function AREarth() {
       // window.location.reload(); // از رفرش کردن صفحه اجتناب کنید، چون می‌تواند باعث ایجاد حلقه بی‌پایان شود
       alert("10. finish");
     };
-  }, [arSupported]);
+  }, [arSupported]); // توجه داشته باشید که ممکن است نیاز به اضافه کردن `permissionGranted` هم به لیست dependencies باشد
 
   return (
     <section>
