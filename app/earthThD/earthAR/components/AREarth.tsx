@@ -594,6 +594,7 @@ export default function AREarth() {
               alert("7." + { hitTestSource });
             } else {
               console.error("Failed to get reference space");
+              alert("Failed to get reference space");
             }
           });
         } else {
