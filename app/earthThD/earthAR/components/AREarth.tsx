@@ -514,7 +514,6 @@ export default function AREarth() {
         if (!navigator.xr) {
           throw new Error("WebXR not supported");
         }
-        alert("1.ساپورت");
 
         // تنظیم ابعاد و اضافه کردن canvas به DOM
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -523,7 +522,6 @@ export default function AREarth() {
 
         // ساخت صحنه و دوربین
         const scene = new THREE.Scene();
-        alert("3." + { scene });
         const camera = new THREE.PerspectiveCamera(
           90,
           window.innerWidth / window.innerHeight,
@@ -531,23 +529,12 @@ export default function AREarth() {
           20
         );
         sceneRef.current = scene;
-        alert("4." + { camera });
         // نورپردازی
         const ambientLight = new THREE.AmbientLight(0xffffff, 1);
         const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
         directionalLight.position.set(1, 1, 1);
         scene.add(ambientLight, directionalLight);
 
-        const cameraButton = document.getElementById("ar-start-button");
-        // 1. درخواست دسترسی به دوربین
-        // درخواست دسترسی به دوربین
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
-        // اگر دسترسی داده شد، دستورات زیر اجرا می‌شود
-        stream.getTracks().forEach((track) => track.stop()); // بستن دسترسی به دوربین پس از درخواست
-        // تنظیم وضعیت دسترسی مجوز به دوربین
-        setPermissionGranted(true);
         let referenceSpace: any;
         // let userPermission = confirm("مجوز استفاده از دوربین را میدهید؟");
         if (permissionGranted) {
@@ -782,8 +769,16 @@ export default function AREarth() {
     }
 
     // زمانی که دکمه کلیک شد، AR شروع شود
-    const onClick = () => {
+    const onClick = async () => {
       setHasStarted(true);
+      // درخواست دسترسی به دوربین
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+      // اگر دسترسی داده شد، دستورات زیر اجرا می‌شود
+      stream.getTracks().forEach((track) => track.stop()); // بستن دسترسی به دوربین پس از درخواست
+      // تنظیم وضعیت دسترسی مجوز به دوربین
+      setPermissionGranted(true);
     };
     arButton.addEventListener("click", onClick);
 
