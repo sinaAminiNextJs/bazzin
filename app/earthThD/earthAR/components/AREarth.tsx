@@ -362,8 +362,8 @@
 //     </section>
 //   );
 // }
-
-"use client";
+///////////////
+("use client");
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -379,7 +379,10 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
-
+  // اندازه پنجره برای تنظیم ابعاد renderer
+  const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
+    0, 0,
+  ]);
   // ref‌ها برای نگهداری session و سایر آبجکت‌های three.js
   const xrSessionRef = useRef<XRSession | null>(null);
   const stopButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -389,6 +392,8 @@ export default function AREarth() {
   const hitTestSourceRef = useRef<XRHitTestSource | undefined>(undefined); // Store the hitTestSource in a ref
 
   useEffect(() => {
+    setWindowsDimention([window.innerWidth, window.innerHeight]);
+
     // Check AR support
     const checkARSupport = async () => {
       if (!navigator.xr) {
@@ -411,7 +416,88 @@ export default function AREarth() {
 
     checkARSupport();
   }, []);
+  let touchStartDistance = 0;
+  let touchStartPos = { x: 0, y: 0 };
+  useEffect(() => {
+    // اضافه کردن تعامل لمسی
+    const handleTouchStart = (event: any) => {
+      if (event.touches.length === 2) {
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        touchStartDistance = Math.sqrt(
+          Math.pow(touch2.clientX - touch1.clientX, 2) +
+            Math.pow(touch2.clientY - touch1.clientY, 2)
+        );
+      }
+    };
 
+    const handleTouchMove = (event: any) => {
+      if (event.touches.length === 2) {
+        const touch1 = event.touches[0];
+        const touch2 = event.touches[1];
+        const newDistance = Math.sqrt(
+          Math.pow(touch2.clientX - touch1.clientX, 2) +
+            Math.pow(touch2.clientY - touch1.clientY, 2)
+        );
+
+        // مقیاس مدل زمین بر اساس فاصله تغییر کند
+        if (earthRef.current) {
+          const scaleFactor = newDistance / touchStartDistance;
+          earthRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
+        }
+      }
+    };
+
+    const handleTouchEnd = (event: any) => {
+      if (event.touches.length < 2) {
+        touchStartDistance = 0;
+      }
+    };
+
+    const handleTouchStartRotation = (event: any) => {
+      if (event.touches.length === 1) {
+        touchStartPos = {
+          x: event.touches[0].clientX,
+          y: event.touches[0].clientY,
+        };
+      }
+    };
+
+    const handleTouchMoveRotation = (event: any) => {
+      if (event.touches.length === 1) {
+        const dx = event.touches[0].clientX - touchStartPos.x;
+        // const dy = event.touches[0].clientY - touchStartPos.y;
+
+        // چرخش مدل زمین بر اساس حرکت انگشت
+        if (earthRef.current) {
+          earthRef.current.rotation.y += dx * 0.005; // حساسیت چرخش
+          // earthRef.current.rotation.x += dy * 0.005; // حساسیت چرخش
+        }
+
+        // بروزرسانی موقعیت اولیه انگشت
+        touchStartPos = {
+          x: event.touches[0].clientX,
+          y: event.touches[0].clientY,
+        };
+      }
+    };
+
+    // اضافه کردن رویدادهای لمسی
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchend", handleTouchEnd);
+    window.addEventListener("touchstart", handleTouchStartRotation);
+    window.addEventListener("touchmove", handleTouchMoveRotation);
+
+    // پاکسازی رویدادها هنگام unmount
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchstart", handleTouchStartRotation);
+      window.removeEventListener("touchmove", handleTouchMoveRotation);
+    };
+  }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
   useEffect(() => {
     if (!arSupported || !hasStarted) return;
 
@@ -450,9 +536,6 @@ export default function AREarth() {
         directionalLight.position.set(1, 1, 1);
         scene.add(ambientLight, directionalLight);
 
-        // بارگذاری مدل زمین
-        const loader = new GLTFLoader();
-
         // ابتدا session را ایجاد می‌کنیم
         const xrSession = await navigator.xr.requestSession("immersive-ar", {
           requiredFeatures: ["viewer", "hit-test"],
@@ -489,7 +572,8 @@ export default function AREarth() {
         } else {
           console.error("Failed to get reference space");
         }
-
+        // بارگذاری مدل زمین
+        const loader = new GLTFLoader();
         // حالا مدل را بارگذاری می‌کنیم
         loader.load(
           "/ar-earth/earth.glb",
@@ -500,6 +584,7 @@ export default function AREarth() {
             earth.visible = false; // ابتدا مدل را مخفی می‌کنیم
             scene.add(earth);
             earthRef.current = earth;
+            setLoading(false);
 
             // راه‌اندازی انیمیشن
             renderer.setAnimationLoop((time, frame) => {
@@ -521,6 +606,8 @@ export default function AREarth() {
                     pose.transform.position.z
                   );
                   earthRef.current.visible = true;
+                } else {
+                  earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
                 }
               }
 
@@ -537,7 +624,48 @@ export default function AREarth() {
             setLoading(false);
           }
         );
+        // دکمه توقف AR
+        const showStopButton = () => {
+          // حذف دکمه قبلی
+          if (stopButtonRef.current) {
+            stopButtonRef.current.remove();
+          }
 
+          // ایجاد دکمه جدید
+          const stopButton = document.createElement("button");
+          Object.assign(stopButton.style, {
+            // استایل سفارشی
+          });
+
+          stopButton.addEventListener("click", () => {
+            if (rendererRef.current?.xr.getSession()) {
+              rendererRef.current.xr.getSession()?.end();
+            }
+          });
+
+          document.body.appendChild(stopButton);
+          stopButtonRef.current = stopButton;
+
+          // حذف دکمه هنگام پایان session
+          const onSessionEnd = () => {
+            if (stopButtonRef.current) {
+              stopButtonRef.current.remove();
+              stopButtonRef.current = null;
+            }
+          };
+
+          rendererRef.current?.xr.addEventListener("sessionend", onSessionEnd);
+        };
+        // هندل کردن شروع session
+        renderer.xr.addEventListener("sessionstart", () => {
+          xrSessionRef.current = renderer.xr.getSession();
+          showStopButton();
+        });
+
+        // در حالت dev هم دکمه نشان داده شود
+        if (process.env.NODE_ENV === "development") {
+          showStopButton();
+        }
         // هندل تغییر سایز پنجره
         const onResize = () => {
           camera.aspect = window.innerWidth / window.innerHeight;
@@ -559,8 +687,8 @@ export default function AREarth() {
           }
         };
       } catch (error) {
-        console.error("AR initialization failed:", error);
-        setError(`Failed to initialize AR: ${error}`);
+        console.error("خطا در بارگذاری مدل:", error);
+        setError(`خطا در بارگذاری مدل زمین: ${error}`);
         setLoading(false);
       }
     };
