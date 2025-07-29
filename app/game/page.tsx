@@ -33,10 +33,10 @@ export default function Game() {
       src: "https://html5.gamedistribution.com/63e8c2d0709e452f842f261a7c9f43f9/",
     },
     {
-      name: "مسیر روستایی",
+      name: "بلاک شکن",
       game: "/g4.jpg",
       slug: "game-4",
-      src: "https://html5.gamedistribution.com/ba81748efe4043d5891173df143d4708/",
+      src: "https://html5.gamedistribution.com/81b03a635d5f4147876166033620ef25/",
     },
     {
       name: "الماس لابوبو",
