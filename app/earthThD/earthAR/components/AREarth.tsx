@@ -506,7 +506,7 @@ export default function AREarth() {
   }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
 
   useEffect(() => {
-    if (!arSupported || !hasStarted) return;
+    if (!arSupported || !hasStarted || !renderer) return;
 
     const initAR = async () => {
       try {
@@ -516,18 +516,8 @@ export default function AREarth() {
         }
         alert("1.ساپورت");
 
-        // ایجاد رندرر سه‌بعدی و فعال کردن WebXR
-        const newRenderer = new THREE.WebGLRenderer({
-          antialias: true,
-          alpha: true,
-        });
-        setRenderer(newRenderer);
-        alert("2." + { renderer });
-        if (renderer) renderer.xr.enabled = true;
-        rendererRef.current = renderer;
-
         // تنظیم ابعاد و اضافه کردن canvas به DOM
-        if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(window.innerWidth, window.innerHeight);
         const container = document.getElementById("ar-view");
         if (container && renderer) container.appendChild(renderer.domElement);
 
@@ -622,38 +612,38 @@ export default function AREarth() {
             setLoading(false);
             alert("8." + { earth });
             // راه‌اندازی انیمیشن
-            if (renderer)
-              renderer.setAnimationLoop((time, frame) => {
-                alert("8.1" + { frame });
-                alert("8.2" + earthRef.current);
-                alert("8.3" + hitTestSourceRef.current);
-                if (!frame || !earthRef.current || !hitTestSourceRef.current)
-                  return;
 
-                const hitTestResults = frame.getHitTestResults(
-                  hitTestSourceRef.current
-                );
-                alert("9." + { hitTestResults });
-                if (hitTestResults.length > 0 && referenceSpace) {
-                  const hit = hitTestResults[0];
-                  const pose = hit.getPose(referenceSpace);
+            renderer.setAnimationLoop((time, frame) => {
+              alert("8.1" + { frame });
+              alert("8.2" + earthRef.current);
+              alert("8.3" + hitTestSourceRef.current);
+              if (!frame || !earthRef.current || !hitTestSourceRef.current)
+                return;
 
-                  if (pose) {
-                    earthRef.current.position.set(
-                      pose.transform.position.x,
-                      pose.transform.position.y,
-                      pose.transform.position.z
-                    );
-                    earthRef.current.visible = true;
-                  } else {
-                    earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
-                    earthRef.current.visible = true;
-                  }
+              const hitTestResults = frame.getHitTestResults(
+                hitTestSourceRef.current
+              );
+              alert("9." + { hitTestResults });
+              if (hitTestResults.length > 0 && referenceSpace) {
+                const hit = hitTestResults[0];
+                const pose = hit.getPose(referenceSpace);
+
+                if (pose) {
+                  earthRef.current.position.set(
+                    pose.transform.position.x,
+                    pose.transform.position.y,
+                    pose.transform.position.z
+                  );
+                  earthRef.current.visible = true;
+                } else {
+                  earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
+                  earthRef.current.visible = true;
                 }
+              }
 
-                earthRef.current.rotation.y += 0.002;
-                renderer.render(scene, camera);
-              });
+              earthRef.current.rotation.y += 0.002;
+              renderer.render(scene, camera);
+            });
 
             setLoading(false);
           },
@@ -697,11 +687,11 @@ export default function AREarth() {
           rendererRef.current?.xr.addEventListener("sessionend", onSessionEnd);
         };
         // هندل کردن شروع session
-        if (renderer)
-          renderer.xr.addEventListener("sessionstart", () => {
-            xrSessionRef.current = renderer.xr.getSession();
-            showStopButton();
-          });
+
+        renderer.xr.addEventListener("sessionstart", () => {
+          xrSessionRef.current = renderer.xr.getSession();
+          showStopButton();
+        });
 
         // در حالت dev هم دکمه نشان داده شود
         if (process.env.NODE_ENV === "development") {
@@ -711,7 +701,7 @@ export default function AREarth() {
         const onResize = () => {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
-          if (renderer) renderer.setSize(window.innerWidth, window.innerHeight);
+          renderer.setSize(window.innerWidth, window.innerHeight);
           const container = document.getElementById("ar-view");
           if (container && renderer) container.appendChild(renderer.domElement);
         };
@@ -738,12 +728,21 @@ export default function AREarth() {
     };
 
     initAR();
-  }, [arSupported, hasStarted]);
+  }, [arSupported, hasStarted, renderer]);
 
   useEffect(() => {
     if (arSupported !== true) return;
-    if (!renderer) return;
+    // ایجاد رندرر سه‌بعدی و فعال کردن WebXR
+    const newRenderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+    });
+    setRenderer(newRenderer);
+    alert("2." + { renderer });
+    if (renderer) renderer.xr.enabled = true;
+    rendererRef.current = renderer;
     // ساخت دکمه شروع AR
+    if (!renderer) return;
     var arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
       optionalFeatures: ["dom-overlay", "dom-overlay-for-handheld-ar"],
@@ -794,7 +793,7 @@ export default function AREarth() {
       window.location.reload();
       alert("10. finish");
     };
-  }, [arSupported, renderer]);
+  }, [arSupported]);
 
   return (
     <section>
