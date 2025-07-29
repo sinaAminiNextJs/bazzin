@@ -608,6 +608,7 @@ export default function AREarth() {
                   earthRef.current.visible = true;
                 } else {
                   earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
+                  earthRef.current.visible = true;
                 }
               }
 
@@ -633,9 +634,7 @@ export default function AREarth() {
 
           // ایجاد دکمه جدید
           const stopButton = document.createElement("button");
-          Object.assign(stopButton.style, {
-            // استایل سفارشی
-          });
+          Object.assign(stopButton.style, {});
 
           stopButton.addEventListener("click", () => {
             if (rendererRef.current?.xr.getSession()) {
@@ -671,6 +670,8 @@ export default function AREarth() {
           camera.aspect = window.innerWidth / window.innerHeight;
           camera.updateProjectionMatrix();
           renderer.setSize(window.innerWidth, window.innerHeight);
+          const container = document.getElementById("ar-view");
+          if (container) container.appendChild(renderer.domElement);
         };
 
         window.addEventListener("resize", onResize);
@@ -750,6 +751,9 @@ export default function AREarth() {
       if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
       renderer.dispose();
       rendererRef.current = null;
+      sceneRef.current = null;
+      setHasStarted(false);
+      window.location.reload();
     };
   }, [arSupported]);
 
