@@ -545,11 +545,12 @@ export default function AREarth() {
         directionalLight.position.set(1, 1, 1);
         scene.add(ambientLight, directionalLight);
 
-        const arButton = document.getElementById("ar-start-button");
+        const cameraButton = document.getElementById("ar-start-button");
         let referenceSpace: any;
 
-        if (arButton) {
-          arButton.addEventListener("click", async () => {
+        if (cameraButton) {
+          cameraButton.style.display = "block";
+          cameraButton.addEventListener("click", async () => {
             // ابتدا session را ایجاد می‌کنیم
             const xrSession = await navigator.xr!.requestSession(
               "immersive-ar",
@@ -797,7 +798,9 @@ export default function AREarth() {
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0 z-50"
       ></div>
-      <button id="ar-start-button">Start Camera</button>
+      <button className="w-full h-20 hidden" id="ar-start-button">
+        Start Camera
+      </button>
     </section>
   );
 }
