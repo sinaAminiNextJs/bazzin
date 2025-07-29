@@ -534,10 +534,15 @@ export default function AREarth() {
       }
 
       // 6. ایجاد hit test source
-      const hitTestSource = await session.requestHitTestSource!({
+
+      const hitTestSource = (await session.requestHitTestSource!({
         space: referenceSpace,
-        offsetRay: new XRRay(new THREE.Vector3(0, 0, 0)),
-      });
+        offsetRay: new XRRay(new THREE.Vector3(0, 0, 0), {
+          x: 0,
+          y: -1,
+          z: 0,
+        }),
+      })) as XRHitTestSource;
       hitTestSourceRef.current = hitTestSource;
 
       // 7. بارگذاری مدل
