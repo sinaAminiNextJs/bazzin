@@ -399,6 +399,7 @@ export default function AREarth() {
       if (!navigator.xr) {
         setArSupported(false);
         setError("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
+        alert("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
         return;
       }
 
@@ -407,10 +408,12 @@ export default function AREarth() {
         setArSupported(supported);
         if (!supported) {
           setError("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
+          alert("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
         }
       } catch (err) {
         setArSupported(false);
         setError("بررسی پشتیبانی AR با خطا مواجه شد.");
+        alert("بررسی پشتیبانی AR با خطا مواجه شد.");
       }
     };
 
@@ -585,6 +588,7 @@ export default function AREarth() {
             scene.add(earth);
             earthRef.current = earth;
             setLoading(false);
+            alert("loader.load");
 
             // راه‌اندازی انیمیشن
             renderer.setAnimationLoop((time, frame) => {
@@ -594,6 +598,7 @@ export default function AREarth() {
               const hitTestResults = frame.getHitTestResults(
                 hitTestSourceRef.current
               );
+              alert("Hit test results: " + JSON.stringify(hitTestResults));
 
               if (hitTestResults.length > 0 && referenceSpace) {
                 const hit = hitTestResults[0];
@@ -622,6 +627,8 @@ export default function AREarth() {
           (error) => {
             console.error("Error loading model:", error);
             setError("Error loading Earth model");
+            alert("Error loading Earth model");
+
             setLoading(false);
           }
         );
@@ -690,6 +697,7 @@ export default function AREarth() {
       } catch (error) {
         console.error("خطا در بارگذاری مدل:", error);
         setError(`خطا در بارگذاری مدل زمین: ${error}`);
+        alert(`خطا در بارگذاری مدل زمین: ${error}`);
         setLoading(false);
       }
     };
