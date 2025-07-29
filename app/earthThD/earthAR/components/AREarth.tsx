@@ -616,6 +616,9 @@ export default function AREarth() {
             alert("8." + { earth });
             // راه‌اندازی انیمیشن
             renderer.setAnimationLoop((time, frame) => {
+              alert("8.1" + { frame });
+              alert("8.2" + earthRef.current);
+              alert("8.3" + hitTestSourceRef.current);
               if (!frame || !earthRef.current || !hitTestSourceRef.current)
                 return;
 
