@@ -379,27 +379,21 @@ export default function AREarth() {
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
-  // اندازه پنجره برای تنظیم ابعاد renderer
-  const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
-    0, 0,
-  ]);
+  const [permissionGranted, setPermissionGranted] = useState(false);
+
   // ref‌ها برای نگهداری session و سایر آبجکت‌های three.js
   const xrSessionRef = useRef<XRSession | null>(null);
-  const stopButtonRef = useRef<HTMLButtonElement | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const hitTestSourceRef = useRef<XRHitTestSource | undefined>(undefined); // Store the hitTestSource in a ref
+  const hitTestSourceRef = useRef<XRHitTestSource | null>(null);
 
+  // بررسی پشتیبانی از WebXR
   useEffect(() => {
-    setWindowsDimention([window.innerWidth, window.innerHeight]);
-
-    // Check AR support
     const checkARSupport = async () => {
       if (!navigator.xr) {
         setArSupported(false);
         setError("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
-        alert("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
         return;
       }
 
@@ -408,56 +402,47 @@ export default function AREarth() {
         setArSupported(supported);
         if (!supported) {
           setError("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
-          alert("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
         }
       } catch (err) {
         setArSupported(false);
         setError("بررسی پشتیبانی AR با خطا مواجه شد.");
-        alert("بررسی پشتیبانی AR با خطا مواجه شد.");
       }
     };
 
     checkARSupport();
   }, []);
-  let touchStartDistance = 0;
-  let touchStartPos = { x: 0, y: 0 };
+
+  // مدیریت تعاملات لمسی
   useEffect(() => {
-    // اضافه کردن تعامل لمسی
-    const handleTouchStart = (event: any) => {
+    let touchStartDistance = 0;
+    let touchStartPos = { x: 0, y: 0 };
+
+    const handleTouchStart = (event: TouchEvent) => {
       if (event.touches.length === 2) {
         const touch1 = event.touches[0];
         const touch2 = event.touches[1];
-        touchStartDistance = Math.sqrt(
-          Math.pow(touch2.clientX - touch1.clientX, 2) +
-            Math.pow(touch2.clientY - touch1.clientY, 2)
+        touchStartDistance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
         );
       }
     };
 
-    const handleTouchMove = (event: any) => {
-      if (event.touches.length === 2) {
+    const handleTouchMove = (event: TouchEvent) => {
+      if (event.touches.length === 2 && earthRef.current) {
         const touch1 = event.touches[0];
         const touch2 = event.touches[1];
-        const newDistance = Math.sqrt(
-          Math.pow(touch2.clientX - touch1.clientX, 2) +
-            Math.pow(touch2.clientY - touch1.clientY, 2)
+        const newDistance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
         );
 
-        // مقیاس مدل زمین بر اساس فاصله تغییر کند
-        if (earthRef.current) {
-          const scaleFactor = newDistance / touchStartDistance;
-          earthRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
-        }
+        const scaleFactor = newDistance / touchStartDistance;
+        earthRef.current.scale.setScalar(scaleFactor * 0.07);
       }
     };
 
-    const handleTouchEnd = (event: any) => {
-      if (event.touches.length < 2) {
-        touchStartDistance = 0;
-      }
-    };
-
-    const handleTouchStartRotation = (event: any) => {
+    const handleTouchStartRotation = (event: TouchEvent) => {
       if (event.touches.length === 1) {
         touchStartPos = {
           x: event.touches[0].clientX,
@@ -466,18 +451,10 @@ export default function AREarth() {
       }
     };
 
-    const handleTouchMoveRotation = (event: any) => {
-      if (event.touches.length === 1) {
+    const handleTouchMoveRotation = (event: TouchEvent) => {
+      if (event.touches.length === 1 && earthRef.current) {
         const dx = event.touches[0].clientX - touchStartPos.x;
-        // const dy = event.touches[0].clientY - touchStartPos.y;
-
-        // چرخش مدل زمین بر اساس حرکت انگشت
-        if (earthRef.current) {
-          earthRef.current.rotation.y += dx * 0.005; // حساسیت چرخش
-          // earthRef.current.rotation.x += dy * 0.005; // حساسیت چرخش
-        }
-
-        // بروزرسانی موقعیت اولیه انگشت
+        earthRef.current.rotation.y += dx * 0.005;
         touchStartPos = {
           x: event.touches[0].clientX,
           y: event.touches[0].clientY,
@@ -485,325 +462,232 @@ export default function AREarth() {
       }
     };
 
-    // اضافه کردن رویدادهای لمسی
     window.addEventListener("touchstart", handleTouchStart);
     window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchend", handleTouchEnd);
     window.addEventListener("touchstart", handleTouchStartRotation);
     window.addEventListener("touchmove", handleTouchMoveRotation);
 
-    // پاکسازی رویدادها هنگام unmount
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
       window.removeEventListener("touchstart", handleTouchStartRotation);
       window.removeEventListener("touchmove", handleTouchMoveRotation);
     };
-  }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
+  }, []);
 
-  useEffect(() => {
-    if (!arSupported || !hasStarted) return;
+  // شروع تجربه AR
+  const startARExperience = async () => {
+    try {
+      setLoading(true);
 
-    const initAR = async () => {
-      try {
-        // 1. بررسی پشتیبانی مرورگر
-        if (!navigator.xr) {
-          throw new Error("WebXR not supported");
-        }
-        alert("1.ساپورت");
+      // 1. درخواست دسترسی به دوربین
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      stream.getTracks().forEach((track) => track.stop());
+      setPermissionGranted(true);
 
-        // ایجاد رندرر سه‌بعدی و فعال کردن WebXR
-        const renderer = new THREE.WebGLRenderer({
-          antialias: true,
-          alpha: true,
-        });
-        alert("2." + { renderer });
+      // 2. تنظیمات Three.js
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+      });
+      renderer.xr.enabled = true;
+      rendererRef.current = renderer;
+      renderer.setSize(window.innerWidth, window.innerHeight);
 
-        renderer.xr.enabled = true;
-        rendererRef.current = renderer;
-
-        // تنظیم ابعاد و اضافه کردن canvas به DOM
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        const container = document.getElementById("ar-view");
-        if (container) container.appendChild(renderer.domElement);
-
-        // ساخت صحنه و دوربین
-        const scene = new THREE.Scene();
-        alert("3." + { scene });
-        const camera = new THREE.PerspectiveCamera(
-          90,
-          window.innerWidth / window.innerHeight,
-          0.01,
-          20
-        );
-        sceneRef.current = scene;
-        alert("4." + { camera });
-        // نورپردازی
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(ambientLight, directionalLight);
-
-        // const cameraButton = document.getElementById("ar-start-button");
-        let referenceSpace: any;
-        let userPermission = confirm("مجوز استفاده از دوربین را میدهید؟");
-        if (userPermission) {
-          // cameraButton.style.display = "block";
-          // cameraButton.addEventListener("click", async () => {
-          // ابتدا session را ایجاد می‌کنیم
-          const xrSession = await navigator.xr!.requestSession("immersive-ar", {
-            requiredFeatures: ["viewer", "hit-test"],
-            optionalFeatures: ["local-floor"],
-          });
-          alert("5." + { xrSession });
-          let hitTestSource = null;
-
-          if (
-            !xrSession ||
-            typeof xrSession.requestHitTestSource !== "function"
-          ) {
-            throw new Error("WebXR Hit Test not supported");
-          }
-
-          // دریافت reference space
-          try {
-            referenceSpace = await xrSession.requestReferenceSpace(
-              "local-floor"
-            );
-            alert("6." + { referenceSpace });
-          } catch (e) {
-            alert("ارور." + { e });
-            console.warn("Local-floor failed, using viewer:", e);
-            referenceSpace = await xrSession.requestReferenceSpace("viewer");
-          }
-          if (referenceSpace) {
-            // ایجاد hit test source
-            hitTestSource = await xrSession.requestHitTestSource({
-              space: referenceSpace,
-              offsetRay: new XRRay(new THREE.Vector3(0, 0, 0), {
-                x: 0,
-                y: -1,
-                z: 0,
-              }),
-            });
-            hitTestSourceRef.current = hitTestSource;
-            alert("7." + { hitTestSource });
-          } else {
-            console.error("Failed to get reference space");
-            alert("Failed to get reference space");
-          }
-          // });
-        } else {
-          window.location.reload();
-          alert("ایراد در مرجع فضا");
-        }
-        // بارگذاری مدل زمین
-        const loader = new GLTFLoader();
-        // حالا مدل را بارگذاری می‌کنیم
-        loader.load(
-          "/ar-earth/earth.glb",
-          (gltf) => {
-            const earth = gltf.scene;
-            earth.scale.set(0.07, 0.07, 0.07);
-            earth.rotation.y = Math.PI / 2;
-            earth.visible = false; // ابتدا مدل را مخفی می‌کنیم
-            scene.add(earth);
-            earthRef.current = earth;
-            setLoading(false);
-            alert("8." + { earth });
-            // راه‌اندازی انیمیشن
-            renderer.setAnimationLoop((time, frame) => {
-              alert("8.1" + { frame });
-              alert("8.2" + earthRef.current);
-              alert("8.3" + hitTestSourceRef.current);
-              if (!frame || !earthRef.current || !hitTestSourceRef.current)
-                return;
-
-              const hitTestResults = frame.getHitTestResults(
-                hitTestSourceRef.current
-              );
-              alert("9." + { hitTestResults });
-              if (hitTestResults.length > 0 && referenceSpace) {
-                const hit = hitTestResults[0];
-                const pose = hit.getPose(referenceSpace);
-
-                if (pose) {
-                  earthRef.current.position.set(
-                    pose.transform.position.x,
-                    pose.transform.position.y,
-                    pose.transform.position.z
-                  );
-                  earthRef.current.visible = true;
-                } else {
-                  earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
-                  earthRef.current.visible = true;
-                }
-              }
-
-              earthRef.current.rotation.y += 0.002;
-              renderer.render(scene, camera);
-            });
-
-            setLoading(false);
-          },
-          undefined,
-          (error) => {
-            console.error("Error loading model:", error);
-            setError("Error loading Earth model");
-            alert("Error loading Earth model");
-
-            setLoading(false);
-          }
-        );
-        // دکمه توقف AR
-        const showStopButton = () => {
-          // حذف دکمه قبلی
-          if (stopButtonRef.current) {
-            stopButtonRef.current.remove();
-          }
-
-          // ایجاد دکمه جدید
-          const stopButton = document.createElement("button");
-          Object.assign(stopButton.style, {});
-
-          stopButton.addEventListener("click", () => {
-            if (rendererRef.current?.xr.getSession()) {
-              rendererRef.current.xr.getSession()?.end();
-            }
-          });
-
-          document.body.appendChild(stopButton);
-          stopButtonRef.current = stopButton;
-
-          // حذف دکمه هنگام پایان session
-          const onSessionEnd = () => {
-            if (stopButtonRef.current) {
-              stopButtonRef.current.remove();
-              stopButtonRef.current = null;
-            }
-          };
-
-          rendererRef.current?.xr.addEventListener("sessionend", onSessionEnd);
-        };
-        // هندل کردن شروع session
-        renderer.xr.addEventListener("sessionstart", () => {
-          xrSessionRef.current = renderer.xr.getSession();
-          showStopButton();
-        });
-
-        // در حالت dev هم دکمه نشان داده شود
-        if (process.env.NODE_ENV === "development") {
-          showStopButton();
-        }
-        // هندل تغییر سایز پنجره
-        const onResize = () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-          const container = document.getElementById("ar-view");
-          if (container) container.appendChild(renderer.domElement);
-        };
-
-        window.addEventListener("resize", onResize);
-
-        return () => {
-          window.removeEventListener("resize", onResize);
-          if (rendererRef.current) {
-            rendererRef.current.dispose();
-            rendererRef.current = null;
-          }
-          if (xrSessionRef.current) {
-            xrSessionRef.current.end();
-            xrSessionRef.current = null;
-          }
-        };
-      } catch (error) {
-        console.error("خطا در بارگذاری مدل:", error);
-        setError(`خطا در بارگذاری مدل زمین: ${error}`);
-        alert(`خطا در بارگذاری مدل زمین: ${error}`);
-        setLoading(false);
+      const container = document.getElementById("ar-view");
+      if (container) {
+        container.innerHTML = "";
+        container.appendChild(renderer.domElement);
       }
-    };
 
-    initAR();
-  }, [arSupported, hasStarted]);
+      // 3. ایجاد صحنه
+      const scene = new THREE.Scene();
+      sceneRef.current = scene;
 
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        100
+      );
+
+      // نورپردازی
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(1, 1, 1);
+      scene.add(ambientLight, directionalLight);
+
+      // 4. شروع session WebXR
+      const session = await navigator.xr!.requestSession("immersive-ar", {
+        requiredFeatures: ["viewer", "hit-test"],
+        optionalFeatures: ["local-floor"],
+      });
+      xrSessionRef.current = session;
+
+      // 5. دریافت reference space
+      let referenceSpace;
+      try {
+        referenceSpace = await session.requestReferenceSpace("local-floor");
+      } catch (e) {
+        console.warn("Local-floor failed, using viewer");
+        referenceSpace = await session.requestReferenceSpace("viewer");
+      }
+
+      // 6. ایجاد hit test source
+      const hitTestSource = await session.requestHitTestSource!({
+        space: referenceSpace,
+        offsetRay: new XRRay(new THREE.Vector3(0, 0, 0)),
+      });
+      hitTestSourceRef.current = hitTestSource;
+
+      // 7. بارگذاری مدل
+      const loader = new GLTFLoader();
+      loader.load(
+        "/ar-earth/earth.glb",
+        (gltf) => {
+          const earth = gltf.scene;
+          earth.scale.set(0.07, 0.07, 0.07);
+          earth.rotation.y = Math.PI / 2;
+          earth.visible = false;
+          scene.add(earth);
+          earthRef.current = earth;
+          setLoading(false);
+
+          // انیمیشن
+          renderer.setAnimationLoop((time, frame) => {
+            if (!frame || !earthRef.current || !hitTestSourceRef.current)
+              return;
+
+            const hitTestResults = frame.getHitTestResults(
+              hitTestSourceRef.current
+            );
+
+            if (hitTestResults.length > 0) {
+              const hit = hitTestResults[0];
+              const pose = hit.getPose(referenceSpace);
+
+              if (pose) {
+                earthRef.current.position.set(
+                  pose.transform.position.x,
+                  pose.transform.position.y,
+                  pose.transform.position.z
+                );
+                earthRef.current.visible = true;
+              }
+            }
+
+            earthRef.current.rotation.y += 0.002;
+            renderer.render(scene, camera);
+          });
+        },
+        undefined,
+        (error) => {
+          console.error("Error loading model:", error);
+          setError("خطا در بارگذاری مدل زمین");
+          setLoading(false);
+        }
+      );
+
+      // مدیریت تغییر سایز
+      const onResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      };
+      window.addEventListener("resize", onResize);
+
+      return () => {
+        window.removeEventListener("resize", onResize);
+        if (rendererRef.current) {
+          rendererRef.current.dispose();
+        }
+        if (session) {
+          session.end();
+        }
+      };
+    } catch (error) {
+      console.error("AR initialization failed:", error);
+      setError(`خطا در راه‌اندازی AR: ${error}`);
+      setLoading(false);
+    }
+  };
+
+  // ایجاد دکمه AR
   useEffect(() => {
-    if (arSupported !== true) return;
+    if (arSupported !== true || permissionGranted) return;
 
-    // ساخت رندرر سه‌بعدی
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.xr.enabled = true;
     rendererRef.current = renderer;
 
-    // ساخت دکمه شروع AR
-    var arButton = ARButton.createButton(renderer, {
+    const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
-      optionalFeatures: ["dom-overlay", "dom-overlay-for-handheld-ar"],
-      domOverlay: { root: document.body },
+      optionalFeatures: ["local-floor"],
     });
-    // اعمال استایل سفارشی به دکمه
+
+    // استایل دکمه
     Object.assign(arButton.style, {
-      minWidth: "fit-content",
-      opacity: "1",
       position: "fixed",
       bottom: "20px",
-      left: "20px",
-      padding: "8px 32px",
-      backgroundColor: "#ffc585",
-      color: "#000",
-      borderRadius: "1rem",
-      border: "2px solid #fff7c4",
-      fontFamily: "iranyekan, sans-serif",
-      fontSize: "1.25rem",
-      boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+      left: "50%",
+      transform: "translateX(-50%)",
+      padding: "12px 24px",
+      backgroundColor: "#4285f4",
+      color: "white",
+      border: "none",
+      borderRadius: "4px",
+      fontSize: "16px",
       cursor: "pointer",
-      zIndex: "11000",
+      zIndex: "10000",
     });
 
-    // اضافه کردن به container
-    const btnContainer = document.getElementById("ar-button-container");
-    if (btnContainer) {
-      btnContainer.appendChild(arButton);
-    } else {
-      alert("مشکلی در نمایش دکمه شروع پیش آمده");
-      // document.body.appendChild(arButton);
+    arButton.textContent = "شروع تجربه AR";
+
+    const container = document.getElementById("ar-button-container");
+    if (container) {
+      container.appendChild(arButton);
     }
 
-    // زمانی که دکمه کلیک شد، AR شروع شود
-    const onClick = () => {
-      setHasStarted(true);
-    };
-    arButton.addEventListener("click", onClick);
-
-    // پاکسازی هنگام unmount شدن
     return () => {
-      arButton.removeEventListener("click", onClick);
-      if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
+      if (arButton.parentNode) {
+        arButton.parentNode.removeChild(arButton);
+      }
       renderer.dispose();
-      rendererRef.current = null;
-      sceneRef.current = null;
-      setHasStarted(false);
-      window.location.reload();
-      alert("10. finish");
     };
-  }, [arSupported]);
+  }, [arSupported, permissionGranted]);
 
   return (
     <section>
-      {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
+
+      {!permissionGranted && (
+        <button
+          onClick={startARExperience}
+          style={{
+            position: "fixed",
+            bottom: "80px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            padding: "12px 24px",
+            backgroundColor: "#34a853",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            fontSize: "16px",
+            cursor: "pointer",
+            zIndex: "10000",
+          }}
+        >
+          فعال‌سازی دوربین
+        </button>
+      )}
+
       <div id="ar-view" className="w-full h-full z-50" />
-      {/* دکمه AR */}
       <div
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0 z-50"
-      ></div>
-      {/* <button className="w-full h-20 hidden" id="ar-start-button">
-        Start Camera
-      </button> */}
+      />
     </section>
   );
 }
