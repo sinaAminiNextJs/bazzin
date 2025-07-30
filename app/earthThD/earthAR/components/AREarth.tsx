@@ -364,6 +364,7 @@
 // }
 ///////////////
 "use client";
+
 import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -372,7 +373,8 @@ import { ARButton } from "three/addons/webxr/ARButton.js";
 // کامپوننت‌های رابط کاربری
 import ARLoading from "./ARLoading";
 import ARError from "./ARError";
-// import WebXRPolyfill from "webxr-polyfill";
+// @ts-ignore
+import WebXRPolyfill from "webxr-polyfill";
 
 export default function AREarth() {
   // state‌ها برای مدیریت وضعیت‌های مختلف
@@ -517,10 +519,10 @@ export default function AREarth() {
     if (!arSupported || !hasStarted || !renderer) return;
     const initAR = async () => {
       try {
-        // 1. بررسی پشتیبانی مرورگر
-        if (!navigator.xr) {
-          throw new Error("WebXR not supported");
-        }
+        // 1. درخواست مجوز دوربین اول
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
 
         // تنظیم رندرر
         renderer.setSize(window.innerWidth, window.innerHeight);
@@ -739,8 +741,6 @@ export default function AREarth() {
 
   return (
     <section>
-      <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/webxr-api@latest/dist/webxr-api.js"></script>
       {/* لودینگ و خطا */}
       {loading && <ARLoading messege={loadingMessege} />}
       {error && <ARError error={error} />}
