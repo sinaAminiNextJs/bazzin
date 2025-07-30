@@ -397,7 +397,6 @@ export default function AREarth() {
   const hitTestSourceRef = useRef<XRHitTestSource | undefined>(undefined); // Store the hitTestSource in a ref
 
   useEffect(() => {
-    alert("اول");
     setWindowsDimention([window.innerWidth, window.innerHeight]);
     setLoading(true);
     setLoadingMessage("در حال بررسی امکانات سخت افزاری شما");
@@ -426,16 +425,14 @@ export default function AREarth() {
         alert("بررسی پشتیبانی AR با خطا مواجه شد.");
       }
       setLoading(false);
+      setLoadingMessage("در حال بررسی امکانات سخت افزاری شما");
     };
 
     checkARSupport();
-    alert("پایان اول");
   }, []);
   let touchStartDistance = 0;
   let touchStartPos = { x: 0, y: 0 };
   useEffect(() => {
-    alert("دوم");
-
     // اضافه کردن تعامل لمسی
     const handleTouchStart = (event: any) => {
       if (event.touches.length === 2) {
@@ -506,7 +503,6 @@ export default function AREarth() {
     window.addEventListener("touchstart", handleTouchStartRotation);
     window.addEventListener("touchmove", handleTouchMoveRotation);
 
-    alert("پایان دوم");
     // پاکسازی رویدادها هنگام unmount
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
@@ -518,10 +514,7 @@ export default function AREarth() {
   }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
 
   useEffect(() => {
-    alert("سوم");
-
     if (!arSupported || !hasStarted || !renderer) return;
-
     const initAR = async () => {
       try {
         // 1. بررسی پشتیبانی مرورگر
@@ -553,7 +546,6 @@ export default function AREarth() {
 
         // مدیریت session
         const startSession = async () => {
-          alert("ساخت سشن");
           try {
             const session = await navigator.xr!.requestSession("immersive-ar", {
               requiredFeatures: ["hit-test"],
@@ -625,7 +617,6 @@ export default function AREarth() {
 
         // اضافه کردن event listener فقط یکبار
         const button = document.getElementById("ar-start-button");
-        alert("دکمه سشن" + button);
 
         if (button) {
           button.onclick = startSession;
@@ -652,12 +643,9 @@ export default function AREarth() {
     };
 
     initAR();
-    alert("پایان سوم");
   }, [arSupported, hasStarted, renderer]);
 
   useEffect(() => {
-    alert("چهارم");
-
     if (arSupported !== true) return;
     setLoading(true);
 
@@ -735,7 +723,6 @@ export default function AREarth() {
     };
 
     arButton.addEventListener("click", onClick);
-    alert("پایان چهارم");
 
     // پاکسازی هنگام unmount شدن
     return () => {
