@@ -580,7 +580,7 @@ export default function AREarth() {
             // },
           });
 
-          alert("5." + { xrSession });
+          // alert("5." + { xrSession });
           let hitTestSource = null;
 
           if (
@@ -595,7 +595,7 @@ export default function AREarth() {
             referenceSpace = await xrSession.requestReferenceSpace(
               "local-floor"
             );
-            alert("6." + { referenceSpace });
+            // alert("6." + { referenceSpace });
           } catch (e) {
             alert("ارور." + { e });
             console.warn("Local-floor failed, using viewer:", e);
@@ -612,7 +612,7 @@ export default function AREarth() {
               }),
             });
             hitTestSourceRef.current = hitTestSource;
-            alert("7." + { hitTestSource });
+            // alert("7." + { hitTestSource });
           } else {
             console.error("Failed to get reference space");
             alert("Failed to get reference space");
@@ -632,20 +632,20 @@ export default function AREarth() {
             scene.add(earth);
             earthRef.current = earth;
             setLoading(false);
-            alert("8." + { earth });
+            // alert("8." + { earth });
             // راه‌اندازی انیمیشن
 
             renderer.setAnimationLoop((time, frame) => {
-              alert("8.1" + { frame });
-              alert("8.2" + earthRef.current);
-              alert("8.3" + hitTestSourceRef.current);
+              // alert("8.1" + { frame });
+              // alert("8.2" + earthRef.current);
+              // alert("8.3" + hitTestSourceRef.current);
               if (!frame || !earthRef.current || !hitTestSourceRef.current)
                 return;
 
               const hitTestResults = frame.getHitTestResults(
                 hitTestSourceRef.current
               );
-              alert("9." + { hitTestResults });
+              // alert("9." + { hitTestResults });
               if (hitTestResults.length > 0 && referenceSpace) {
                 const hit = hitTestResults[0];
                 const pose = hit.getPose(referenceSpace);
