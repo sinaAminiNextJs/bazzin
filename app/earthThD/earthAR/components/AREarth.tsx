@@ -427,7 +427,7 @@ export default function AREarth() {
         alert("بررسی پشتیبانی AR با خطا مواجه شد.");
       }
       setLoading(false);
-      setLoadingMessage("در حال بررسی امکانات سخت افزاری شما");
+      setLoadingMessage("");
     };
 
     checkARSupport();
