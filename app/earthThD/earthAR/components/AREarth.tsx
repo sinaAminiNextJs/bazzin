@@ -599,11 +599,13 @@ export default function AREarth() {
               (error) => {
                 console.error("Error loading model:", error);
                 setError("Error loading Earth model");
+                alert("Error loading Earth model");
               }
             );
           } catch (error) {
             console.error("Session error:", error);
             setError("Failed to start AR session");
+            alert("Failed to start AR session");
           }
         };
 
@@ -629,6 +631,7 @@ export default function AREarth() {
       } catch (error) {
         console.error("AR init error:", error);
         setError("AR initialization failed");
+        alert("AR initialization failed");
       }
     };
 
