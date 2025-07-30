@@ -377,6 +377,7 @@ import ARError from "./ARError";
 export default function AREarth() {
   // state‌ها برای مدیریت وضعیت‌های مختلف
   const [loading, setLoading] = useState(false);
+  const [loadingMessege, setLoadingMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
@@ -397,10 +398,12 @@ export default function AREarth() {
 
   useEffect(() => {
     setWindowsDimention([window.innerWidth, window.innerHeight]);
-
+    setLoading(true);
+    setLoadingMessage("در حال بررسی امکانات سخت افزاری شما");
     // Check AR support
     const checkARSupport = async () => {
       if (!navigator.xr) {
+        setLoading(false);
         setArSupported(false);
         setError("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
         alert("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
@@ -411,14 +414,17 @@ export default function AREarth() {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
         setArSupported(supported);
         if (!supported) {
+          setLoading(false);
           setError("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
           alert("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
         }
       } catch (err) {
+        setLoading(false);
         setArSupported(false);
         setError("بررسی پشتیبانی AR با خطا مواجه شد.");
         alert("بررسی پشتیبانی AR با خطا مواجه شد.");
       }
+      setLoading(false);
     };
 
     checkARSupport();
@@ -735,7 +741,7 @@ export default function AREarth() {
       <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/webxr-api@latest/dist/webxr-api.js"></script>
       {/* لودینگ و خطا */}
-      {loading && <ARLoading />}
+      {loading && <ARLoading messege={loadingMessege} />}
       {error && <ARError error={error} />}
       <div id="ar-view" className="w-full h-full z-50" />
       <div id="ar-overlay" className="w-1/2 h-2/3 z-50" />
