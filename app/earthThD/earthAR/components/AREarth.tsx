@@ -751,7 +751,10 @@ export default function AREarth() {
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0 z-50"
       ></div>
-      <button className="w-full h-20 hidden" id="ar-start-button">
+      <button
+        className="fixed top-0 w-20 h-20 hidden bg-myblue z-50"
+        id="ar-start-button"
+      >
         Start Camera
       </button>
     </section>
