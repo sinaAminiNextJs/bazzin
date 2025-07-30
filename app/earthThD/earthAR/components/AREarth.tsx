@@ -540,6 +540,7 @@ export default function AREarth() {
 
         // مدیریت session
         const startSession = async () => {
+          alert("ساخت سشن");
           try {
             const session = await navigator.xr!.requestSession("immersive-ar", {
               requiredFeatures: ["hit-test"],
@@ -611,6 +612,8 @@ export default function AREarth() {
 
         // اضافه کردن event listener فقط یکبار
         const button = document.getElementById("ar-start-button");
+        alert("دکمه سشن" + button);
+
         if (button) {
           button.onclick = startSession;
         }
