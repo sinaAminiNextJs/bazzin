@@ -547,11 +547,9 @@ export default function AREarth() {
             }
           });
         }
-        if (permissionGranted) {
+        const cameraButton = document.getElementById("ar-start-button");
+        cameraButton!.addEventListener("click", async () => {
           alert("دسترسی به دوربین داده شد");
-
-          // cameraButton.style.display = "block";
-          // cameraButton.addEventListener("click", async () => {
           // ابتدا session را ایجاد می‌کنیم
           const xrSession = await navigator.xr!.requestSession("immersive-ar", {
             requiredFeatures: ["viewer", "hit-test"],
@@ -595,10 +593,7 @@ export default function AREarth() {
             alert("Failed to get reference space");
           }
           // });
-        } else {
-          window.location.reload();
-          alert("ایراد در مرجع فضا");
-        }
+        });
         // بارگذاری مدل زمین
         const loader = new GLTFLoader();
         // حالا مدل را بارگذاری می‌کنیم
@@ -781,6 +776,9 @@ export default function AREarth() {
     // زمانی که دکمه کلیک شد، AR شروع شود
     const onClick = async () => {
       setHasStarted(true);
+      const cameraButton = document.getElementById("ar-start-button");
+
+      cameraButton!.style.display = "block";
 
       try {
         // درخواست دسترسی به دوربین
@@ -829,9 +827,9 @@ export default function AREarth() {
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0 z-50"
       ></div>
-      {/* <button className="w-full h-20 hidden" id="ar-start-button">
+      <button className="w-full h-20 hidden" id="ar-start-button">
         Start Camera
-      </button> */}
+      </button>
     </section>
   );
 }
