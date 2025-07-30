@@ -397,6 +397,7 @@ export default function AREarth() {
   const hitTestSourceRef = useRef<XRHitTestSource | undefined>(undefined); // Store the hitTestSource in a ref
 
   useEffect(() => {
+    alert("اول");
     setWindowsDimention([window.innerWidth, window.innerHeight]);
     setLoading(true);
     setLoadingMessage("در حال بررسی امکانات سخت افزاری شما");
@@ -428,10 +429,13 @@ export default function AREarth() {
     };
 
     checkARSupport();
+    alert("پایان اول");
   }, []);
   let touchStartDistance = 0;
   let touchStartPos = { x: 0, y: 0 };
   useEffect(() => {
+    alert("دوم");
+
     // اضافه کردن تعامل لمسی
     const handleTouchStart = (event: any) => {
       if (event.touches.length === 2) {
@@ -502,6 +506,7 @@ export default function AREarth() {
     window.addEventListener("touchstart", handleTouchStartRotation);
     window.addEventListener("touchmove", handleTouchMoveRotation);
 
+    alert("پایان دوم");
     // پاکسازی رویدادها هنگام unmount
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
@@ -513,6 +518,8 @@ export default function AREarth() {
   }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
 
   useEffect(() => {
+    alert("سوم");
+
     if (!arSupported || !hasStarted || !renderer) return;
 
     const initAR = async () => {
@@ -645,9 +652,14 @@ export default function AREarth() {
     };
 
     initAR();
+    alert("پایان سوم");
   }, [arSupported, hasStarted, renderer]);
+
   useEffect(() => {
+    alert("چهارم");
+
     if (arSupported !== true) return;
+    setLoading(true);
 
     // ایجاد رندرر سه‌بعدی و فعال کردن WebXR
     const newRenderer = new THREE.WebGLRenderer({
@@ -719,9 +731,11 @@ export default function AREarth() {
         console.error("خطا در دریافت دسترسی دوربین:", error);
         alert("دسترسی به دوربین داده نشد.");
       }
+      setLoading(false);
     };
 
     arButton.addEventListener("click", onClick);
+    alert("پایان چهارم");
 
     // پاکسازی هنگام unmount شدن
     return () => {
@@ -731,10 +745,10 @@ export default function AREarth() {
       rendererRef.current = null;
       sceneRef.current = null;
       setHasStarted(false);
-      // window.location.reload(); // از رفرش کردن صفحه اجتناب کنید، چون می‌تواند باعث ایجاد حلقه بی‌پایان شود
+      window.location.reload();
       alert("10. finish");
     };
-  }, [arSupported]); // توجه داشته باشید که ممکن است نیاز به اضافه کردن `permissionGranted` هم به لیست dependencies باشد
+  }, [arSupported]);
 
   return (
     <section>
