@@ -537,6 +537,16 @@ export default function AREarth() {
 
         let referenceSpace: any;
         // let userPermission = confirm("مجوز استفاده از دوربین را میدهید؟");
+        if (navigator.xr) {
+          alert("hi");
+          navigator.xr.isSessionSupported("immersive-ar").then((supported) => {
+            if (supported) {
+              alert("suport");
+            } else {
+              alert("not suport");
+            }
+          });
+        }
         if (permissionGranted) {
           alert("دسترسی به دوربین داده شد");
 
