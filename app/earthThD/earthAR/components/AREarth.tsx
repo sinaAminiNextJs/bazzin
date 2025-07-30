@@ -372,6 +372,7 @@ import { ARButton } from "three/addons/webxr/ARButton.js";
 // کامپوننت‌های رابط کاربری
 import ARLoading from "./ARLoading";
 import ARError from "./ARError";
+// import WebXRPolyfill from "webxr-polyfill";
 
 export default function AREarth() {
   // state‌ها برای مدیریت وضعیت‌های مختلف
@@ -537,24 +538,47 @@ export default function AREarth() {
 
         let referenceSpace: any;
         // let userPermission = confirm("مجوز استفاده از دوربین را میدهید؟");
-        if (navigator.xr) {
-          alert("hi");
-          navigator.xr.isSessionSupported("immersive-ar").then((supported) => {
-            if (supported) {
-              alert("suport");
-            } else {
-              alert("not suport");
-            }
-          });
-        }
+
         const cameraButton = document.getElementById("ar-start-button");
         cameraButton!.addEventListener("click", async () => {
           alert("دسترسی به دوربین داده شد");
           // ابتدا session را ایجاد می‌کنیم
+
+          // if (window.WebXRPolyfill) {
+          //   new WebXRPolyfill();
+          // }
+          // این تابع برای مدیریت شروع یک جلسه WebXR است
+          function onSessionStarted(session: XRSession) {
+            console.log("WebXR session started successfully!");
+            // می‌توانید اینجا سایر کارها مثل شروع رندرینگ AR را انجام دهید
+            // مثلا:
+            session.addEventListener("end", onSessionEnded);
+          }
+
+          // این تابع برای مدیریت اتمام جلسه WebXR است
+          function onSessionEnded(event: Event) {
+            console.log("WebXR session ended");
+            // انجام اقدامات لازم پس از اتمام جلسه
+          }
+
+          document!
+            .getElementById("ar-start-button")!
+            .addEventListener("click", function () {
+              navigator
+                .xr!.requestSession("immersive-ar", {
+                  requiredFeatures: ["hit-test"],
+                })
+                .then(onSessionStarted)
+                .catch((err) => console.error("AR session start error:", err));
+            });
           const xrSession = await navigator.xr!.requestSession("immersive-ar", {
-            requiredFeatures: ["viewer", "hit-test"],
-            optionalFeatures: ["local-floor"],
+            requiredFeatures: ["hit-test"],
+            optionalFeatures: ["dom-overlay", "local-floor"],
+            // domOverlay: {
+            //   root: document.getElementById("ar-overlay"), // عنصر DOM برای overlay
+            // },
           });
+
           alert("5." + { xrSession });
           let hitTestSource = null;
 
@@ -742,7 +766,8 @@ export default function AREarth() {
     // ساخت دکمه شروع AR
     const arButton = ARButton.createButton(newRenderer, {
       requiredFeatures: ["hit-test"],
-      optionalFeatures: ["dom-overlay", "dom-overlay-for-handheld-ar"],
+      optionalFeatures: ["dom-overlay"],
+      // optionalFeatures: ["dom-overlay", "dom-overlay-for-handheld-ar"],
       domOverlay: { root: document.body },
     });
 
@@ -818,10 +843,14 @@ export default function AREarth() {
 
   return (
     <section>
+      <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/webxr-api@latest/dist/webxr-api.js"></script>
       {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
       <div id="ar-view" className="w-full h-full z-50" />
+      <div id="ar-overlay" className="w-1/2 h-2/3 z-50" />
+
       {/* دکمه AR */}
       <div
         id="ar-button-container"
