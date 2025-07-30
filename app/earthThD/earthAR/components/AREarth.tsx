@@ -574,6 +574,7 @@ export default function AREarth() {
           const xrSession = await navigator.xr!.requestSession("immersive-ar", {
             requiredFeatures: ["hit-test"],
             optionalFeatures: ["dom-overlay", "local-floor"],
+            //
             // domOverlay: {
             //   root: document.getElementById("ar-overlay"), // عنصر DOM برای overlay
             // },
