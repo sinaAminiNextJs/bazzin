@@ -374,35 +374,28 @@ export default function AREarth() {
   const [error, setError] = useState(null);
   const [arSupported, setArSupported] = useState(null);
   const [hasStarted, setHasStarted] = useState(false);
-  const [windowsDimention, setWindowsDimention] = useState([0, 0]);
 
-  const xrSessionRef = useRef(null);
-  const stopButtonRef = useRef(null);
   const sceneRef = useRef(null);
-  const earthRef = useRef(null);
   const rendererRef = useRef(null);
-  const hitTestSourceRef = useRef(null);
-  const hitTestSourceRequestedRef = useRef(false);
+  const earthRef = useRef(null);
   const reticleRef = useRef(null);
+  const hitTestSourceRef = useRef(null);
+  const hitTestSourceRequested = useRef(false);
 
   useEffect(() => {
-    setWindowsDimention([window.innerWidth, window.innerHeight]);
-
     const checkARSupport = async () => {
       if (!navigator.xr) {
         setArSupported(false);
-        setError("WebXR توسط مرورگر شما پشتیبانی نمی‌شود.");
+        setError("WebXR not supported by your browser.");
         return;
       }
 
       try {
         const supported = await navigator.xr.isSessionSupported("immersive-ar");
         setArSupported(supported);
-        if (!supported)
-          setError("دستگاه شما از واقعیت افزوده پشتیبانی نمی‌کند.");
       } catch (err) {
         setArSupported(false);
-        setError("بررسی پشتیبانی AR با خطا مواجه شد.");
+        setError("Error checking AR support.");
       }
     };
 
@@ -410,7 +403,7 @@ export default function AREarth() {
   }, []);
 
   useEffect(() => {
-    if (arSupported !== true) return;
+    if (arSupported === false) return;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.xr.enabled = true;
@@ -418,193 +411,130 @@ export default function AREarth() {
 
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
-      optionalFeatures: ["dom-overlay"],
-      domOverlay: { root: document.body },
     });
-
-    Object.assign(arButton.style, {
-      minWidth: "fit-content",
-      position: "fixed",
-      bottom: "20px",
-      left: "20px",
-      padding: "8px 32px",
-      backgroundColor: "#ffc585",
-      color: "#000",
-      borderRadius: "1rem",
-      border: "2px solid #fff7c4",
-      fontFamily: "iranyekan, sans-serif",
-      fontSize: "1.25rem",
-      boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
-      cursor: "pointer",
-      zIndex: "11000",
-    });
-
-    const btnContainer = document.getElementById("ar-button-container");
-    if (btnContainer) btnContainer.appendChild(arButton);
-
-    const onClick = () => setHasStarted(true);
-    arButton.addEventListener("click", onClick);
-
-    return () => {
-      arButton.removeEventListener("click", onClick);
-      if (arButton.parentNode) arButton.parentNode.removeChild(arButton);
-      renderer.dispose();
-    };
-  }, [arSupported]);
-
-  useEffect(() => {
-    if (!hasStarted) return;
-
-    const bg = document.getElementById("background-images");
-    if (bg) bg.style.display = "none";
-
-    setLoading(true);
+    document.body.appendChild(arButton);
 
     const scene = new THREE.Scene();
     sceneRef.current = scene;
 
     const camera = new THREE.PerspectiveCamera(
-      70,
+      90,
       window.innerWidth / window.innerHeight,
       0.01,
       20
     );
+    camera.position.set(0, 0, 5);
 
-    const renderer = rendererRef.current;
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    const container = document.getElementById("ar-view");
-    if (container) container.appendChild(renderer.domElement);
-
-    // نورپردازی
-    const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 3);
-    light.position.set(0.5, 1, 0.25);
+    const light = new THREE.AmbientLight(0xffffff, 1);
     scene.add(light);
 
-    // ایجاد رتیکل (نشانگر سطح)
+    const loader = new GLTFLoader();
+    loader.load("/ar-earth/earth.glb", (gltf) => {
+      const earth = gltf.scene;
+      earth.scale.set(0.07, 0.07, 0.07);
+      earthRef.current = earth;
+    });
+
     const reticle = new THREE.Mesh(
       new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
-      new THREE.MeshBasicMaterial({
-        color: 0x00ff00,
-        transparent: true,
-        opacity: 0.8,
-      })
+      new THREE.MeshBasicMaterial()
     );
     reticle.matrixAutoUpdate = false;
     reticle.visible = false;
-    scene.add(reticle);
     reticleRef.current = reticle;
-    // تابع برای درخواست Hit-Test
-    const requestHitTestSource = async (session) => {
-      try {
-        const referenceSpace = await session.requestReferenceSpace("viewer");
-        const hitTestSource = await session.requestHitTestSource({
-          space: referenceSpace,
-          entityTypes: ["plane", "estimated-plane"], // تشخیص هم سطوح تخت و هم تخمینی
-        });
+    scene.add(reticle);
 
-        hitTestSourceRef.current = hitTestSource;
-        hitTestSourceRequestedRef.current = true;
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-        // فعال کردن تشخیص مداوم سطوح
-        session.requestReferenceSpace("local").then((localSpace) => {
-          session.updateRenderState({
-            baseLayer: new XRWebGLLayer(session, renderer.context),
-            depthFar: 20,
-            depthNear: 0.1,
-            inlineVerticalFieldOfView: true,
-            space: localSpace,
-          });
-        });
-      } catch (error) {
-        console.error("Error setting up hit test:", error);
-      }
-    };
-    // تابع اصلی انیمیشن با قابلیت تشخیص سطح بهبود یافته
-    const animate = (timestamp, frame) => {
-      if (frame && earthRef.current && reticleRef.current) {
-        const hitTestResults = hitTestSourceRef.current
-          ? frame.getHitTestResults(hitTestSourceRef.current)
-          : [];
+    window.addEventListener("resize", onWindowResize);
 
-        if (hitTestResults.length > 0) {
-          const hit = hitTestResults[0];
-          const pose = hit.getPose(renderer.xr.getReferenceSpace());
-
-          if (pose) {
-            // نمایش رتیکل در محل تشخیص سطح
-            reticleRef.current.visible = true;
-            reticleRef.current.matrix.fromArray(pose.transform.matrix);
-
-            // قرار دادن مدل زمین روی سطح تشخیص داده شده
-            earthRef.current.visible = true;
-            earthRef.current.position.setFromMatrixPosition(
-              reticleRef.current.matrix
-            );
-            earthRef.current.rotation.y += 0.002;
-
-            // تنظیم جهت مدل متناسب با سطح
-            const rotation = new THREE.Quaternion();
-            rotation.setFromRotationMatrix(reticleRef.current.matrix);
-            earthRef.current.quaternion.copy(rotation);
-          }
-        } else {
-          reticleRef.current.visible = false;
-          earthRef.current.visible = false;
-        }
-      }
-      renderer.render(scene, camera);
-    };
-    // بارگذاری مدل زمین
-    const loader = new GLTFLoader();
-    loader.load(
-      "/ar-earth/earth.glb",
-      (gltf) => {
-        const earth = gltf.scene;
-        earth.scale.set(0.07, 0.07, 0.07);
-        earth.visible = false; // ابتدا مدل مخفی است
-        scene.add(earth);
-        earthRef.current = earth;
-        setLoading(false);
-
-        // شروع انیمیشن پس از بارگذاری مدل
-        renderer.setAnimationLoop(animate);
-
-        // تنظیم Hit-Test هنگام شروع session
-        renderer.xr.addEventListener("sessionstart", (event) => {
-          xrSessionRef.current = event.session;
-          requestHitTestSource(event.session);
-        });
-      },
-      undefined,
-      (error) => {
-        console.error("خطا در بارگذاری مدل:", error);
-        setError("خطا در بارگذاری مدل زمین");
-        setLoading(false);
-      }
-    );
-
-    const onResize = () => {
+    function onWindowResize() {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-    };
+    }
 
-    window.addEventListener("resize", onResize);
+    function animate(timestamp, frame) {
+      if (frame) {
+        const referenceSpace = renderer.xr.getReferenceSpace();
+        const session = renderer.xr.getSession();
 
-    renderer.xr.addEventListener("sessionend", () => {
-      renderer.setAnimationLoop(null);
-      if (container && renderer.domElement.parentNode === container) {
-        container.removeChild(renderer.domElement);
+        if (!hitTestSourceRequested.current) {
+          session.requestReferenceSpace("viewer").then((referenceSpace) => {
+            session
+              .requestHitTestSource({ space: referenceSpace })
+              .then((source) => {
+                hitTestSourceRef.current = source;
+              });
+          });
+
+          session.addEventListener("end", () => {
+            hitTestSourceRequested.current = false;
+            hitTestSourceRef.current = null;
+          });
+
+          hitTestSourceRequested.current = true;
+        }
+
+        if (hitTestSourceRef.current) {
+          const hitTestResults = frame.getHitTestResults(
+            hitTestSourceRef.current
+          );
+
+          if (hitTestResults.length) {
+            const hit = hitTestResults[0];
+            reticle.visible = true;
+            reticle.matrix.fromArray(
+              hit.getPose(referenceSpace).transform.matrix
+            );
+          } else {
+            reticle.visible = false;
+          }
+        }
       }
-      setHasStarted(false);
-    });
+
+      renderer.render(scene, camera);
+    }
+
+    renderer.setAnimationLoop(animate);
 
     return () => {
-      window.removeEventListener("resize", onResize);
-      if (rendererRef.current) {
-        rendererRef.current.dispose();
+      window.removeEventListener("resize", onWindowResize);
+      renderer.dispose();
+      rendererRef.current = null;
+    };
+  }, [arSupported]);
+
+  useEffect(() => {
+    if (!hasStarted || !earthRef.current) return;
+
+    const onSelect = () => {
+      if (reticleRef.current.visible) {
+        const material = new THREE.MeshPhongMaterial({
+          color: 0xffffff * Math.random(),
+        });
+        const mesh = new THREE.Mesh(earthRef.current.geometry, material);
+        reticleRef.current.matrix.decompose(
+          mesh.position,
+          mesh.quaternion,
+          mesh.scale
+        );
+        sceneRef.current.add(mesh);
       }
+    };
+
+    const controller1 = rendererRef.current.xr.getController(0);
+    controller1.addEventListener("select", onSelect);
+    sceneRef.current.add(controller1);
+
+    const controller2 = rendererRef.current.xr.getController(1);
+    controller2.addEventListener("select", onSelect);
+    sceneRef.current.add(controller2);
+
+    return () => {
+      controller1.removeEventListener("select", onSelect);
+      controller2.removeEventListener("select", onSelect);
     };
   }, [hasStarted]);
 
@@ -613,10 +543,6 @@ export default function AREarth() {
       {loading && <div>Loading...</div>}
       {error && <div>{error}</div>}
       <div id="ar-view" className="w-full h-full z-50" />
-      <div
-        id="ar-button-container"
-        className="w-full fixed bottom-0 left-0 z-50"
-      ></div>
     </section>
   );
 }
