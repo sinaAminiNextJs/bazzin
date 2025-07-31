@@ -532,19 +532,22 @@ export default function AREarth() {
       }
     };
 
-    // رویدادهای تاچ
-    const onTap = (event) => {
-      alert("selected");
-
-      placeEarth();
+    // استفاده از رویدادهای touch در AR
+    const onTouchStart = (event) => {
+      alert("کلیک شد");
+      // تشخیص ضربه روی صفحه
+      if (reticleRef.current.visible) {
+        placeEarth(); // مدل را در موقعیت رتیکل قرار می‌دهد
+      }
     };
-
+    // رویداد لمسی (touchstart)
+    window.addEventListener("touchstart", onTouchStart);
     // رویدادهای کنترلر
     const onSelect = () => {
+      alert("کلیک شد");
+
       placeEarth();
     };
-    const buttonn = document.getElementById("but");
-    buttonn.addEventListener("touchend", onTap);
 
     const controller1 = rendererRef.current.xr.getController(0);
     controller1.addEventListener("select", onSelect);
@@ -555,7 +558,7 @@ export default function AREarth() {
     sceneRef.current.add(controller2);
 
     return () => {
-      window.removeEventListener("touchend", onTap);
+      window.removeEventListener("touchstart", onTouchStart);
       if (rendererRef.current) {
         controller1.removeEventListener("select", onSelect);
         controller2.removeEventListener("select", onSelect);
@@ -568,9 +571,6 @@ export default function AREarth() {
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
       <div id="ar-view" className="w-full h-full z-50" />
-      <button id="but" className="fixed top-0 w-20 h-20 bg-amber-300 z-50">
-        tap
-      </button>
     </section>
   );
 }
