@@ -368,6 +368,8 @@ import { useEffect, useState, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
+import ARLoading from "./ARLoading";
+import ARError from "./ARError";
 
 export default function AREarth() {
   const [loading, setLoading] = useState(false);
@@ -432,6 +434,8 @@ export default function AREarth() {
     loader.load("/ar-earth/earth.glb", (gltf) => {
       const earth = gltf.scene;
       earth.scale.set(0.07, 0.07, 0.07);
+      earth.rotation.y = Math.PI / 2;
+      scene.add(earth);
       earthRef.current = earth;
     });
 
@@ -539,9 +543,10 @@ export default function AREarth() {
   }, [hasStarted]);
 
   return (
-    <section>
-      {loading && <div>Loading...</div>}
-      {error && <div>{error}</div>}
+    <section className="overflow-hidden">
+      {/* لودینگ و خطا */}
+      {loading && <ARLoading />}
+      {error && <ARError error={error} />}
       <div id="ar-view" className="w-full h-full z-50" />
     </section>
   );
