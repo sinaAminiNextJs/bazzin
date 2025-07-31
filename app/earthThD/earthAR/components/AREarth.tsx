@@ -427,11 +427,15 @@ export default function AREarth() {
       setLoadingMessage("در حال راه‌اندازی واقعیت افزوده");
 
       // 1. Request camera permission
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-      });
-      stream.getTracks().forEach((track) => track.stop());
-      setPermissionGranted(true);
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: true,
+        });
+        stream.getTracks().forEach((track) => track.stop());
+        setPermissionGranted(true);
+      } catch (error) {
+        throw new Error("دسترسی به دوربین داده نشد");
+      }
 
       // 2. Setup renderer
       const container = document.getElementById("ar-view");
@@ -468,8 +472,8 @@ export default function AREarth() {
       try {
         referenceSpace = await session.requestReferenceSpace("local-floor");
       } catch (e) {
-        console.warn("Using viewer reference space");
         referenceSpace = await session.requestReferenceSpace("viewer");
+        throw new Error("Using viewer reference space");
       }
 
       // 6. Setup hit test
@@ -479,6 +483,11 @@ export default function AREarth() {
       hitTestSourceRef.current = hitTestSource as XRHitTestSource;
 
       // 7. Load model
+      const modelResponse = await fetch("/ar-earth/earth.glb");
+      if (!modelResponse.ok) {
+        throw new Error("مدل سه بعدی یافت نشد");
+      }
+
       const loader = new GLTFLoader();
       loader.load(
         "/ar-earth/earth.glb",
