@@ -485,13 +485,77 @@ export default function AREarth() {
     // ایجاد رتیکل (نشانگر سطح)
     const reticle = new THREE.Mesh(
       new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
-      new THREE.MeshBasicMaterial()
+      new THREE.MeshBasicMaterial({
+        color: 0x00ff00,
+        transparent: true,
+        opacity: 0.8,
+      })
     );
     reticle.matrixAutoUpdate = false;
     reticle.visible = false;
     scene.add(reticle);
     reticleRef.current = reticle;
+    // تابع برای درخواست Hit-Test
+    const requestHitTestSource = async (session) => {
+      try {
+        const referenceSpace = await session.requestReferenceSpace("viewer");
+        const hitTestSource = await session.requestHitTestSource({
+          space: referenceSpace,
+          entityTypes: ["plane", "estimated-plane"], // تشخیص هم سطوح تخت و هم تخمینی
+        });
 
+        hitTestSourceRef.current = hitTestSource;
+        hitTestSourceRequestedRef.current = true;
+
+        // فعال کردن تشخیص مداوم سطوح
+        session.requestReferenceSpace("local").then((localSpace) => {
+          session.updateRenderState({
+            baseLayer: new XRWebGLLayer(session, renderer.context),
+            depthFar: 20,
+            depthNear: 0.1,
+            inlineVerticalFieldOfView: true,
+            space: localSpace,
+          });
+        });
+      } catch (error) {
+        console.error("Error setting up hit test:", error);
+      }
+    };
+    // تابع اصلی انیمیشن با قابلیت تشخیص سطح بهبود یافته
+    const animate = (timestamp, frame) => {
+      if (frame && earthRef.current && reticleRef.current) {
+        const hitTestResults = hitTestSourceRef.current
+          ? frame.getHitTestResults(hitTestSourceRef.current)
+          : [];
+
+        if (hitTestResults.length > 0) {
+          const hit = hitTestResults[0];
+          const pose = hit.getPose(renderer.xr.getReferenceSpace());
+
+          if (pose) {
+            // نمایش رتیکل در محل تشخیص سطح
+            reticleRef.current.visible = true;
+            reticleRef.current.matrix.fromArray(pose.transform.matrix);
+
+            // قرار دادن مدل زمین روی سطح تشخیص داده شده
+            earthRef.current.visible = true;
+            earthRef.current.position.setFromMatrixPosition(
+              reticleRef.current.matrix
+            );
+            earthRef.current.rotation.y += 0.002;
+
+            // تنظیم جهت مدل متناسب با سطح
+            const rotation = new THREE.Quaternion();
+            rotation.setFromRotationMatrix(reticleRef.current.matrix);
+            earthRef.current.quaternion.copy(rotation);
+          }
+        } else {
+          reticleRef.current.visible = false;
+          earthRef.current.visible = false;
+        }
+      }
+      renderer.render(scene, camera);
+    };
     // بارگذاری مدل زمین
     const loader = new GLTFLoader();
     loader.load(
@@ -499,54 +563,18 @@ export default function AREarth() {
       (gltf) => {
         const earth = gltf.scene;
         earth.scale.set(0.07, 0.07, 0.07);
-        earth.rotation.y = Math.PI / 2;
+        earth.visible = false; // ابتدا مدل مخفی است
         scene.add(earth);
         earthRef.current = earth;
         setLoading(false);
 
-        renderer.setAnimationLoop((timestamp, frame) => {
-          if (frame && earthRef.current) {
-            const referenceSpace = renderer.xr.getReferenceSpace();
-            const session = renderer.xr.getSession();
+        // شروع انیمیشن پس از بارگذاری مدل
+        renderer.setAnimationLoop(animate);
 
-            if (!hitTestSourceRequestedRef.current) {
-              session.requestReferenceSpace("viewer").then((refSpace) => {
-                session
-                  .requestHitTestSource({ space: refSpace })
-                  .then((source) => {
-                    hitTestSourceRef.current = source;
-                  });
-              });
-              hitTestSourceRequestedRef.current = true;
-            }
-
-            if (hitTestSourceRef.current) {
-              const hitTestResults = frame.getHitTestResults(
-                hitTestSourceRef.current
-              );
-              if (hitTestResults.length > 0) {
-                const hit = hitTestResults[0];
-                const pose = hit.getPose(referenceSpace);
-
-                if (pose && reticleRef.current) {
-                  reticleRef.current.visible = true;
-                  reticleRef.current.matrix.fromArray(pose.transform.matrix);
-
-                  // قرار دادن زمین روی سطح تشخیص داده شده
-                  earth.position.setFromMatrixPosition(
-                    reticleRef.current.matrix
-                  );
-                  earth.visible = true;
-                }
-              } else {
-                if (reticleRef.current) reticleRef.current.visible = false;
-                earth.visible = false;
-              }
-            }
-
-            earth.rotation.y += 0.002;
-          }
-          renderer.render(scene, camera);
+        // تنظیم Hit-Test هنگام شروع session
+        renderer.xr.addEventListener("sessionstart", (event) => {
+          xrSessionRef.current = event.session;
+          requestHitTestSource(event.session);
         });
       },
       undefined,
