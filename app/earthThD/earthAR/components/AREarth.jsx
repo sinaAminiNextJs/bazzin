@@ -412,9 +412,13 @@ export default function AREarth() {
     rendererRef.current = renderer;
 
     const arButton = ARButton.createButton(renderer, {
-      requiredFeatures: ["hit-test"],
+      requiredFeatures: ["hit-test", "dom-overlay"],
       onSessionStart: () => {
         setHasStarted(true);
+        session.addEventListener("select", (event) => {
+          alert("Session select event", event);
+          placeEarth();
+        });
       },
       onSessionEnd: () => {
         setHasStarted(false);
@@ -551,10 +555,12 @@ export default function AREarth() {
 
     const controller1 = rendererRef.current.xr.getController(0);
     controller1.addEventListener("select", onSelect);
+    controller1.addEventListener("selectstart", onSelect);
     sceneRef.current.add(controller1);
 
     const controller2 = rendererRef.current.xr.getController(1);
     controller2.addEventListener("select", onSelect);
+    controller2.addEventListener("selectstart", onSelect);
     sceneRef.current.add(controller2);
 
     return () => {
