@@ -365,365 +365,308 @@
 ///////////////
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ARButton } from "three/addons/webxr/ARButton.js";
-
-// کامپوننت‌های رابط کاربری
 import ARLoading from "./ARLoading";
 import ARError from "./ARError";
-// @ts-ignore
-import WebXRPolyfill from "webxr-polyfill";
 
 export default function AREarth() {
-  // state‌ها برای مدیریت وضعیت‌های مختلف
-  const [loading, setLoading] = useState(false);
-  const [loadingMessege, setLoadingMessage] = useState("");
+  // State management
+  const [loading, setLoading] = useState(true);
+  const [loadingMessage, setLoadingMessage] = useState(
+    "در حال بررسی امکانات سخت افزاری شما"
+  );
   const [error, setError] = useState<string | null>(null);
   const [arSupported, setArSupported] = useState<boolean | null>(null);
   const [hasStarted, setHasStarted] = useState(false);
-  // اندازه پنجره برای تنظیم ابعاد renderer
-  const [windowsDimention, setWindowsDimention] = useState<[number, number]>([
-    0, 0,
-  ]);
   const [permissionGranted, setPermissionGranted] = useState(false);
   const [renderer, setRenderer] = useState<THREE.WebGLRenderer | null>(null);
 
-  // ref‌ها برای نگهداری session و سایر آبجکت‌های three.js
+  // Refs
   const xrSessionRef = useRef<XRSession | null>(null);
-  const stopButtonRef = useRef<HTMLButtonElement | null>(null);
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const hitTestSourceRef = useRef<XRHitTestSource | undefined>(undefined); // Store the hitTestSource in a ref
-  ("use client");
-  import { useEffect, useState, useRef, useCallback } from "react";
-  import * as THREE from "three";
-  import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-  import { ARButton } from "three/addons/webxr/ARButton.js";
-  import ARLoading from "./ARLoading";
-  import ARError from "./ARError";
+  const hitTestSourceRef = useRef<XRHitTestSource | null>(null);
+  const arButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  export default function AREarth() {
-    // State management
-    const [loading, setLoading] = useState(true);
-    const [loadingMessage, setLoadingMessage] = useState(
-      "در حال بررسی امکانات سخت افزاری شما"
-    );
-    const [error, setError] = useState<string | null>(null);
-    const [arSupported, setArSupported] = useState<boolean | null>(null);
-    const [hasStarted, setHasStarted] = useState(false);
-    const [permissionGranted, setPermissionGranted] = useState(false);
-    const [renderer, setRenderer] = useState<THREE.WebGLRenderer | null>(null);
-
-    // Refs
-    const xrSessionRef = useRef<XRSession | null>(null);
-    const sceneRef = useRef<THREE.Scene | null>(null);
-    const earthRef = useRef<THREE.Group | null>(null);
-    const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-    const hitTestSourceRef = useRef<XRHitTestSource | null>(null);
-    const arButtonRef = useRef<HTMLButtonElement | null>(null);
-
-    // Check AR support on mount
-    useEffect(() => {
-      const checkARSupport = async () => {
-        try {
-          if (!navigator.xr) {
-            throw new Error("WebXR not supported");
-          }
-
-          const supported = await navigator.xr.isSessionSupported(
-            "immersive-ar"
-          );
-          setArSupported(supported);
-
-          if (!supported) {
-            throw new Error("AR not supported");
-          }
-        } catch (err) {
-          setError(err instanceof Error ? err.message : "Unknown error");
-          console.error("AR support check failed:", err);
-        } finally {
-          setLoading(false);
-          setLoadingMessage("");
-        }
-      };
-
-      checkARSupport();
-    }, []);
-
-    // Initialize AR experience
-    const startARExperience = useCallback(async () => {
-      if (!arSupported || !renderer) return;
-
+  // Check AR support on mount
+  useEffect(() => {
+    const checkARSupport = async () => {
       try {
-        setLoading(true);
-        setLoadingMessage("در حال راه‌اندازی واقعیت افزوده");
-
-        // 1. Request camera permission
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
-        stream.getTracks().forEach((track) => track.stop());
-        setPermissionGranted(true);
-
-        // 2. Setup renderer
-        const container = document.getElementById("ar-view");
-        if (container) {
-          container.innerHTML = "";
-          container.appendChild(renderer.domElement);
+        if (!navigator.xr) {
+          throw new Error("WebXR not supported");
         }
 
-        // 3. Create scene
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(
-          75,
-          window.innerWidth / window.innerHeight,
-          0.1,
-          1000
-        );
-        sceneRef.current = scene;
+        const supported = await navigator.xr.isSessionSupported("immersive-ar");
+        setArSupported(supported);
 
-        // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(1, 1, 1);
-        scene.add(ambientLight, directionalLight);
-
-        // 4. Start XR session
-        const session = await navigator.xr!.requestSession("immersive-ar", {
-          requiredFeatures: ["hit-test"],
-          optionalFeatures: ["local-floor"],
-        });
-        xrSessionRef.current = session;
-
-        // 5. Get reference space
-        let referenceSpace;
-        try {
-          referenceSpace = await session.requestReferenceSpace("local-floor");
-        } catch (e) {
-          console.warn("Using viewer reference space");
-          referenceSpace = await session.requestReferenceSpace("viewer");
+        if (!supported) {
+          throw new Error("AR not supported");
         }
-
-        // 6. Setup hit test
-        const hitTestSource = await session.requestHitTestSource!({
-          space: referenceSpace,
-        });
-        hitTestSourceRef.current = hitTestSource;
-
-        // 7. Load model
-        const loader = new GLTFLoader();
-        loader.load(
-          "/ar-earth/earth.glb",
-          (gltf) => {
-            const earth = gltf.scene;
-            earth.scale.set(0.07, 0.07, 0.07);
-            earth.rotation.y = Math.PI / 2;
-            earth.visible = false;
-            scene.add(earth);
-            earthRef.current = earth;
-            setLoading(false);
-
-            // Animation loop
-            renderer.setAnimationLoop((time, frame) => {
-              if (!frame || !earthRef.current || !hitTestSourceRef.current)
-                return;
-
-              const hitTestResults = frame.getHitTestResults(
-                hitTestSourceRef.current
-              );
-              if (hitTestResults.length > 0) {
-                const pose = hitTestResults[0].getPose(referenceSpace);
-                if (pose) {
-                  earthRef.current.position.set(
-                    pose.transform.position.x,
-                    pose.transform.position.y,
-                    pose.transform.position.z
-                  );
-                  earthRef.current.visible = true;
-                }
-              }
-              earthRef.current.rotation.y += 0.002;
-              renderer.render(scene, camera);
-            });
-          },
-          undefined,
-          (error) => {
-            console.error("Error loading model:", error);
-            setError("خطا در بارگذاری مدل زمین");
-            setLoading(false);
-          }
-        );
-
-        // Handle resize
-        const onResize = () => {
-          camera.aspect = window.innerWidth / window.innerHeight;
-          camera.updateProjectionMatrix();
-          renderer.setSize(window.innerWidth, window.innerHeight);
-        };
-        window.addEventListener("resize", onResize);
-
-        return () => {
-          window.removeEventListener("resize", onResize);
-          if (session) session.end();
-        };
-      } catch (error) {
-        console.error("AR initialization failed:", error);
-        setError("خطا در راه‌اندازی واقعیت افزوده");
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Unknown error");
+        console.error("AR support check failed:", err);
+      } finally {
         setLoading(false);
+        setLoadingMessage("");
       }
-    }, [arSupported, renderer]);
+    };
 
-    // Setup AR button and renderer
-    useEffect(() => {
-      if (!arSupported) return;
+    checkARSupport();
+  }, []);
 
-      // Create renderer
-      const newRenderer = new THREE.WebGLRenderer({
-        antialias: true,
-        alpha: true,
+  // Initialize AR experience
+  const startARExperience = useCallback(async () => {
+    if (!arSupported || !renderer) return;
+
+    try {
+      setLoading(true);
+      setLoadingMessage("در حال راه‌اندازی واقعیت افزوده");
+
+      // 1. Request camera permission
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
       });
-      newRenderer.xr.enabled = true;
-      rendererRef.current = newRenderer;
-      setRenderer(newRenderer);
+      stream.getTracks().forEach((track) => track.stop());
+      setPermissionGranted(true);
 
-      // Create AR button
-      const arButton = ARButton.createButton(newRenderer, {
+      // 2. Setup renderer
+      const container = document.getElementById("ar-view");
+      if (container) {
+        container.innerHTML = "";
+        container.appendChild(renderer.domElement);
+      }
+
+      // 3. Create scene
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      sceneRef.current = scene;
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1);
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+      directionalLight.position.set(1, 1, 1);
+      scene.add(ambientLight, directionalLight);
+
+      // 4. Start XR session
+      const session = await navigator.xr!.requestSession("immersive-ar", {
         requiredFeatures: ["hit-test"],
         optionalFeatures: ["local-floor"],
       });
+      xrSessionRef.current = session;
 
-      // Style button
-      Object.assign(arButton.style, {
-        position: "fixed",
-        bottom: "20px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        padding: "12px 24px",
-        backgroundColor: "#4285f4",
-        color: "white",
-        border: "none",
-        borderRadius: "4px",
-        fontSize: "16px",
-        cursor: "pointer",
-        zIndex: "10000",
-      });
-
-      arButton.textContent = "شروع تجربه AR";
-      arButtonRef.current = arButton;
-
-      // Add to container
-      const container = document.getElementById("ar-button-container");
-      if (container) {
-        container.appendChild(arButton);
+      // 5. Get reference space
+      let referenceSpace;
+      try {
+        referenceSpace = await session.requestReferenceSpace("local-floor");
+      } catch (e) {
+        console.warn("Using viewer reference space");
+        referenceSpace = await session.requestReferenceSpace("viewer");
       }
 
-      // Set click handler
-      const handleClick = async () => {
-        setHasStarted(true);
-        await startARExperience();
-      };
+      // 6. Setup hit test
+      const hitTestSource = await session.requestHitTestSource!({
+        space: referenceSpace,
+      });
+      hitTestSourceRef.current = hitTestSource as XRHitTestSource;
 
-      arButton.addEventListener("click", handleClick);
+      // 7. Load model
+      const loader = new GLTFLoader();
+      loader.load(
+        "/ar-earth/earth.glb",
+        (gltf) => {
+          const earth = gltf.scene;
+          earth.scale.set(0.07, 0.07, 0.07);
+          earth.rotation.y = Math.PI / 2;
+          earth.visible = false;
+          scene.add(earth);
+          earthRef.current = earth;
+          setLoading(false);
+
+          // Animation loop
+          renderer.setAnimationLoop((time, frame) => {
+            if (!frame || !earthRef.current || !hitTestSourceRef.current)
+              return;
+
+            const hitTestResults = frame.getHitTestResults(
+              hitTestSourceRef.current
+            );
+            if (hitTestResults.length > 0) {
+              const pose = hitTestResults[0].getPose(referenceSpace);
+              if (pose) {
+                earthRef.current.position.set(
+                  pose.transform.position.x,
+                  pose.transform.position.y,
+                  pose.transform.position.z
+                );
+                earthRef.current.visible = true;
+              }
+            }
+            earthRef.current.rotation.y += 0.002;
+            renderer.render(scene, camera);
+          });
+        },
+        undefined,
+        (error) => {
+          console.error("Error loading model:", error);
+          setError("خطا در بارگذاری مدل زمین");
+          setLoading(false);
+        }
+      );
+
+      // Handle resize
+      const onResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      };
+      window.addEventListener("resize", onResize);
 
       return () => {
-        arButton.removeEventListener("click", handleClick);
-        if (arButton.parentNode) {
-          arButton.parentNode.removeChild(arButton);
-        }
-        newRenderer.dispose();
+        window.removeEventListener("resize", onResize);
+        if (session) session.end();
       };
-    }, [arSupported, startARExperience]);
+    } catch (error) {
+      console.error("AR initialization failed:", error);
+      setError("خطا در راه‌اندازی واقعیت افزوده");
+      setLoading(false);
+    }
+  }, [arSupported, renderer]);
 
-    // Touch interactions
-    useEffect(() => {
-      if (!hasStarted) return;
+  // Setup AR button and renderer
+  useEffect(() => {
+    if (!arSupported) return;
 
-      let touchStartDistance = 0;
-      let touchStartPos = { x: 0, y: 0 };
+    // Create renderer
+    const newRenderer = new THREE.WebGLRenderer({
+      antialias: true,
+      alpha: true,
+    });
+    newRenderer.xr.enabled = true;
+    rendererRef.current = newRenderer;
+    setRenderer(newRenderer);
 
-      const handleTouchStart = (e: TouchEvent) => {
-        if (e.touches.length === 2) {
-          const touch1 = e.touches[0];
-          const touch2 = e.touches[1];
-          touchStartDistance = Math.hypot(
-            touch2.clientX - touch1.clientX,
-            touch2.clientY - touch1.clientY
-          );
-        } else if (e.touches.length === 1) {
-          touchStartPos = {
-            x: e.touches[0].clientX,
-            y: e.touches[0].clientY,
-          };
-        }
-      };
+    // Create AR button
+    const arButton = ARButton.createButton(newRenderer, {
+      requiredFeatures: ["hit-test"],
+      optionalFeatures: ["local-floor"],
+    });
 
-      const handleTouchMove = (e: TouchEvent) => {
-        if (!earthRef.current) return;
+    // Style button
+    Object.assign(arButton.style, {
+      position: "fixed",
+      bottom: "20px",
+      left: "50%",
+      transform: "translateX(-50%)",
+      padding: "12px 24px",
+      backgroundColor: "#4285f4",
+      color: "white",
+      border: "none",
+      borderRadius: "4px",
+      fontSize: "16px",
+      cursor: "pointer",
+      zIndex: "10000",
+    });
 
-        if (e.touches.length === 2) {
-          const touch1 = e.touches[0];
-          const touch2 = e.touches[1];
-          const newDistance = Math.hypot(
-            touch2.clientX - touch1.clientX,
-            touch2.clientY - touch1.clientY
-          );
+    arButton.textContent = "شروع تجربه AR";
+    arButtonRef.current = arButton as HTMLButtonElement;
 
-          const scaleFactor = newDistance / touchStartDistance;
-          earthRef.current.scale.setScalar(scaleFactor * 0.07);
-        } else if (e.touches.length === 1) {
-          const dx = e.touches[0].clientX - touchStartPos.x;
-          earthRef.current.rotation.y += dx * 0.005;
-          touchStartPos = {
-            x: e.touches[0].clientX,
-            y: e.touches[0].clientY,
-          };
-        }
-      };
+    // Add to container
+    const container = document.getElementById("ar-button-container");
+    if (container) {
+      container.appendChild(arButton);
+    }
 
-      window.addEventListener("touchstart", handleTouchStart);
-      window.addEventListener("touchmove", handleTouchMove);
+    // Set click handler
+    const handleClick = async () => {
+      setHasStarted(true);
+      await startARExperience();
+    };
 
-      return () => {
-        window.removeEventListener("touchstart", handleTouchStart);
-        window.removeEventListener("touchmove", handleTouchMove);
-      };
-    }, [hasStarted]);
+    arButton.addEventListener("click", handleClick);
 
-    return (
-      <section>
-        {loading && <ARLoading messege={loadingMessage} />}
-        {error && <ARError error={error} />}
+    return () => {
+      arButton.removeEventListener("click", handleClick);
+      if (arButton.parentNode) {
+        arButton.parentNode.removeChild(arButton);
+      }
+      newRenderer.dispose();
+    };
+  }, [arSupported, startARExperience]);
 
-        <div id="ar-view" className="w-full h-full z-50" />
-        <div
-          id="ar-button-container"
-          className="w-full fixed bottom-0 left-0 z-50"
-        />
-      </section>
-    );
-  }
+  // Touch interactions
+  useEffect(() => {
+    if (!hasStarted) return;
+
+    let touchStartDistance = 0;
+    let touchStartPos = { x: 0, y: 0 };
+
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        touchStartDistance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+      } else if (e.touches.length === 1) {
+        touchStartPos = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        };
+      }
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!earthRef.current) return;
+
+      if (e.touches.length === 2) {
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        const newDistance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+
+        const scaleFactor = newDistance / touchStartDistance;
+        earthRef.current.scale.setScalar(scaleFactor * 0.07);
+      } else if (e.touches.length === 1) {
+        const dx = e.touches[0].clientX - touchStartPos.x;
+        earthRef.current.rotation.y += dx * 0.005;
+        touchStartPos = {
+          x: e.touches[0].clientX,
+          y: e.touches[0].clientY,
+        };
+      }
+    };
+
+    window.addEventListener("touchstart", handleTouchStart);
+    window.addEventListener("touchmove", handleTouchMove);
+
+    return () => {
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, [hasStarted]);
+
   return (
     <section>
-      {/* لودینگ و خطا */}
-      {loading && <ARLoading messege={loadingMessege} />}
+      {loading && <ARLoading messege={loadingMessage} />}
       {error && <ARError error={error} />}
-      <div id="ar-view" className="w-full h-full z-50" />
-      <div id="ar-overlay" className="w-1/2 h-2/3 z-50" />
 
-      {/* دکمه AR */}
+      <div id="ar-view" className="w-full h-full z-50" />
       <div
         id="ar-button-container"
         className="w-full fixed bottom-0 left-0 z-50"
-      ></div>
-      <button
-        className="fixed top-0 w-20 h-20 hidden bg-myblue z-50"
-        id="ar-start-button"
-      >
-        Start Camera
-      </button>
+      />
     </section>
   );
 }
