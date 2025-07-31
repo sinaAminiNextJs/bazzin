@@ -512,7 +512,24 @@ export default function AREarth() {
 
   useEffect(() => {
     if (!hasStarted || !earthRef.current) return;
+    // Tap event to place the model
+    const onTap = (event) => {
+      if (reticleRef.current.visible && earthRef.current) {
+        const material = new THREE.MeshPhongMaterial({
+          color: 0xffffff * Math.random(),
+        });
+        const mesh = new THREE.Mesh(earthRef.current.geometry, material);
+        reticleRef.current.matrix.decompose(
+          mesh.position,
+          mesh.quaternion,
+          mesh.scale
+        );
+        sceneRef.current.add(mesh);
+      }
+    };
 
+    // Add the touch event listener to place the model on tap
+    window.addEventListener("touchend", onTap);
     const onSelect = () => {
       if (reticleRef.current.visible) {
         const material = new THREE.MeshPhongMaterial({
@@ -537,6 +554,7 @@ export default function AREarth() {
     sceneRef.current.add(controller2);
 
     return () => {
+      window.removeEventListener("touchend", onTap);
       controller1.removeEventListener("select", onSelect);
       controller2.removeEventListener("select", onSelect);
     };
