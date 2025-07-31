@@ -535,8 +535,26 @@ export default function AREarth() {
         if (session) session.end();
       };
     } catch (error) {
-      console.error("AR initialization failed:", error);
-      setError("خطا در راه‌اندازی واقعیت افزوده");
+      let errorMessage = "خطا در راه‌اندازی واقعیت افزوده";
+
+      if (error instanceof Error) {
+        console.error("Error details:", {
+          name: error.name,
+          message: error.message,
+          stack: error.stack,
+        });
+
+        // تشخیص نوع خطا
+        if (error.message.includes("permission")) {
+          errorMessage = "لطفاً دسترسی به دوربین را فعال کنید";
+        } else if (error.message.includes("hit-test")) {
+          errorMessage = "سیستم قادر به تشخیص سطوح نیست";
+        } else if (error.message.includes("session")) {
+          errorMessage = "امکان اتصال به سرویس AR وجود ندارد";
+        }
+      }
+
+      setError(errorMessage);
       setLoading(false);
     }
   }, [arSupported, renderer]);
@@ -665,7 +683,7 @@ export default function AREarth() {
       <div id="ar-view" className="w-full h-full z-50" />
       <div
         id="ar-button-container"
-        className="w-full fixed bottom-0 left-0 z-50"
+        className="w-full fixed top-0 left-0 z-50"
       />
     </section>
   );
