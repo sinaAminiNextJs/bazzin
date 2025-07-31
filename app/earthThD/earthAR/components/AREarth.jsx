@@ -364,408 +364,55 @@
 // }
 ///////////////
 "use client";
+// pages/ar-page.jsx
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
 
-import { useEffect, useState, useRef, useCallback } from "react";
-import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { ARButton } from "three/addons/webxr/ARButton.js";
-import ARLoading from "./ARLoading";
-import ARError from "./ARError";
+// بارگذاری پویا برای جلوگیری از خطای SSR
+const ARScene = dynamic(() => import("./ARScene"), {
+  ssr: false,
+  loading: () => <div>در حال بارگذاری...</div>,
+});
 
-export default function AREarth() {
-  // State management
-  const [loading, setLoading] = useState(true);
-  const [loadingMessage, setLoadingMessage] = useState(
-    "در حال بررسی امکانات سخت افزاری شما"
-  );
-  const [error, setError] = useState<string | null>(null);
-  const [arSupported, setArSupported] = useState<boolean | null>(null);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [permissionGranted, setPermissionGranted] = useState(false);
-  const [renderer, setRenderer] = useState<THREE.WebGLRenderer | null>(null);
+export default function ARPage() {
+  const [supported, setSupported] = useState(null);
+  const router = useRouter();
 
-  // Refs
-  const xrSessionRef = useRef<XRSession | null>(null);
-  const sceneRef = useRef<THREE.Scene | null>(null);
-  const earthRef = useRef<THREE.Group | null>(null);
-  const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
-  const hitTestSourceRef = useRef<XRHitTestSource | null>(null);
-  const arButtonRef = useRef<HTMLButtonElement | null>(null);
-
-  // Check AR support on mount
   useEffect(() => {
-    const checkARSupport = async () => {
+    // بررسی پشتیبانی از WebXR
+    const checkSupport = async () => {
+      if (!navigator.xr) {
+        setSupported(false);
+        return;
+      }
+
       try {
-        if (!navigator.xr) {
-          throw new Error("WebXR not supported");
-        }
-
-        const supported = await navigator.xr.isSessionSupported("immersive-ar");
-        setArSupported(supported);
-
-        if (!supported) {
-          throw new Error("AR not supported");
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Unknown error");
-        console.error("AR support check failed:", err);
-      } finally {
-        setLoading(false);
-        setLoadingMessage("");
+        const isSupported = await navigator.xr.isSessionSupported(
+          "immersive-ar"
+        );
+        setSupported(isSupported);
+      } catch (error) {
+        console.error("خطای بررسی پشتیبانی:", error);
+        setSupported(false);
       }
     };
 
-    checkARSupport();
+    checkSupport();
   }, []);
 
-  // Initialize AR experience
-  const startARExperience = useCallback(async () => {
-    if (!arSupported || !renderer) return;
-
-    try {
-      setLoading(true);
-      setLoadingMessage("در حال راه‌اندازی واقعیت افزوده");
-
-      // 1. Request camera permission
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
-        stream.getTracks().forEach((track) => track.stop());
-        setPermissionGranted(true);
-      } catch (error) {
-        throw new Error("دسترسی به دوربین داده نشد");
-      }
-
-      // 2. Setup renderer
-      const container = document.getElementById("ar-view");
-      if (container) {
-        container.innerHTML = "";
-        container.appendChild(renderer.domElement);
-      }
-
-      // 3. Create scene
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        70,
-        window.innerWidth / window.innerHeight,
-        0.01,
-        20
-      );
-      sceneRef.current = scene;
-
-      //
-      const geometry = new THREE.CylinderGeometry(0.1, 0.1, 0.2, 32).translate(
-        0,
-        0.1,
-        0
-      );
-
-      let reticle;
-      function onSelect() {
-        if (reticle!.visible) {
-          const material = new THREE.MeshPhongMaterial({
-            color: 0xffffff * Math.random(),
-          });
-          const mesh = new THREE.Mesh(geometry, material);
-          reticle!.matrix.decompose(mesh.position, mesh.quaternion, mesh.scale);
-          mesh.scale.y = Math.random() * 2 + 1;
-          scene.add(mesh);
-        }
-      }
-
-      const controller1 = renderer.xr.getController(0);
-      controller1.addEventListener("select", onSelect);
-      scene.add(controller1);
-
-      const controller2 = renderer.xr.getController(1);
-      controller2.addEventListener("select", onSelect);
-      scene.add(controller2);
-
-      // Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 1);
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-      directionalLight.position.set(1, 1, 1);
-      scene.add(ambientLight, directionalLight);
-
-      // 4. Start XR session
-      const session = await navigator.xr!.requestSession("immersive-ar", {
-        requiredFeatures: ["hit-test"],
-        optionalFeatures: ["local-floor"],
-      });
-      xrSessionRef.current = session;
-
-      // 5. Get reference space
-      let referenceSpace;
-      try {
-        referenceSpace = await session.requestReferenceSpace("local-floor");
-      } catch (e) {
-        referenceSpace = await session.requestReferenceSpace("viewer");
-        throw new Error("Using viewer reference space");
-      }
-
-      // 6. Setup hit test
-      const hitTestSource = await session.requestHitTestSource!({
-        space: referenceSpace,
-      });
-      hitTestSourceRef.current = hitTestSource as XRHitTestSource;
-
-      // 7. Load model
-      const modelResponse = await fetch("/ar-earth/earth.glb");
-      if (!modelResponse.ok) {
-        throw new Error("مدل سه بعدی یافت نشد");
-      }
-
-      const loader = new GLTFLoader();
-      loader.load(
-        "/ar-earth/earth.glb",
-        (gltf) => {
-          const earth = gltf.scene;
-          earth.scale.set(0.07, 0.07, 0.07);
-          earth.rotation.y = Math.PI / 2;
-          earth.visible = false;
-          scene.add(earth);
-          earthRef.current = earth;
-          setLoading(false);
-
-          // Animation loop
-          renderer.setAnimationLoop((timestamp, frame) => {
-            if (!frame || !earthRef.current || !hitTestSourceRef.current)
-              return;
-            const referenceSpace = renderer.xr.getReferenceSpace();
-            const session = renderer.xr.getSession();
-            let hitTestSourceRequested = false;
-
-            if (hitTestSourceRequested === false && session) {
-              session.requestReferenceSpace("viewer");
-              // .then(function (referenceSpace) {
-              //     session
-              //       .requestHitTestSource!({
-              //         space: referenceSpace,
-              //       })
-              //       .then(function (source) {
-              //         hitTestSource = source;
-              //       });
-
-              // });
-
-              session.addEventListener("end", function () {
-                hitTestSourceRequested = false;
-                // hitTestSource = null;
-              });
-
-              hitTestSourceRequested = true;
-            }
-
-            if (hitTestSource) {
-              const hitTestResults = frame.getHitTestResults(hitTestSource);
-
-              if (hitTestResults.length) {
-                const hit = hitTestResults[0];
-
-                reticle!.visible = true;
-                reticle!.matrix.fromArray(
-                  hit!.getPose(referenceSpace as XRReferenceSpace)!.transform
-                    .matrix
-                );
-              } else {
-                reticle!.visible = false;
-              }
-            }
-
-            const hitTestResults = frame.getHitTestResults(
-              hitTestSourceRef.current
-            );
-            if (hitTestResults.length > 0) {
-              const pose = hitTestResults[0].getPose(
-                referenceSpace as XRReferenceSpace
-              );
-              if (pose) {
-                earthRef.current.position.set(
-                  pose.transform.position.x,
-                  pose.transform.position.y,
-                  pose.transform.position.z
-                );
-                earthRef.current.visible = true;
-              }
-            }
-            earthRef.current.rotation.y += 0.002;
-            renderer.render(scene, camera);
-          });
-        },
-        undefined,
-        (error) => {
-          console.error("Error loading model:", error);
-          setError("خطا در بارگذاری مدل زمین");
-          setLoading(false);
-        }
-      );
-
-      // Handle resize
-      const onResize = () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      };
-      window.addEventListener("resize", onResize);
-
-      return () => {
-        window.removeEventListener("resize", onResize);
-        if (session) session.end();
-      };
-    } catch (error) {
-      let errorMessage = "خطا در راه‌اندازی واقعیت افزوده";
-
-      if (error instanceof Error) {
-        console.error("Error details:", {
-          name: error.name,
-          message: error.message,
-          stack: error.stack,
-        });
-
-        // تشخیص نوع خطا
-        if (error.message.includes("permission")) {
-          errorMessage = "لطفاً دسترسی به دوربین را فعال کنید";
-        } else if (error.message.includes("hit-test")) {
-          errorMessage = "سیستم قادر به تشخیص سطوح نیست";
-        } else if (error.message.includes("session")) {
-          errorMessage = "امکان اتصال به سرویس AR وجود ندارد";
-        }
-      }
-
-      setError(errorMessage);
-      setLoading(false);
-    }
-  }, [arSupported, renderer]);
-
-  // Setup AR button and renderer
-  useEffect(() => {
-    if (!arSupported) return;
-
-    // Create renderer
-    const newRenderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-    });
-    newRenderer.setPixelRatio(window.devicePixelRatio);
-    newRenderer.setSize(window.innerWidth, window.innerHeight);
-    newRenderer.xr.enabled = true;
-    rendererRef.current = newRenderer;
-    setRenderer(newRenderer);
-
-    // Create AR button
-    const arButton = ARButton.createButton(newRenderer, {
-      requiredFeatures: ["hit-test"],
-      optionalFeatures: ["local-floor"],
-    });
-
-    // Style button
-    Object.assign(arButton.style, {
-      position: "fixed",
-      bottom: "20px",
-      left: "50%",
-      transform: "translateX(-50%)",
-      padding: "12px 24px",
-      backgroundColor: "#4285f4",
-      color: "white",
-      border: "none",
-      borderRadius: "4px",
-      fontSize: "16px",
-      cursor: "pointer",
-      zIndex: "10000",
-    });
-
-    arButton.textContent = "شروع تجربه AR";
-    arButtonRef.current = arButton as HTMLButtonElement;
-
-    // Add to container
-    const container = document.getElementById("ar-button-container");
-    if (container) {
-      container.appendChild(arButton);
-    }
-
-    // Set click handler
-    const handleClick = async () => {
-      setHasStarted(true);
-      await startARExperience();
-    };
-
-    arButton.addEventListener("click", handleClick);
-
-    return () => {
-      arButton.removeEventListener("click", handleClick);
-      if (arButton.parentNode) {
-        arButton.parentNode.removeChild(arButton);
-      }
-      newRenderer.dispose();
-    };
-  }, [arSupported, startARExperience]);
-
-  // Touch interactions
-  useEffect(() => {
-    if (!hasStarted) return;
-
-    let touchStartDistance = 0;
-    let touchStartPos = { x: 0, y: 0 };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 2) {
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        touchStartDistance = Math.hypot(
-          touch2.clientX - touch1.clientX,
-          touch2.clientY - touch1.clientY
-        );
-      } else if (e.touches.length === 1) {
-        touchStartPos = {
-          x: e.touches[0].clientX,
-          y: e.touches[0].clientY,
-        };
-      }
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      if (!earthRef.current) return;
-
-      if (e.touches.length === 2) {
-        const touch1 = e.touches[0];
-        const touch2 = e.touches[1];
-        const newDistance = Math.hypot(
-          touch2.clientX - touch1.clientX,
-          touch2.clientY - touch1.clientY
-        );
-
-        const scaleFactor = newDistance / touchStartDistance;
-        earthRef.current.scale.setScalar(scaleFactor * 0.07);
-      } else if (e.touches.length === 1) {
-        const dx = e.touches[0].clientX - touchStartPos.x;
-        earthRef.current.rotation.y += dx * 0.005;
-        touchStartPos = {
-          x: e.touches[0].clientX,
-          y: e.touches[0].clientY,
-        };
-      }
-    };
-
-    window.addEventListener("touchstart", handleTouchStart);
-    window.addEventListener("touchmove", handleTouchMove);
-
-    return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, [hasStarted]);
+  if (supported === false) {
+    return (
+      <div className="error-message">
+        <h2>پلتفرم شما از AR پشتیبانی نمی‌کند</h2>
+        <button onClick={() => router.back()}>بازگشت</button>
+      </div>
+    );
+  }
 
   return (
-    <section>
-      {loading && <ARLoading messege={loadingMessage} />}
-      {error && <ARError error={error} />}
-
-      <div id="ar-view" className="w-full h-full z-50" />
-      <div
-        id="ar-button-container"
-        className="w-full fixed top-0 left-0 z-50"
-      />
-    </section>
+    <div className="ar-container">
+      <ARScene />
+    </div>
   );
 }

@@ -7,6 +7,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no"
     />
+
     <style>
       body {
         margin: 0;
@@ -42,9 +43,10 @@
     <div id="loading">در حال بارگذاری...</div>
 
     <script type="module">
-      import * as THREE from "three";
-      import { ARButton } from "three/addons/webxr/ARButton.js";
-      import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+      // استفاده از CDN برای بارگذاری کتابخانه‌ها
+      import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.module.js";
+      import { ARButton } from "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/webxr/ARButton.js";
+      import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.132.2/examples/jsm/loaders/GLTFLoader.js";
 
       // عناصر DOM
       const container = document.createElement("div");

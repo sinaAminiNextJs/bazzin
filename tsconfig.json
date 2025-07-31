@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/components/Globe.jsx",
-    "app/earthThD/earthAR/hooks/useARButton.js"
+    "app/earthThD/earthAR/hooks/useARButton.js",
+    "app/earthThD/earthAR/components/AREarth.jsx"
   ],
   "exclude": ["node_modules"]
 }
