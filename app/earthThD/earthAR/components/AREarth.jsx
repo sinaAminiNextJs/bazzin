@@ -568,7 +568,7 @@ export default function AREarth() {
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
       <div id="ar-view" className="w-full h-full z-50" />
-      <button id="but" className="w-20 h-20 bg-amber-300">
+      <button id="but" className="w-20 h-20 bg-amber-300 z-50">
         tap
       </button>
     </section>
