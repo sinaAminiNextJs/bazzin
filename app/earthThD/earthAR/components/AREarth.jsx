@@ -543,8 +543,8 @@ export default function AREarth() {
     const onSelect = () => {
       placeEarth();
     };
-
-    window.addEventListener("touchend", onTap);
+    const buttonn = document.getElementById("but");
+    buttonn.addEventListener("touchend", onTap);
 
     const controller1 = rendererRef.current.xr.getController(0);
     controller1.addEventListener("select", onSelect);
@@ -568,6 +568,9 @@ export default function AREarth() {
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
       <div id="ar-view" className="w-full h-full z-50" />
+      <button id="but" className="w-20 h-20 bg-amber-300">
+        tap
+      </button>
     </section>
   );
 }
