@@ -447,12 +447,40 @@ export default function AREarth() {
       // 3. Create scene
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(
-        75,
+        70,
         window.innerWidth / window.innerHeight,
-        0.1,
-        1000
+        0.01,
+        20
       );
       sceneRef.current = scene;
+
+      //
+      const geometry = new THREE.CylinderGeometry(0.1, 0.1, 0.2, 32).translate(
+        0,
+        0.1,
+        0
+      );
+
+      let reticle;
+      function onSelect() {
+        if (reticle!.visible) {
+          const material = new THREE.MeshPhongMaterial({
+            color: 0xffffff * Math.random(),
+          });
+          const mesh = new THREE.Mesh(geometry, material);
+          reticle!.matrix.decompose(mesh.position, mesh.quaternion, mesh.scale);
+          mesh.scale.y = Math.random() * 2 + 1;
+          scene.add(mesh);
+        }
+      }
+
+      const controller1 = renderer.xr.getController(0);
+      controller1.addEventListener("select", onSelect);
+      scene.add(controller1);
+
+      const controller2 = renderer.xr.getController(1);
+      controller2.addEventListener("select", onSelect);
+      scene.add(controller2);
 
       // Lighting
       const ambientLight = new THREE.AmbientLight(0xffffff, 1);
@@ -501,15 +529,57 @@ export default function AREarth() {
           setLoading(false);
 
           // Animation loop
-          renderer.setAnimationLoop((time, frame) => {
+          renderer.setAnimationLoop((timestamp, frame) => {
             if (!frame || !earthRef.current || !hitTestSourceRef.current)
               return;
+            const referenceSpace = renderer.xr.getReferenceSpace();
+            const session = renderer.xr.getSession();
+            let hitTestSourceRequested = false;
+
+            if (hitTestSourceRequested === false && session) {
+              session.requestReferenceSpace("viewer");
+              // .then(function (referenceSpace) {
+              //     session
+              //       .requestHitTestSource!({
+              //         space: referenceSpace,
+              //       })
+              //       .then(function (source) {
+              //         hitTestSource = source;
+              //       });
+
+              // });
+
+              session.addEventListener("end", function () {
+                hitTestSourceRequested = false;
+                // hitTestSource = null;
+              });
+
+              hitTestSourceRequested = true;
+            }
+
+            if (hitTestSource) {
+              const hitTestResults = frame.getHitTestResults(hitTestSource);
+
+              if (hitTestResults.length) {
+                const hit = hitTestResults[0];
+
+                reticle!.visible = true;
+                reticle!.matrix.fromArray(
+                  hit!.getPose(referenceSpace as XRReferenceSpace)!.transform
+                    .matrix
+                );
+              } else {
+                reticle!.visible = false;
+              }
+            }
 
             const hitTestResults = frame.getHitTestResults(
               hitTestSourceRef.current
             );
             if (hitTestResults.length > 0) {
-              const pose = hitTestResults[0].getPose(referenceSpace);
+              const pose = hitTestResults[0].getPose(
+                referenceSpace as XRReferenceSpace
+              );
               if (pose) {
                 earthRef.current.position.set(
                   pose.transform.position.x,
@@ -577,6 +647,8 @@ export default function AREarth() {
       antialias: true,
       alpha: true,
     });
+    newRenderer.setPixelRatio(window.devicePixelRatio);
+    newRenderer.setSize(window.innerWidth, window.innerHeight);
     newRenderer.xr.enabled = true;
     rendererRef.current = newRenderer;
     setRenderer(newRenderer);
