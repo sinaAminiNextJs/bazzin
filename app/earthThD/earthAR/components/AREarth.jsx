@@ -379,7 +379,7 @@ export default function AREarth() {
 
   const sceneRef = useRef(null);
   const rendererRef = useRef(null);
-  const earthRef = useRef(null);
+  const earthModelRef = useRef(null); // فقط مدل را ذخیره می‌کنیم، نه نمونه ای از آن در صحنه
   const reticleRef = useRef(null);
   const hitTestSourceRef = useRef(null);
   const hitTestSourceRequested = useRef(false);
@@ -413,6 +413,12 @@ export default function AREarth() {
 
     const arButton = ARButton.createButton(renderer, {
       requiredFeatures: ["hit-test"],
+      onSessionStart: () => {
+        setHasStarted(true);
+      },
+      onSessionEnd: () => {
+        setHasStarted(false);
+      },
     });
     document.body.appendChild(arButton);
 
@@ -430,13 +436,13 @@ export default function AREarth() {
     const light = new THREE.AmbientLight(0xffffff, 1);
     scene.add(light);
 
+    // فقط مدل را بارگذاری می‌کنیم اما به صحنه اضافه نمی‌کنیم
     const loader = new GLTFLoader();
     loader.load("/ar-earth/earth.glb", (gltf) => {
       const earth = gltf.scene;
       earth.scale.set(0.07, 0.07, 0.07);
       earth.rotation.y = Math.PI / 2;
-      scene.add(earth);
-      earthRef.current = earth;
+      earthModelRef.current = earth; // ذخیره مدل برای استفاده بعدی
     });
 
     const reticle = new THREE.Mesh(
@@ -511,39 +517,32 @@ export default function AREarth() {
   }, [arSupported]);
 
   useEffect(() => {
-    if (!hasStarted || !earthRef.current) return;
-    // Tap event to place the model
-    const onTap = (event) => {
-      if (reticleRef.current.visible && earthRef.current) {
-        const material = new THREE.MeshPhongMaterial({
-          color: 0xffffff * Math.random(),
-        });
-        const mesh = new THREE.Mesh(earthRef.current.geometry, material);
+    if (!hasStarted || !earthModelRef.current) return;
+
+    const placeEarth = () => {
+      if (reticleRef.current.visible && earthModelRef.current) {
+        // یک کپی از مدل اصلی ایجاد می‌کنیم
+        const earth = earthModelRef.current.clone();
         reticleRef.current.matrix.decompose(
-          mesh.position,
-          mesh.quaternion,
-          mesh.scale
+          earth.position,
+          earth.quaternion,
+          earth.scale
         );
-        sceneRef.current.add(mesh);
+        sceneRef.current.add(earth);
       }
     };
 
-    // Add the touch event listener to place the model on tap
-    window.addEventListener("touchend", onTap);
-    const onSelect = () => {
-      if (reticleRef.current.visible) {
-        const material = new THREE.MeshPhongMaterial({
-          color: 0xffffff * Math.random(),
-        });
-        const mesh = new THREE.Mesh(earthRef.current.geometry, material);
-        reticleRef.current.matrix.decompose(
-          mesh.position,
-          mesh.quaternion,
-          mesh.scale
-        );
-        sceneRef.current.add(mesh);
-      }
+    // رویدادهای تاچ
+    const onTap = (event) => {
+      placeEarth();
     };
+
+    // رویدادهای کنترلر
+    const onSelect = () => {
+      placeEarth();
+    };
+
+    window.addEventListener("touchend", onTap);
 
     const controller1 = rendererRef.current.xr.getController(0);
     controller1.addEventListener("select", onSelect);
@@ -555,14 +554,15 @@ export default function AREarth() {
 
     return () => {
       window.removeEventListener("touchend", onTap);
-      controller1.removeEventListener("select", onSelect);
-      controller2.removeEventListener("select", onSelect);
+      if (rendererRef.current) {
+        controller1.removeEventListener("select", onSelect);
+        controller2.removeEventListener("select", onSelect);
+      }
     };
   }, [hasStarted]);
 
   return (
     <section className="overflow-hidden">
-      {/* لودینگ و خطا */}
       {loading && <ARLoading />}
       {error && <ARError error={error} />}
       <div id="ar-view" className="w-full h-full z-50" />
