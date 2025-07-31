@@ -534,6 +534,8 @@ export default function AREarth() {
 
     // رویدادهای تاچ
     const onTap = (event) => {
+      alert("selected");
+
       placeEarth();
     };
 
