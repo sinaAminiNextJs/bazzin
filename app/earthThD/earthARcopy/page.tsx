@@ -12,33 +12,8 @@ export default function ARPage() {
   const [showAR, setShowAR] = useState(false);
   const modelViewerRef = useRef<ModelViewerElement>(null);
 
-  const startAR = () => {
-    setShowAR(true);
-    // نمایش مدل با تاخیر برای اطمینان از لود کامل
-    setTimeout(() => {
-      modelViewerRef.current?.dismissPoster?.();
-    }, 300);
-  };
-
   return (
     <section className="relative w-full min-h-screen text-white flex flex-col items-center bg-mybg/96 overflow-hidden">
-      {/* پس‌زمینه */}
-      <div
-        className={`absolute top-0 left-0 -z-10 w-full h-screen  ${
-          showAR ? "hidden" : "block"
-        }`}
-      >
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-40 absolute top-20 -right-3"
-        />
-        <img
-          src="/clipart/earth.png"
-          alt="Earth"
-          className="w-96 absolute -bottom-7 -left-44"
-        />
-      </div>
       <div
         className={`absolute top-0 left-0 z-50 w-full h-screen mx-auto bg-white shadow transition-all flex flex-col items-center justify-center ${
           showAR ? "block" : "hidden"
@@ -108,13 +83,6 @@ export default function ARPage() {
           {/* @ts-ignore */}
         </model-viewer>
       </div>
-
-      <button
-        onClick={startAR}
-        className="fixed top-10 z-50 w-[200px] h-[40px] rounded-full flex items-center justify-center text-white bg-res-100 text-sm"
-      >
-        Start AR Experience
-      </button>
 
       <BackButton pathName="/menu" />
     </section>
