@@ -13,6 +13,7 @@ export default function ARPage() {
   const modelViewerRef = useRef<ModelViewerElement>(null);
 
   const startAR = () => {
+    alert("کلیک شد");
     setShowAR(true);
     // نمایش مدل با تاخیر برای اطمینان از لود کامل
     setTimeout(() => {
