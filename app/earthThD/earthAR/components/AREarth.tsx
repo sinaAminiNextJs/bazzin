@@ -85,8 +85,8 @@ export default function AREarth() {
         // مقیاس مدل زمین بر اساس فاصله تغییر کند
         if (earthRef.current) {
           const scaleFactor =
-            (newDistance * defaultScale) / (2 * touchStartDistance) +
-            defaultScale / 2;
+            (newDistance * defaultScale) / (3 * touchStartDistance) +
+            (2 * defaultScale) / 3;
           defaultScale = scaleFactor;
           earthRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
         }
