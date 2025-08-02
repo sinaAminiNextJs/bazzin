@@ -61,6 +61,10 @@ export default function AREarth() {
   let touchStartDistance = 0;
   let touchStartPos = { x: 0, y: 0 };
   let defaultScale = 0.07;
+  //متغیر های تغییر مکان رتیکل
+  const fixedDistance = 2.0; // فاصله ثابت ۲ متری
+  let reticleYOffset = 0; // مقدار جابجایی عمودی
+  const moveSensitivity = 0.05; // حساسیت حرکت
   useEffect(() => {
     // محاسبه نقطه شروع زوم تاچ
     const handleTouchStart = (event: any) => {
@@ -100,32 +104,19 @@ export default function AREarth() {
         touchStartDistance = 0;
       }
     };
+    let startY = 0;
 
-    const handleTouchStartRotation = (event: any) => {
+    const handleTouchStartForReticle = (event: any) => {
       if (event.touches.length === 1) {
-        touchStartPos = {
-          x: event.touches[0].clientX,
-          y: event.touches[0].clientY,
-        };
+        startY = event.touches[0].clientY;
       }
     };
 
-    const handleTouchMoveRotation = (event: any) => {
+    const handleTouchMoveForReticle = (event: any) => {
       if (event.touches.length === 1) {
-        const dx = event.touches[0].clientX - touchStartPos.x;
-        // const dy = event.touches[0].clientY - touchStartPos.y;
-
-        // چرخش مدل زمین بر اساس حرکت انگشت
-        if (earthRef.current) {
-          earthRef.current.rotation.y += dx * 0.005; // حساسیت چرخش
-          // earthRef.current.rotation.x += dy * 0.005; // حساسیت چرخش
-        }
-
-        // بروزرسانی موقعیت اولیه انگشت
-        touchStartPos = {
-          x: event.touches[0].clientX,
-          y: event.touches[0].clientY,
-        };
+        const deltaY = startY - event.touches[0].clientY;
+        reticleYOffset += deltaY * moveSensitivity;
+        startY = event.touches[0].clientY;
       }
     };
 
@@ -133,16 +124,16 @@ export default function AREarth() {
     window.addEventListener("touchstart", handleTouchStart);
     window.addEventListener("touchmove", handleTouchMove);
     window.addEventListener("touchend", handleTouchEnd);
-    window.addEventListener("touchstart", handleTouchStartRotation);
-    window.addEventListener("touchmove", handleTouchMoveRotation);
+    window.addEventListener("touchstart", handleTouchStartForReticle);
+    window.addEventListener("touchmove", handleTouchMoveForReticle);
 
     // پاکسازی رویدادها هنگام unmount
     return () => {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("touchstart", handleTouchStartRotation);
-      window.removeEventListener("touchmove", handleTouchMoveRotation);
+      window.removeEventListener("touchstart", handleTouchStartForReticle);
+      window.removeEventListener("touchmove", handleTouchMoveForReticle);
     };
   }, []); // خالی بودن این آرایه باعث می‌شود که فقط یکبار کد اجرا شود
 
@@ -311,20 +302,40 @@ export default function AREarth() {
 
               if (hitTestResults.length && referenceSpace) {
                 const hit = hitTestResults[0];
-
-                // بررسی اینکه آیا getPose مقدار غیر undefined برمی‌گرداند یا خیر
                 const pose = hit.getPose(referenceSpace);
 
                 if (pose) {
-                  // بررسی اینکه pose مقداردهی شده است
+                  // بررسی اینکه پوز مقداردهی شده است
                   reticle.visible = true;
-                  reticle.matrix.fromArray(pose.transform.matrix); // استفاده از matrix زمانی که pose موجود باشد
+                  // reticle.matrix.fromArray(pose.transform.matrix); //  استفاده از ماتریکس زمانی که پوز موجود باشد
+                  // محاسبه جهت بدون تغییر فاصله
+
+                  const hitPosition = new THREE.Vector3().setFromMatrixPosition(
+                    new THREE.Matrix4().fromArray(
+                      Array.from(pose.transform.matrix)
+                    )
+                  );
+
+                  const cameraPosition =
+                    new THREE.Vector3().setFromMatrixPosition(
+                      camera.matrixWorld
+                    );
+                  const direction = hitPosition.sub(cameraPosition).normalize();
+
+                  // اعمال فاصله ثابت و جابجایی عمودی
+                  const targetPosition = cameraPosition
+                    .clone()
+                    .add(direction.multiplyScalar(fixedDistance))
+                    .add(new THREE.Vector3(0, reticleYOffset, 0));
+
+                  reticle.position.copy(targetPosition);
                 } else {
                   reticle.visible = false;
                 }
               } else {
                 reticle.visible = false;
               }
+              // تابع برای قرار دادن مدل روی رتیکل
               function placeModelAtReticle() {
                 if (!reticleRef.current || !earthRef.current) return;
 
