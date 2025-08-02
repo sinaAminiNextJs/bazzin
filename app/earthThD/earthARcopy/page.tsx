@@ -48,7 +48,7 @@ export default function ARPage() {
           camera-controls
           auto-rotate
           shadow-intensity="1"
-          style={{ width: "100%", height: "100%" }}
+          style={{ width: "100%", height: "100%", zIndex: "10" }}
           touch-action="pan-y"
           reveal="manual"
         >
@@ -63,6 +63,7 @@ export default function ARPage() {
               background: "#4285f4",
               color: "white",
               border: "none",
+              zIndex: "10",
             }}
           >
             View in AR
