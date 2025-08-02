@@ -17,16 +17,6 @@ export default function ARPage() {
       <div
         className={`absolute top-0 left-0 z-50 w-full h-screen mx-auto bg-white shadow transition-all flex flex-col items-center justify-center`}
       >
-        <div className="w-full h-[50px] flex items-center justify-end px-3">
-          <button
-            onClick={() => {
-              setShowAR(false);
-            }}
-          >
-            بستن{" "}
-          </button>
-        </div>
-
         {/* @ts-ignore */}
         <model-viewer
           ref={modelViewerRef}
@@ -61,8 +51,8 @@ export default function ARPage() {
               minWidth: "fit-content",
               opacity: "1",
               position: "fixed",
-              top: "20px",
-              left: "50%",
+              bottom: "20px",
+              left: "20px",
               transform: "translate(-50%, -50%)",
               padding: "8px 32px",
               backgroundColor: "#ffc585",
@@ -81,8 +71,7 @@ export default function ARPage() {
           {/* @ts-ignore */}
         </model-viewer>
       </div>
-
-      {/* <BackButton pathName="/menu" /> */}
+      <BackButton pathName="/menu" />
     </section>
   );
 }
