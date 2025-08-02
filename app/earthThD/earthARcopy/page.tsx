@@ -64,10 +64,13 @@ export default function ARPage() {
           camera-controls
           auto-rotate
           shadow-intensity="1"
+          ar-scale="fixed" // ثابت نگه داشتن مقیاس
+          ar-placement="floor" // تشخیص سطوح
+          interaction-prompt="none" // غیرفعال کردن prompt پیش‌فرض
           style={{ width: "100%", height: "100%", zIndex: "10" }}
           touch-action="pan-y"
           reveal="manual"
-          scale="0.1 0.1 0.1" // تغییر مقیاس مدل به نصف
+          scale="0.05 0.05 0.05" // تغییر مقیاس مدل به نصف
           camera-position="0 1.6 3" // تنظیم موقعیت دوربین
         >
           <div className="progress-bar hide" slot="progress-bar">
