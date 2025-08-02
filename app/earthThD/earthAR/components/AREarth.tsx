@@ -58,20 +58,21 @@ export default function AREarth() {
 
   let touchStartDistance = 0;
   let touchStartPos = { x: 0, y: 0 };
-
+  let defaultScale = 0.07;
   useEffect(() => {
-    // اضافه کردن تعامل لمسی
+    // محاسبه نقطه شروع زوم تاچ
     const handleTouchStart = (event: any) => {
       if (event.touches.length === 2) {
         const touch1 = event.touches[0];
         const touch2 = event.touches[1];
+        //محاسبه فاصله دو تاچ
         touchStartDistance = Math.sqrt(
           Math.pow(touch2.clientX - touch1.clientX, 2) +
             Math.pow(touch2.clientY - touch1.clientY, 2)
         );
       }
     };
-
+    //محاسبه تغییر فاصله زوم تاچ
     const handleTouchMove = (event: any) => {
       if (event.touches.length === 2) {
         const touch1 = event.touches[0];
@@ -83,12 +84,13 @@ export default function AREarth() {
 
         // مقیاس مدل زمین بر اساس فاصله تغییر کند
         if (earthRef.current) {
-          const scaleFactor = newDistance / touchStartDistance;
+          const scaleFactor = (newDistance * defaultScale) / touchStartDistance;
+          defaultScale = scaleFactor;
           earthRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
         }
       }
     };
-
+    // پایان دادن به زوم تاچ
     const handleTouchEnd = (event: any) => {
       if (event.touches.length < 2) {
         touchStartDistance = 0;
@@ -249,7 +251,7 @@ export default function AREarth() {
 
       (gltf) => {
         const earth = gltf.scene;
-        earth.scale.set(0.07, 0.07, 0.07);
+        earth.scale.set(defaultScale, defaultScale, defaultScale);
         earth.rotation.y = Math.PI / 2;
         scene.add(earth);
         earthRef.current = earth;
