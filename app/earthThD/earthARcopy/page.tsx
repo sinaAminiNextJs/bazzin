@@ -13,7 +13,6 @@ export default function ARPage() {
   const modelViewerRef = useRef<ModelViewerElement>(null);
 
   const startAR = () => {
-    alert("کلیک شد");
     setShowAR(true);
     // نمایش مدل با تاخیر برای اطمینان از لود کامل
     setTimeout(() => {
@@ -24,7 +23,11 @@ export default function ARPage() {
   return (
     <section className="relative w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
       {/* پس‌زمینه */}
-      <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+      <div
+        className={`absolute top-0 left-0 -z-10 w-full h-screen  ${
+          showAR ? "hidden" : "block"
+        }`}
+      >
         <img
           src="/clipart/earth.png"
           alt="Earth"
@@ -37,8 +40,8 @@ export default function ARPage() {
         />
       </div>
       <div
-        className={`fixed left-0 right-0 bottom-0 max-w-md mx-auto bg-white shadow transition-all z-[10] px-10 duration-500 flex flex-col ${
-          showAR ? "top-0 visible min-h-screen" : "top-[100%] invisible"
+        className={`absolute top-0 left-0 z-50 w-full h-screen mx-auto bg-white shadow transition-all flex flex-col ${
+          showAR ? "block" : "hidden"
         }`}
       >
         <div className="w-full h-[50px] flex items-center justify-end px-3">
@@ -69,17 +72,24 @@ export default function ARPage() {
             slot="ar-button"
             className="ar-button"
             style={{
-              position: "absolute",
+              minWidth: "fit-content",
+              opacity: "1",
+              position: "fixed",
               bottom: "20px",
-              padding: "12px 24px",
-              borderRadius: "50px",
-              background: "#4285f4",
-              color: "white",
-              border: "none",
-              zIndex: "10",
+              left: "20px",
+              padding: "8px 32px",
+              backgroundColor: "#ffc585",
+              color: "#000",
+              borderRadius: "1rem",
+              border: "2px solid #fff7c4",
+              fontFamily: "iranyekan, sans-serif",
+              fontSize: "1.25rem",
+              boxShadow: "0 0 20px rgba(0, 0, 0, 0.6)",
+              cursor: "pointer",
+              zIndex: "11000",
             }}
           >
-            View in AR2
+            واقیعت افزوده{" "}
           </button>
           {/* @ts-ignore */}
         </model-viewer>
