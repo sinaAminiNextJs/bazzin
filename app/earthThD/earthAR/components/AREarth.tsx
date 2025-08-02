@@ -29,6 +29,8 @@ export default function AREarth() {
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
   const reticleRef = useRef<THREE.Object3D | null>(null);
+  const hitTestSourceRequested = useRef<boolean>(false);
+  const hitTestSourceRef = useRef<XRHitTestSource>(null);
 
   useEffect(() => {
     setWindowsDimention([window.innerWidth, window.innerHeight]);
@@ -86,7 +88,7 @@ export default function AREarth() {
         if (earthRef.current) {
           const scaleFactor =
             (newDistance * defaultScale) / (10 * touchStartDistance) +
-            (9 * defaultScale) / 10;
+            (9 * defaultScale) / 10; //کاهش تغییرات به یک دهم تغییر
           defaultScale = scaleFactor;
           earthRef.current.scale.set(scaleFactor, scaleFactor, scaleFactor);
         }
@@ -265,6 +267,72 @@ export default function AREarth() {
           // موقعیت مدل را نسبت به دوربین تنظیم می‌کنیم (3 واحد جلوتر)
           earthRef.current.position.set(0, 0, -3); // مدل 3 واحد از دوربین فاصله دارد
         }
+        async function animate(timestamp: number, frame: XRFrame) {
+          if (frame) {
+            const referenceSpace = renderer.xr.getReferenceSpace();
+            const session = renderer.xr.getSession() as XRSession | null; // تایپ session را به صورت واضح مشخص می‌کنیم
+
+            if (session && !hitTestSourceRequested.current) {
+              try {
+                // درخواست فضای مرجع برای "viewer"
+                const referenceSpace = await session.requestReferenceSpace(
+                  "viewer"
+                );
+
+                // درخواست HitTestSource با استفاده از عملگر اختیاری
+                const hitTestSource = await session.requestHitTestSource?.({
+                  space: referenceSpace,
+                });
+
+                if (hitTestSource) {
+                  // ذخیره Source پس از دریافت آن
+                  hitTestSourceRef.current = hitTestSource;
+                } else {
+                  console.warn("HitTestSource is not available");
+                }
+              } catch (error) {
+                console.error("Error in hit test source:", error);
+              }
+
+              // اضافه کردن event listener برای پایان session
+              session.addEventListener("end", () => {
+                hitTestSourceRequested.current = false;
+                hitTestSourceRef.current = null;
+              });
+
+              hitTestSourceRequested.current = true;
+            }
+
+            // بررسی اینکه hitTestSourceRef و hitTestSourceRef.current مقداردهی شده‌اند
+            if (hitTestSourceRef.current) {
+              const hitTestResults = frame.getHitTestResults(
+                hitTestSourceRef.current
+              );
+
+              if (hitTestResults.length && referenceSpace) {
+                const hit = hitTestResults[0];
+
+                // بررسی اینکه آیا getPose مقدار غیر undefined برمی‌گرداند یا خیر
+                const pose = hit.getPose(referenceSpace);
+
+                if (pose) {
+                  // بررسی اینکه pose مقداردهی شده است
+                  reticle.visible = true;
+                  reticle.matrix.fromArray(pose.transform.matrix); // استفاده از matrix زمانی که pose موجود باشد
+                } else {
+                  reticle.visible = false;
+                }
+              } else {
+                reticle.visible = false;
+              }
+            }
+          }
+
+          renderer.render(scene, camera);
+        }
+
+        renderer.setAnimationLoop(animate);
+
         // انیمیشن چرخش زمین
         renderer.setAnimationLoop(() => {
           if (earthRef.current) {
