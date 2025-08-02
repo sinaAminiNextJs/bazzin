@@ -1,7 +1,6 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
 import { useRef, useState } from "react";
-import "@google/model-viewer"; // اضافه کردن تایپ‌ها
 
 interface ModelViewerElement extends HTMLElement {
   dismissPoster: () => void;
