@@ -36,9 +36,22 @@ export default function ARPage() {
           className="w-96 absolute -bottom-7 -left-44"
         />
       </div>
+      <div
+        className={`fixed left-0 right-0 bottom-0 max-w-md mx-auto bg-white shadow transition-all z-[10] px-10 duration-500 flex flex-col ${
+          showAR ? "top-0 visible min-h-screen" : "top-[100%] invisible"
+        }`}
+      >
+        <div className="w-full h-[50px] flex items-center justify-end px-3">
+          <button
+            onClick={() => {
+              setShowAR(false);
+            }}
+          >
+            بستن{" "}
+          </button>
+        </div>
 
-      {showAR && (
-        // @ts-ignore
+        {/* @ts-ignore */}
         <model-viewer
           ref={modelViewerRef}
           ar
@@ -70,7 +83,7 @@ export default function ARPage() {
           </button>
           {/* @ts-ignore */}
         </model-viewer>
-      )}
+      </div>
 
       <button
         onClick={startAR}
