@@ -72,7 +72,12 @@ export default function ARPage() {
         >
           <div className="progress-bar hide" slot="progress-bar">
             <div className="update-bar"></div>
+            <p>بارگذاری مدل. صبور باشید.</p>
           </div>
+          <div id="error" className="hide">
+            واقعیت افزوده در دستگاه شما پشتیبانی نمیشود
+          </div>
+
           <button
             slot="ar-button"
             className="ar-button"
@@ -81,7 +86,8 @@ export default function ARPage() {
               opacity: "1",
               position: "fixed",
               bottom: "20px",
-              left: "20px",
+              marginRight: "auto",
+              marginLeft: "auto",
               padding: "8px 32px",
               backgroundColor: "#ffc585",
               color: "#000",
@@ -94,7 +100,7 @@ export default function ARPage() {
               zIndex: "11000",
             }}
           >
-            واقیعت افزوده{" "}
+            شروع واقیعت افزوده{" "}
           </button>
           {/* @ts-ignore */}
         </model-viewer>
