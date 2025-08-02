@@ -14,7 +14,7 @@ export default function ARPage() {
 
   return (
     <section className="relative w-full text-white flex justify-center items-center bg-mybg/96 overflow-hidden">
-      <div className="w-full h-screen ">
+      <div className="fixed top-0 left-0 w-full h-screen ">
         {/* @ts-ignore */}
         <model-viewer
           ref={modelViewerRef}
