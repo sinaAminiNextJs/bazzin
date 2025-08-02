@@ -1,65 +1,84 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import AREarth from "./components/AREarth";
 import { useRef, useState } from "react";
+import "@google/model-viewer"; // اضافه کردن تایپ‌ها
 
-// شروع تابع اصلی کامپوننت
+interface ModelViewerElement extends HTMLElement {
+  dismissPoster: () => void;
+  scene?: any;
+  // سایر متدها و properties اختصاصی
+}
+
 export default function ARPage() {
-  const [visibleModel, setVisibleModal] = useState<boolean>(false);
-  const modelRef: any = useRef(0);
+  const [showAR, setShowAR] = useState(false);
+  const modelViewerRef = useRef<ModelViewerElement>(null);
 
-  const startModel = () => {
-    setVisibleModal(true);
-    modelRef?.current?.dismissPoster();
+  const startAR = () => {
+    setShowAR(true);
+    // نمایش مدل با تاخیر برای اطمینان از لود کامل
+    setTimeout(() => {
+      modelViewerRef.current?.dismissPoster?.();
+    }, 300);
   };
+
   return (
-    <>
-      <section
-        id="background-images"
-        className="relative overflow-hidden w-full min-h-screen text-white flex flex-col items-center bg-mybg/96"
-      >
-        {/* پس‌زمینه‌های تصویری */}
-        <div className="absolute top-0 left-0 -z-10 w-full h-screen">
-          <img
-            src="/clipart/earth.png"
-            alt="Earth"
-            className="w-40 absolute top-20 -right-3"
-          />
-          <img
-            src="/clipart/earth.png"
-            alt="Earth"
-            className="w-96 absolute -bottom-7 -left-44"
-          />
-        </div>
-        {/* @ts-ignore */}
+    <section className="relative w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
+      {/* پس‌زمینه */}
+      <div className="absolute top-0 left-0 -z-10 w-full h-screen">
+        <img
+          src="/clipart/earth.png"
+          alt="Earth"
+          className="w-40 absolute top-20 -right-3"
+        />
+        <img
+          src="/clipart/earth.png"
+          alt="Earth"
+          className="w-96 absolute -bottom-7 -left-44"
+        />
+      </div>
+
+      {showAR && (
+        // @ts-ignore
         <model-viewer
+          ref={modelViewerRef}
           ar
-          modes="scene-viewer quick-look webxr"
-          src={"/ar-earth/earth1.glb"} // AR Android/Web
-          // ios-src={"/model/pizza.usdz"} // AR iOS
-          touch-action="pan-y"
-          reveal="manual"
+          ar-modes="scene-viewer quick-look webxr"
+          src="/ar-earth/earth1.glb"
+          ios-src="/ar-earth/earth.usdz" // برای iOS
+          camera-controls
           auto-rotate
           shadow-intensity="1"
-          camera-controls
           style={{ width: "100%", height: "100%" }}
-          ref={modelRef}
+          touch-action="pan-y"
+          reveal="manual"
         >
-          <button slot="ar-button" id="ar-button">
-            View in your space
+          <button
+            slot="ar-button"
+            className="ar-button"
+            style={{
+              position: "absolute",
+              bottom: "20px",
+              padding: "12px 24px",
+              borderRadius: "50px",
+              background: "#4285f4",
+              color: "white",
+              border: "none",
+            }}
+          >
+            View in AR
           </button>
           {/* @ts-ignore */}
         </model-viewer>
-        <button
-          onClick={startModel}
-          className="fixed top-0 w-[200px] h-[40px] rounded-full flex items-center justify-center text-white bg-res-100 text-sm"
-        >
-          View Ar
-        </button>
+      )}
 
-        {/* دکمه برگشت */}
-        <BackButton pathName="/menu" />
-      </section>
-    </>
+      <button
+        onClick={startAR}
+        className="fixed top-10 z-50 w-[200px] h-[40px] rounded-full flex items-center justify-center text-white bg-res-100 text-sm"
+      >
+        Start AR Experience
+      </button>
+
+      <BackButton pathName="/menu" />
+    </section>
   );
 }
