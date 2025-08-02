@@ -325,13 +325,29 @@ export default function AREarth() {
               } else {
                 reticle.visible = false;
               }
+              function placeModelAtReticle() {
+                if (!reticleRef.current || !earthRef.current) return;
+
+                // کپی مستقیم ماتریس
+                earthRef.current.matrix.copy(reticleRef.current.matrix);
+                earthRef.current.matrix.decompose(
+                  earthRef.current.position,
+                  earthRef.current.quaternion,
+                  earthRef.current.scale
+                );
+              }
+              if (hitTestResults.length && reticleRef.current?.visible) {
+                // قرار دادن مدل هنگام تعامل کاربر
+                if (earthRef.current) {
+                  placeModelAtReticle();
+                }
+              }
             }
           }
           // انیمیشن چرخش زمین
           if (earthRef.current) {
             earthRef.current.rotation.y += 0.002;
           }
-
           renderer.render(scene, camera);
         }
 
