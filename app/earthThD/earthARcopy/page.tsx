@@ -79,7 +79,7 @@ export default function ARPage() {
               zIndex: "10",
             }}
           >
-            View in AR
+            View in AR2
           </button>
           {/* @ts-ignore */}
         </model-viewer>
