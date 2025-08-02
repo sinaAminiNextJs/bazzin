@@ -21,7 +21,7 @@ export default function ARPage() {
   };
 
   return (
-    <section className="relative w-full min-h-screen text-white flex flex-col items-center bg-mybg/96">
+    <section className="relative w-full min-h-screen text-white flex flex-col items-center bg-mybg/96 overflow-hidden">
       {/* پس‌زمینه */}
       <div
         className={`absolute top-0 left-0 -z-10 w-full h-screen  ${
@@ -70,6 +70,9 @@ export default function ARPage() {
           scale="0.5 0.5 0.5" // تغییر مقیاس مدل به نصف
           camera-position="0 1.6 3" // تنظیم موقعیت دوربین
         >
+          <div className="progress-bar hide" slot="progress-bar">
+            <div className="update-bar"></div>
+          </div>
           <button
             slot="ar-button"
             className="ar-button"
