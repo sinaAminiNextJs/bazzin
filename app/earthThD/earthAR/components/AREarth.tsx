@@ -328,13 +328,21 @@ export default function AREarth() {
               function placeModelAtReticle() {
                 if (!reticleRef.current || !earthRef.current) return;
 
-                // کپی مستقیم ماتریس
-                earthRef.current.matrix.copy(reticleRef.current.matrix);
-                earthRef.current.matrix.decompose(
-                  earthRef.current.position,
-                  earthRef.current.quaternion,
-                  earthRef.current.scale
+                // ایجاد متغیرهای موقت
+                const position = new THREE.Vector3();
+                const quaternion = new THREE.Quaternion();
+                const dummyScale = new THREE.Vector3(); // فقط برای دریافت داده
+
+                // استخراج موقعیت و چرخش از رتیکل
+                reticleRef.current.matrix.decompose(
+                  position,
+                  quaternion,
+                  dummyScale
                 );
+
+                // اعمال روی مدل
+                earthRef.current.position.copy(position);
+                earthRef.current.quaternion.copy(quaternion);
               }
               if (hitTestResults.length && reticleRef.current?.visible) {
                 // قرار دادن مدل هنگام تعامل کاربر
