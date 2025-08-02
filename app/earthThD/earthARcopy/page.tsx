@@ -40,7 +40,7 @@ export default function ARPage() {
         />
       </div>
       <div
-        className={`absolute top-0 left-0 z-50 w-full h-screen mx-auto bg-white shadow transition-all flex flex-col ${
+        className={`absolute top-0 left-0 z-50 w-full h-screen mx-auto bg-white shadow transition-all flex flex-col items-center justify-center ${
           showAR ? "block" : "hidden"
         }`}
       >
@@ -59,14 +59,16 @@ export default function ARPage() {
           ref={modelViewerRef}
           ar
           ar-modes="scene-viewer quick-look webxr"
-          src="/ar-earth/earth1.glb"
-          // ios-src="/ar-earth/earth.usdz" // برای iOS
+          src="/ar-earth/earth1.glb" // Android / Web
+          ios-src="/ar-earth/earth.usdz" // iOS
           camera-controls
           auto-rotate
           shadow-intensity="1"
           style={{ width: "100%", height: "100%", zIndex: "10" }}
           touch-action="pan-y"
           reveal="manual"
+          scale="0.5 0.5 0.5" // تغییر مقیاس مدل به نصف
+          camera-position="0 1.6 3" // تنظیم موقعیت دوربین
         >
           <button
             slot="ar-button"
