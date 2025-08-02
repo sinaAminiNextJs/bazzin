@@ -67,7 +67,7 @@ export default function ARPage() {
           style={{ width: "100%", height: "100%", zIndex: "10" }}
           touch-action="pan-y"
           reveal="manual"
-          scale="0.5 0.5 0.5" // تغییر مقیاس مدل به نصف
+          scale="0.1 0.1 0.1" // تغییر مقیاس مدل به نصف
           camera-position="0 1.6 3" // تنظیم موقعیت دوربین
         >
           <div className="progress-bar hide" slot="progress-bar">
@@ -85,9 +85,9 @@ export default function ARPage() {
               minWidth: "fit-content",
               opacity: "1",
               position: "fixed",
-              bottom: "20px",
-              marginRight: "auto",
-              marginLeft: "auto",
+              top: "20px",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
               padding: "8px 32px",
               backgroundColor: "#ffc585",
               color: "#000",
