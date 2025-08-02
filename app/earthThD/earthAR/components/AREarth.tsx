@@ -307,7 +307,7 @@ export default function AREarth() {
                 if (pose) {
                   // بررسی اینکه پوز مقداردهی شده است
                   reticle.visible = true;
-                  // reticle.matrix.fromArray(pose.transform.matrix); //  استفاده از ماتریکس زمانی که پوز موجود باشد
+                  reticle.matrix.fromArray(pose.transform.matrix); //  استفاده از ماتریکس زمانی که پوز موجود باشد
                   // محاسبه جهت بدون تغییر فاصله
 
                   const hitPosition = new THREE.Vector3().setFromMatrixPosition(

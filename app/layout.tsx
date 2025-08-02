@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Madimi_One } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 
 const madimiOne = Madimi_One({
   subsets: ["latin"],
@@ -24,6 +25,10 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"
           rel="stylesheet"
+        />
+        <Script
+          type="module"
+          src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
         />
         <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/webxr-api@latest/dist/webxr-api.js"></script>
