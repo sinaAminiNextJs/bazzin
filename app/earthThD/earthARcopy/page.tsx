@@ -15,9 +15,7 @@ export default function ARPage() {
   return (
     <section className="relative w-full min-h-screen text-white flex flex-col items-center bg-mybg/96 overflow-hidden">
       <div
-        className={`absolute top-0 left-0 z-50 w-full h-screen mx-auto bg-white shadow transition-all flex flex-col items-center justify-center ${
-          showAR ? "block" : "hidden"
-        }`}
+        className={`absolute top-0 left-0 z-50 w-full h-screen mx-auto bg-white shadow transition-all flex flex-col items-center justify-center`}
       >
         <div className="w-full h-[50px] flex items-center justify-end px-3">
           <button
@@ -84,7 +82,7 @@ export default function ARPage() {
         </model-viewer>
       </div>
 
-      <BackButton pathName="/menu" />
+      {/* <BackButton pathName="/menu" /> */}
     </section>
   );
 }
