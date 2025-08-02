@@ -28,6 +28,7 @@ export default function AREarth() {
   const sceneRef = useRef<THREE.Scene | null>(null);
   const earthRef = useRef<THREE.Group | null>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
+  const reticleRef = useRef<THREE.Object3D | null>(null);
 
   useEffect(() => {
     setWindowsDimention([window.innerWidth, window.innerHeight]);
@@ -230,6 +231,16 @@ export default function AREarth() {
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
     directionalLight.position.set(1, 1, 1);
     scene.add(ambientLight, directionalLight);
+
+    // تشخیص سطح
+    const reticle = new THREE.Mesh(
+      new THREE.RingGeometry(0.15, 0.2, 32).rotateX(-Math.PI / 2),
+      new THREE.MeshBasicMaterial()
+    );
+    reticle.matrixAutoUpdate = false;
+    reticle.visible = false;
+    reticleRef.current = reticle;
+    scene.add(reticle);
 
     // بارگذاری مدل glTF زمین
     const loader = new GLTFLoader();
