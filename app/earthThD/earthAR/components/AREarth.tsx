@@ -291,7 +291,7 @@ export default function AREarth() {
                   console.warn("HitTestSource is not available");
                 }
               } catch (error) {
-                console.error("Error in hit test source:", error);
+                setError("Error in hit test source:" + error);
               }
 
               // اضافه کردن event listener برای پایان session
@@ -327,19 +327,15 @@ export default function AREarth() {
               }
             }
           }
+          // انیمیشن چرخش زمین
+          if (earthRef.current) {
+            earthRef.current.rotation.y += 0.002;
+          }
 
           renderer.render(scene, camera);
         }
 
         renderer.setAnimationLoop(animate);
-
-        // انیمیشن چرخش زمین
-        renderer.setAnimationLoop(() => {
-          if (earthRef.current) {
-            earthRef.current.rotation.y += 0.002;
-          }
-          renderer.render(scene, camera);
-        });
 
         // دکمه توقف AR
         const showStopButton = () => {
