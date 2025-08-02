@@ -44,7 +44,7 @@ export default function ARPage() {
           ar
           ar-modes="scene-viewer quick-look webxr"
           src="/ar-earth/earth1.glb"
-          ios-src="/ar-earth/earth.usdz" // برای iOS
+          // ios-src="/ar-earth/earth.usdz" // برای iOS
           camera-controls
           auto-rotate
           shadow-intensity="1"

@@ -26,10 +26,14 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"
           rel="stylesheet"
         />
-        <Script
+        {/* <Script
           type="module"
           src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
-        />
+        /> */}
+        <script
+          type="module"
+          src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
+        ></script>
         <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/webxr-api@latest/dist/webxr-api.js"></script>
       </head>
