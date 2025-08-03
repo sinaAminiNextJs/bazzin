@@ -23,7 +23,7 @@ export default function ARPage() {
           camera-controls
           auto-rotate
           shadow-intensity="1"
-          ar-scale="auto"
+          // ar-scale="auto"
           ar-placement="floor"
           interaction-prompt="none"
           style={{ width: "100%", height: "100%", zIndex: "10" }}
