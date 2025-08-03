@@ -34,7 +34,7 @@ export default function ARPage() {
           ref={modelViewerRef}
           ar
           ar-modes="scene-viewer quick-look webxr"
-          src="/ar-earth/earth1.glb"
+          src="/ar-earth/earth.glb"
           // ios-src="/ar-earth/earth.usdz"
           camera-controls
           auto-rotate
