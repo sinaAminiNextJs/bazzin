@@ -17,7 +17,33 @@ export default function Page({ params }: any) {
     <main className="w-full flex flex-col bg-mybg/96">
       {/* دکمه برگشت */}
       <BackButton pathName="/earthThD" />
-
+      <div className="flex flex-col px-3 pb-[80px]">
+        <h1 className="text-res-75 font-bold">FRESH MEAT</h1>
+        <span className="text-sm text-res-75 mt-1">Our best pizza</span>
+        <div className="w-full flex items-center justify-between my-3">
+          <div className="flex items-center"></div>
+          <span className="font-bold text-xl">25$</span>
+        </div>
+        <span className="text-sm text-res-75 text-justify">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Egestas
+          purus viverra accumsan in nisl nisi. Arcu cursus vitae congue mauris
+          rhoncus aenean vel elit scelerisque. In egestas erat imperdiet sed
+          euismod nisi porta lorem mollis. Morbi tristique senectus et netus.
+          Mattis pellentesque id nibh tortor id aliquet lectus proin.
+        </span>
+        <div className="max-w-md  mx-auto left-0 right-0 bottom-0 py-[15px] px-4 fixed  flex items-center justify-between z-[4] bg-res-50">
+          <Link href={"/"}>
+            <button className="w-[40px] h-[40px] rounded-full flex items-center justify-center text-white border border-res-75 text-sm"></button>
+          </Link>
+          <button
+            onClick={startModel}
+            className="w-[200px] h-[40px] rounded-full flex items-center justify-center text-white bg-res-100 text-sm"
+          >
+            View Ar
+          </button>
+        </div>
+      </div>
       <div className="bg-mybg/96">
         <div className="mx-auto py-[15px] px-4 fixed  flex items-center justify-between bg-mybg/96">
           <button
