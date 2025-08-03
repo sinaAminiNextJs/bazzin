@@ -33,9 +33,9 @@ export default function ARPage() {
           field-of-view="30deg"
           min-camera-orbit="auto auto 0.1m"
           max-camera-orbit="auto auto 100m"
-          scale="0.01 0.01 0.01"
+          scale="10 1 0.1"
         >
-          <div
+          {/* <div
             className="flex justify-between items-center m-20"
             slot="progress-bar"
           >
@@ -47,7 +47,7 @@ export default function ARPage() {
             className="hide flex justify-between items-center m-20"
           >
             واقعیت افزوده در دستگاه شما پشتیبانی نمیشود
-          </div>
+          </div> */}
 
           <button
             slot="ar-button"
