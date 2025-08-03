@@ -44,7 +44,7 @@ export default function HomePage() {
       <BackButton pathName="/menu" />
       {/* AR */}
       <div
-        className={`fixed left-0 right-0 bottom-0 max-w-md mx-auto bg-white shadow transition-all z-[10] px-10 duration-500 flex flex-col ${
+        className={`fixed left-0 right-0 bottom-0 mx-auto bg-white shadow transition-all z-[10] duration-500 flex flex-col ${
           visibleModel ? "top-0 visible min-h-full" : "top-[100%] invisible"
         }`}
       >
@@ -88,7 +88,7 @@ export default function HomePage() {
           <button
             slot="ar-button"
             id="ar-button"
-            className="fixed bottom-4 w-fit -translate-x-5 px-4 text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
+            className="fixed bottom-4 right-1/6 w-[220px] px-4 text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
           >
             شروع واقعیت افزوده
           </button>

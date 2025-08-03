@@ -99,7 +99,7 @@ export default function Page({ params }: any) {
           <button
             slot="ar-button"
             id="ar-button"
-            className="fixed bottom-4 w-fit -translate-x-5 px-4 text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
+            className="fixed bottom-4 w-fit -translate-x-1/2 px-4 text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
           >
             شروع واقعیت افزوده
           </button>
