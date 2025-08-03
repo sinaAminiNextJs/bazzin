@@ -16,7 +16,7 @@ export default function Page({ params }: any) {
   return (
     <main className="w-full flex flex-col bg-mybg/96">
       {/* دکمه برگشت */}
-      <BackButton pathName="/menu" />
+      <BackButton pathName="/earthThD" />
 
       <div className="bg-mybg/96">
         <div className="mx-auto py-[15px] px-4 fixed  flex items-center justify-between bg-mybg/96">
@@ -30,7 +30,7 @@ export default function Page({ params }: any) {
       </div>
       <div
         className={`fixed left-0 right-0 bottom-0 max-w-md mx-auto bg-white shadow transition-all z-[10] px-10 duration-500 flex flex-col ${
-          visibleModel ? "top-0 visible min-h-screen" : "top-[100%] invisible"
+          visibleModel ? "top-0 visible min-h-full" : "top-[100%] invisible"
         }`}
       >
         <button
@@ -67,6 +67,7 @@ export default function Page({ params }: any) {
           shadow-intensity="1"
           camera-controls
           style={{ width: "100%", height: "100%" }}
+          scale={"0.1 0.1 0.1"}
           ref={modelRef}
         >
           <button
