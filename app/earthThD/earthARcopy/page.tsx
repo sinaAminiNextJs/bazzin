@@ -8,30 +8,11 @@ interface ModelViewerElement extends HTMLElement {
 }
 
 export default function ARPage() {
-  const modelViewerRef = useRef<ModelViewerElement>(null);
-  useEffect(() => {
-    const modelViewer = modelViewerRef.current;
-
-    if (!modelViewer) return;
-
-    const handleLoad = () => {
-      // تنظیم مقیاس از طریق JavaScript
-      modelViewer.addEventListener("load", () => {
-        const model = modelViewer.scene;
-        if (model) {
-          model.scale.set(0.01, 0.01, 1); // تنظیم مقیاس Three.js مستقیماً
-        }
-      });
-    };
-
-    handleLoad();
-  }, []);
   return (
     <section className="relative w-full text-white flex justify-center items-center bg-mybg/96 overflow-hidden">
-      <div className="fixed top-0 left-0 w-full h-screen">
+      <div className="fixed top-0 left-0 w-full">
         {/* @ts-ignore */}
         <model-viewer
-          ref={modelViewerRef}
           ar
           ar-modes="scene-viewer quick-look webxr"
           src="/ar-earth/earth.glb"
@@ -39,7 +20,6 @@ export default function ARPage() {
           camera-controls
           auto-rotate
           shadow-intensity="1"
-          // ar-scale="auto"
           ar-placement="floor"
           interaction-prompt="none"
           style={{ width: "100%", height: "100%", zIndex: "10" }}
@@ -49,7 +29,7 @@ export default function ARPage() {
           field-of-view="30deg"
           min-camera-orbit="auto auto 0.1m"
           max-camera-orbit="auto auto 100m"
-          // scale="10 1 0.1"
+          scale="10 1 0.1"
         >
           <button
             slot="ar-button"
