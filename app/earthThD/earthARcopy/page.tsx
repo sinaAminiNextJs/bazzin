@@ -1,18 +1,22 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
 import { useEffect, useRef } from "react";
-
 export default function ARPage() {
-  const modelRef = useRef<HTMLElement & { dismissPoster?: () => void }>(null);
+  const modelRef = useRef<
+    HTMLElement & { dismissPoster?: () => void; scene?: any }
+  >(null);
+
   useEffect(() => {
     if (modelRef.current) {
+      // پنهان کردن پوستر پس از لود کامل
       modelRef.current.dismissPoster?.();
-      console.log(">>>>", modelRef.current);
-      // @ts-ignore
-      modelRef.current.model.setAttribute("scale", "10 1 0.1");
+
+      // تغییر مقیاس مدل بعد از لود
+      if (modelRef.current.scene) {
+        modelRef.current.scene.scale.set(0.1, 0.1, 0.1); // تغییر مقیاس مدل
+      }
     }
   }, []);
-
   return (
     <section className="relative w-full text-white flex justify-center items-center bg-mybg/96 overflow-hidden">
       <div className="fixed top-0 left-0 w-full h-full">
