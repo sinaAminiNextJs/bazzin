@@ -19,7 +19,7 @@ export default function ARPage() {
       modelViewer.addEventListener("load", () => {
         const model = modelViewer.scene;
         if (model) {
-          model.scale.set(0.1, 0.1, 0.1); // تنظیم مقیاس Three.js مستقیماً
+          model.scale.set(0.01, 0.01, 1); // تنظیم مقیاس Three.js مستقیماً
         }
       });
     };
@@ -34,7 +34,7 @@ export default function ARPage() {
           ref={modelViewerRef}
           ar
           ar-modes="scene-viewer quick-look webxr"
-          src="/ar-earth/earth.glb"
+          src="/ar-earth/earth1.glb"
           // ios-src="/ar-earth/earth.usdz"
           camera-controls
           auto-rotate
