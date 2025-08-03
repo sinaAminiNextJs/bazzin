@@ -1,7 +1,18 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
+import { useEffect, useRef } from "react";
 
 export default function ARPage() {
+  const modelRef = useRef<HTMLElement & { dismissPoster?: () => void }>(null);
+  useEffect(() => {
+    if (modelRef.current) {
+      modelRef.current.dismissPoster?.();
+      console.log(">>>>", modelRef.current);
+      // @ts-ignore
+      modelRef.current.model.setAttribute("scale", "10 1 0.1");
+    }
+  }, []);
+
   return (
     <section className="relative w-full text-white flex justify-center items-center bg-mybg/96 overflow-hidden">
       <div className="fixed top-0 left-0 w-full h-full">
@@ -19,7 +30,7 @@ export default function ARPage() {
           style={{ width: "100%", height: "100%", zIndex: "10" }}
           touch-action="pan-y"
           reveal="manual"
-          camera-orbit="0deg 90deg 2m"
+          camera-orbit="45deg 45deg 3m"
           field-of-view="30deg"
           min-camera-orbit="auto auto 0.1m"
           max-camera-orbit="auto auto 100m"
