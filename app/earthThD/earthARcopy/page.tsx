@@ -29,11 +29,11 @@ export default function ARPage() {
           style={{ width: "100%", height: "100%", zIndex: "10" }}
           touch-action="pan-y"
           reveal="manual"
-          camera-orbit="0deg 75deg 105%"
+          camera-orbit="0deg 90deg 2m"
           field-of-view="30deg"
           min-camera-orbit="auto auto 0.1m"
           max-camera-orbit="auto auto 100m"
-          scale="0.005, 0.005, 0.005"
+          scale="0.001, 0.001, 0.001"
         >
           <div
             className="flex justify-between items-center m-20"
