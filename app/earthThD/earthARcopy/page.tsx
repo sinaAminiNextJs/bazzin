@@ -24,6 +24,7 @@ export default function ARPage() {
           min-camera-orbit="auto auto 0.1m"
           max-camera-orbit="auto auto 100m"
           scale="10 1 0.1"
+          ar-scale="fixed"
         >
           <button
             slot="ar-button"
@@ -31,7 +32,7 @@ export default function ARPage() {
             style={{
               minWidth: "fit-content",
               position: "fixed",
-              bottom: "20px",
+              bottom: "16px",
               left: "50%",
               transform: "translateX(-50%)",
               padding: "12px 24px",
