@@ -16,21 +16,11 @@
     "nodes": [
         {
             "name": "Object01",
-            "mesh": 0,
-            "translation": [
-                0.0,
-                -155.33685302734376,
-                0.0
-            ]
+            "mesh": 0
         },
         {
             "name": "Globe02",
-            "mesh": 1,
-            "translation": [
-                0.0,
-                -155.33685302734376,
-                0.0
-            ]
+            "mesh": 1
         }
     ],
     "meshes": [
