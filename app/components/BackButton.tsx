@@ -7,7 +7,7 @@ export default function BackButton({ pathName }: backButtonType) {
   const router = useRouter();
 
   return (
-    <div className="fixed bottom-4 left-4 z-50">
+    <div className="fixed bottom-4 left-4 z-10">
       <button
         onClick={() => router.push(pathName)}
         className="flex justify-center items-center w-12 pr-1 aspect-square bg-myred rounded-full border-2 border-myorangeLight active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"

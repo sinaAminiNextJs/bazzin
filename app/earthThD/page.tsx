@@ -52,7 +52,7 @@ export default function HomePage() {
           onClick={() => {
             setVisibleModal(false);
           }}
-          className="fixed bottom-4 left-4 flex justify-center items-center w-12 pr-1 aspect-square bg-myred rounded-full border-2 border-myorangeLight active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
+          className="fixed bottom-4 left-4 flex justify-center items-center w-12 pr-1 aspect-square bg-myred rounded-full border-2 border-myorangeLight active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black] z-20"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
