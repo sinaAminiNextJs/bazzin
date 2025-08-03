@@ -82,7 +82,7 @@ export default function HomePage() {
           shadow-intensity="1"
           camera-controls
           style={{ width: "100%", height: "100%" }}
-          scale={"0.1 0.1 0.1"}
+          scale={"0.05 0.05 0.05"}
           ref={modelRef}
         >
           <button
