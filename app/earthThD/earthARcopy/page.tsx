@@ -33,6 +33,7 @@ export default function ARPage() {
           field-of-view="30deg"
           min-camera-orbit="auto auto 0.1m"
           max-camera-orbit="auto auto 100m"
+          scale="0.005, 0.005, 0.005"
         >
           <div
             className="flex justify-between items-center m-20"
