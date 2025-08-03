@@ -1,6 +1,6 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { useRef, useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 interface ModelViewerElement extends HTMLElement {
   dismissPoster: () => void;
@@ -9,7 +9,23 @@ interface ModelViewerElement extends HTMLElement {
 
 export default function ARPage() {
   const modelViewerRef = useRef<ModelViewerElement>(null);
+  useEffect(() => {
+    const modelViewer = modelViewerRef.current;
 
+    if (!modelViewer) return;
+
+    const handleLoad = () => {
+      // تنظیم مقیاس از طریق JavaScript
+      modelViewer.addEventListener("load", () => {
+        const model = modelViewer.scene;
+        if (model) {
+          model.scale.set(0.1, 0.1, 0.1); // تنظیم مقیاس Three.js مستقیماً
+        }
+      });
+    };
+
+    handleLoad();
+  }, []);
   return (
     <section className="relative w-full text-white flex justify-center items-center bg-mybg/96 overflow-hidden">
       <div className="fixed top-0 left-0 w-full h-screen">
@@ -18,7 +34,7 @@ export default function ARPage() {
           ref={modelViewerRef}
           ar
           ar-modes="scene-viewer quick-look webxr"
-          src="/ar-earth/earth1.glb"
+          src="/ar-earth/earth.glb"
           // ios-src="/ar-earth/earth.usdz"
           camera-controls
           auto-rotate
@@ -33,22 +49,8 @@ export default function ARPage() {
           field-of-view="30deg"
           min-camera-orbit="auto auto 0.1m"
           max-camera-orbit="auto auto 100m"
-          scale="10 1 0.1"
+          // scale="10 1 0.1"
         >
-          {/* <div
-            className="flex justify-between items-center m-20"
-            slot="progress-bar"
-          >
-            <p className="mx-auto">بارگذاری مدل. صبور باشید.</p>
-          </div>
-
-          <div
-            id="error"
-            className="hide flex justify-between items-center m-20"
-          >
-            واقعیت افزوده در دستگاه شما پشتیبانی نمیشود
-          </div> */}
-
           <button
             slot="ar-button"
             className="ar-button"
