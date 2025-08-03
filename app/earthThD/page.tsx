@@ -74,7 +74,7 @@ export default function HomePage() {
         <model-viewer
           ar
           modes="scene-viewer quick-look webxr"
-          src={"/ar-earth/untitled.gltf"}
+          src={"/ar-earth/untitled.glb"}
           ios-src={"/model/pizza.usdz"} // AR iOS
           touch-action="pan-y"
           reveal="manual"
