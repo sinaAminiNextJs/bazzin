@@ -22,6 +22,7 @@ export default function ARPage() {
       <div className="fixed top-0 left-0 w-full h-full">
         {/* @ts-ignore */}
         <model-viewer
+          loading="eager"
           ar
           ar-modes="scene-viewer quick-look webxr"
           src="/ar-earth/earth.glb"
