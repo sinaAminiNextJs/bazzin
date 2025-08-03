@@ -1,16 +1,10 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { useEffect, useRef } from "react";
-
-interface ModelViewerElement extends HTMLElement {
-  dismissPoster: () => void;
-  scene?: any;
-}
 
 export default function ARPage() {
   return (
     <section className="relative w-full text-white flex justify-center items-center bg-mybg/96 overflow-hidden">
-      <div className="fixed top-0 left-0 w-full">
+      <div className="fixed top-0 left-0 w-full h-full">
         {/* @ts-ignore */}
         <model-viewer
           ar
