@@ -85,7 +85,7 @@ export default function Page({ params }: any) {
         <model-viewer
           ar
           modes="scene-viewer quick-look webxr"
-          src={"/ar-earth/earth.glb"}
+          src={"/ar-earth/untitled.gltf"}
           ios-src={"/model/pizza.usdz"} // AR iOS
           touch-action="pan-y"
           reveal="manual"

@@ -242,7 +242,7 @@ export default function AREarth() {
     // بارگذاری مدل glTF زمین
     const loader = new GLTFLoader();
     loader.load(
-      "/ar-earth/earth.glb",
+      "/ar-earth/untitled.gltf",
 
       (gltf) => {
         const earth = gltf.scene;

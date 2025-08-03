@@ -25,7 +25,7 @@ export default function ARPage() {
           loading="eager"
           ar
           ar-modes="scene-viewer quick-look webxr"
-          src="/ar-earth/earth.glb"
+          src={"/ar-earth/untitled.gltf"}
           // ios-src="/ar-earth/earth.usdz"
           camera-controls
           auto-rotate
