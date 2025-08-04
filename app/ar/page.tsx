@@ -23,6 +23,7 @@ export default function HomePage() {
   }
   return (
     <>
+      <button onClick={startModel}>hi</button>
       {/* AR */}
       <div
         className={`fixed left-0 right-0 bottom-0 mx-auto bg-white shadow transition-all z-[10] duration-500 flex flex-col ${
