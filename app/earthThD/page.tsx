@@ -84,7 +84,7 @@ export default function HomePage() {
           style={{ width: "100%", height: "100%" }}
           scale={"0.01 0.01 0.01"}
           ref={modelRef}
-          ar-scale="fixed"
+          // ar-scale="fixed"
           ar-placement="floor"
           interaction-prompt="none"
         >
