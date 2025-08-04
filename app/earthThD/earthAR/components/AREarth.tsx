@@ -60,7 +60,7 @@ export default function AREarth() {
 
   let touchStartDistance = 0;
   let touchStartPos = { x: 0, y: 0 };
-  let defaultScale = 0.07;
+  let defaultScale = 0.01;
   //متغیر های تغییر مکان رتیکل
   const fixedDistance = 2.0; // فاصله ثابت ۲ متری
   let reticleYOffset = 0; // مقدار جابجایی عمودی
