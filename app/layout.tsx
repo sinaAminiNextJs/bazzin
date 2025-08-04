@@ -14,10 +14,6 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl">
       <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Madimi+One&display=swap"
-          rel="stylesheet"
-        />
         <script
           type="module"
           src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
