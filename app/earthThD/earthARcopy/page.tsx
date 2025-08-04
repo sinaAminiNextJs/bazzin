@@ -1,41 +1,22 @@
 "use client";
 import BackButton from "@/app/components/BackButton";
-import { useEffect, useRef } from "react";
 export default function ARPage() {
-  const modelRef = useRef<
-    HTMLElement & { dismissPoster?: () => void; scene?: any }
-  >(null);
-
-  useEffect(() => {
-    if (modelRef.current) {
-      // پنهان کردن پوستر پس از لود کامل
-      modelRef.current.dismissPoster?.();
-
-      // تغییر مقیاس مدل بعد از لود
-      if (modelRef.current.scene) {
-        modelRef.current.scene.scale.set(0.1, 0.1, 0.1); // تغییر مقیاس مدل
-      }
-    }
-  }, []);
   return (
     <section className="relative w-full text-white flex justify-center items-center bg-mybg/96 overflow-hidden">
       <div className="fixed top-0 left-0 w-full h-full">
         {/* @ts-ignore */}
         <model-viewer
-          loading="eager"
           ar
-          modes="scene-viewer quick-look webxr"
+          ar-modes="scene-viewer quick-look webxr"
           src={"/ar-earth/m1/untitled.gltf"}
-          // ios-src="/ar-earth/earth.usdz"
-          camera-controls
+          ios-src={"/model/pizza.usdz"} // AR iOS
           touch-action="pan-y"
           reveal="manual"
           auto-rotate
           shadow-intensity="1"
-          ar-placement="floor"
-          interaction-prompt="none"
-          style={{ width: "100%", height: "100%", zIndex: "10" }}
-          scale="10 1 0.1"
+          camera-controls
+          style={{ width: "100%", height: "100%" }}
+          scale={"0.1 0.1 0.1"}
         >
           <button
             slot="ar-button"
