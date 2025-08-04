@@ -50,7 +50,7 @@ export default function Menu() {
           </button>
           <Image
             src="/clipart/joy.webp"
-            alt="Earth illustration"
+            alt="joy illustration"
             width={96}
             height={96}
             priority
@@ -66,7 +66,7 @@ export default function Menu() {
           </button>
           <Image
             src="/clipart/play.webp"
-            alt="Earth illustration"
+            alt="play illustration"
             width={96}
             height={96}
             priority
@@ -82,7 +82,7 @@ export default function Menu() {
           </button>
           <Image
             src="/clipart/qustion.webp"
-            alt="Earth illustration"
+            alt="qustion illustration"
             width={96}
             height={96}
             priority

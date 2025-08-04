@@ -35,7 +35,7 @@ export default function HomePage() {
         <button
           // onClick={() => router.push("/earthThD/earthAR/")}
           onClick={startModel}
-          className="w-full text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
+          className="w-full max-w-md mx-auto text-black h-12 bg-myorange rounded-2xl border-2 border-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100 shadow-[0px_0px_20px_black]"
         >
           واقعیت افزوده (AR){" "}
         </button>
@@ -82,8 +82,11 @@ export default function HomePage() {
           shadow-intensity="1"
           camera-controls
           style={{ width: "100%", height: "100%" }}
-          scale={"0.05 0.05 0.05"}
+          scale={"0.01 0.01 0.01"}
           ref={modelRef}
+          ar-scale="fixed"
+          ar-placement="floor"
+          interaction-prompt="none"
         >
           <button
             slot="ar-button"
