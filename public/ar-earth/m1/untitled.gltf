@@ -1,0 +1,228 @@
+{
+    "asset": {
+        "copyright": "(C)2025 MT66",
+        "generator": "maya2glTF main fbbc95e5dc4d",
+        "version": "2.0"
+    },
+    "scenes": [
+        {
+            "nodes": [
+                0
+            ]
+        }
+    ],
+    "scene": 0,
+    "nodes": [
+        {
+            "name": "Object_4",
+            "children": [
+                1
+            ],
+            "translation": [
+                0.00003051800013054162,
+                107.7833251953125,
+                -0.00003051800013054162
+            ]
+        },
+        {
+            "name": "Object_4:PIV",
+            "mesh": 0,
+            "translation": [
+                -0.00003051800013054162,
+                -107.7833251953125,
+                0.00003051800013054162
+            ]
+        }
+    ],
+    "meshes": [
+        {
+            "name": "Object_4Shape",
+            "extras": {
+                "targetNames": []
+            },
+            "primitives": [
+                {
+                    "attributes": {
+                        "NORMAL": 1,
+                        "POSITION": 2,
+                        "TANGENT": 3,
+                        "TEXCOORD_0": 4
+                    },
+                    "indices": 0,
+                    "mode": 4,
+                    "material": 0
+                }
+            ]
+        }
+    ],
+    "materials": [
+        {
+            "name": "GLSLShader1",
+            "pbrMetallicRoughness": {
+                "baseColorFactor": [
+                    0.7428571581840515,
+                    0.7428571581840515,
+                    0.7428571581840515,
+                    1.0
+                ],
+                "baseColorTexture": {
+                    "index": 0
+                },
+                "metallicFactor": 0.5235294103622437,
+                "roughnessFactor": 1.0
+            },
+            "emissiveFactor": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        }
+    ],
+    "textures": [
+        {
+            "sampler": 0,
+            "source": 0
+        }
+    ],
+    "images": [
+        {
+            "uri": "World Map.jpg"
+        }
+    ],
+    "samplers": [
+        {
+            "magFilter": 9728,
+            "minFilter": 9728,
+            "wrapS": 10497,
+            "wrapT": 10497
+        }
+    ],
+    "accessors": [
+        {
+            "name": "Object_4Shape#0/indices",
+            "bufferView": 0,
+            "byteOffset": 0,
+            "componentType": 5123,
+            "count": 2880,
+            "max": [
+                1949
+            ],
+            "min": [
+                0
+            ],
+            "type": "SCALAR"
+        },
+        {
+            "name": "Object_4Shape#0/vertices/NORMAL",
+            "bufferView": 1,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1950,
+            "max": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "type": "VEC3"
+        },
+        {
+            "name": "Object_4Shape#0/vertices/POSITION",
+            "bufferView": 1,
+            "byteOffset": 23400,
+            "componentType": 5126,
+            "count": 1950,
+            "max": [
+                99.99996948242188,
+                207.78335571289066,
+                99.99996185302736
+            ],
+            "min": [
+                -99.99990844726564,
+                7.783295631408691,
+                -100.0000228881836
+            ],
+            "type": "VEC3"
+        },
+        {
+            "name": "Object_4Shape#0/vertices/TANGENT",
+            "bufferView": 2,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1950,
+            "max": [
+                1.0,
+                0.04914020001888275,
+                1.0,
+                1.0
+            ],
+            "min": [
+                -1.0,
+                -0.04912881180644035,
+                -1.0,
+                1.0
+            ],
+            "type": "VEC4"
+        },
+        {
+            "name": "Object_4Shape#0/vertices/TEXCOORD_0",
+            "bufferView": 3,
+            "byteOffset": 0,
+            "componentType": 5126,
+            "count": 1950,
+            "max": [
+                1.0,
+                1.0
+            ],
+            "min": [
+                0.0,
+                0.0
+            ],
+            "type": "VEC2"
+        }
+    ],
+    "bufferViews": [
+        {
+            "name": "untitled/data/indices-2",
+            "buffer": 0,
+            "byteOffset": 93600,
+            "byteLength": 5760,
+            "target": 34963
+        },
+        {
+            "name": "untitled/data/vertices-12",
+            "buffer": 0,
+            "byteOffset": 31200,
+            "byteLength": 46800,
+            "byteStride": 12,
+            "target": 34962
+        },
+        {
+            "name": "untitled/data/vertices-16",
+            "buffer": 0,
+            "byteOffset": 0,
+            "byteLength": 31200,
+            "byteStride": 16,
+            "target": 34962
+        },
+        {
+            "name": "untitled/data/vertices-8",
+            "buffer": 0,
+            "byteOffset": 78000,
+            "byteLength": 15600,
+            "byteStride": 8,
+            "target": 34962
+        }
+    ],
+    "buffers": [
+        {
+            "name": "untitled/data",
+            "byteLength": 99360,
+            "uri": "untitled0.bin"
+        }
+    ]
+}
