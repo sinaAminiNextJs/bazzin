@@ -1,13 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Madimi_One } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
-
-const madimiOne = Madimi_One({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-madimi-one",
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -34,9 +26,7 @@ export default function RootLayout({
         <script src="https://cdn.jsdelivr.net/npm/webxr-polyfill@latest/build/webxr-polyfill.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/webxr-api@latest/dist/webxr-api.js"></script>
       </head>
-      <body className={`${madimiOne.variable} antialiased bg-black/20`}>
-        {children}
-      </body>
+      <body className={`antialiased bg-black/20`}>{children}</body>
     </html>
   );
 }

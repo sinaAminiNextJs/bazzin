@@ -20,6 +20,12 @@
   font-weight: 700;
   font-style: normal;
 }
+@font-face {
+  font-family: "Madimi One";
+  src: url("/fonts/MadimiOne-Regular.ttf") format("ttf");
+  /* font-weight: 700; */
+  font-style: normal;
+}
 
 :root {
   --background: #ffffff;
