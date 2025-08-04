@@ -64,10 +64,8 @@ export default function HomePage() {
           shadow-intensity="1"
           camera-controls
           style={{ width: "100%", height: "100%" }}
-          scale={"0.01 0.01 0.01"}
+          scale={"0.005 0.005 0.005"}
           ref={modelRef}
-          // ar-scale="fixed"
-          ar-placement="floor"
           interaction-prompt="none"
         >
           <button
