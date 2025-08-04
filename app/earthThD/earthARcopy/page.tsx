@@ -24,21 +24,17 @@ export default function ARPage() {
         <model-viewer
           loading="eager"
           ar
-          ar-modes="scene-viewer quick-look webxr"
-          src={"/ar-earth/untitled.gltf"}
+          modes="scene-viewer quick-look webxr"
+          src={"/ar-earth/m1/untitled.gltf"}
           // ios-src="/ar-earth/earth.usdz"
           camera-controls
+          touch-action="pan-y"
+          reveal="manual"
           auto-rotate
           shadow-intensity="1"
           ar-placement="floor"
           interaction-prompt="none"
           style={{ width: "100%", height: "100%", zIndex: "10" }}
-          touch-action="pan-y"
-          reveal="manual"
-          camera-orbit="45deg 45deg 3m"
-          field-of-view="30deg"
-          min-camera-orbit="auto auto 0.1m"
-          max-camera-orbit="auto auto 100m"
           scale="10 1 0.1"
         >
           <button
