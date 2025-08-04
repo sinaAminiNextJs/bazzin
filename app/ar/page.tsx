@@ -70,9 +70,13 @@ export default function HomePage() {
           ar-placement="floor"
           interaction-prompt="none"
         >
-          <div className="controls glass">
-            <button onClick={() => exportGLB()}>Export GLB</button>
-          </div>
+          <button
+            slot="hotspot-export"
+            onClick={() => exportGLB()}
+            className="fixed bottom-20 left-4 bg-blue-500 text-white p-2 rounded"
+          >
+            Export GLB
+          </button>
 
           <button
             slot="ar-button"
