@@ -17,6 +17,16 @@ export default function HomePage() {
     setVisibleModal(true);
     modelRef?.current?.dismissPoster();
   };
+  async function exportGLB() {
+    const modelViewer = document.getElementById("static-model");
+    // @ts-ignore
+    const glTF = await modelViewer?.exportScene();
+    const file = new File([glTF], "export.glb");
+    const link = document.createElement("a");
+    link.download = file.name;
+    link.href = URL.createObjectURL(file);
+    link.click();
+  }
   return (
     <>
       <button
@@ -88,6 +98,10 @@ export default function HomePage() {
           ar-placement="floor"
           interaction-prompt="none"
         >
+          <div className="controls glass">
+            <button onClick={() => exportGLB()}>Export GLB</button>
+          </div>
+
           <button
             slot="ar-button"
             id="ar-button"
