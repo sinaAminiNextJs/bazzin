@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 
-export default function HomePage() {
+export default function AR() {
   const [visibleModel, setVisibleModal] = useState<boolean>(false);
   const modelRef: any = useRef(null);
 
