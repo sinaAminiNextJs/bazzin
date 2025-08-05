@@ -57,17 +57,24 @@
   <body>
     <!-- استفاده مستقیم از کد مستندات -->
     <model-viewer
+      ar
+      ar-modes="scene-viewer quick-look webxr"
       src="/ar-earth/earth.glb"
+      ios-src="/model/pizza.usdz"
+      touch-action="pan-y"
+      reveal="manual"
+      auto-rotate
       shadow-intensity="1"
       camera-controls
-      touch-action="pan-y"
-      alt="A 3D model of an astronaut"
+      scale="0.01 0.01 0.01"
+      ref="{modelRef}"
+      interaction-prompt="none"
     >
       <div class="controls glass">
-        <button onclick="exportGLB()">Export GLB3</button>
+        <button onclick="exportGLB()">Export GLB4</button>
       </div>
       <div class="ar-button">
-        <button slot="ar-button">مشاهده در AR</button>
+        <button slot="ar-button" id="ar-button">مشاهده در AR</button>
       </div>
     </model-viewer>
     <script>
