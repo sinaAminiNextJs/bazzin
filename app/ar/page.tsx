@@ -56,7 +56,7 @@ export default function HomePage() {
         <model-viewer
           ar
           ar-modes="scene-viewer quick-look webxr"
-          src={"/ar-earth/m1/untitled.gltf"}
+          src={"/ar-earth/earth.glb"}
           ios-src={"/model/pizza.usdz"} // AR iOS
           touch-action="pan-y"
           reveal="manual"
@@ -64,7 +64,7 @@ export default function HomePage() {
           shadow-intensity="1"
           camera-controls
           style={{ width: "100%", height: "100%" }}
-          scale={"0.005 0.005 0.005"}
+          scale={"0.05 0.05 0.05"}
           ref={modelRef}
           interaction-prompt="none"
         >
