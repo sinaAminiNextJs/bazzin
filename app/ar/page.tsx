@@ -1,6 +1,7 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAuthCheck } from "@/lib/hooks/useAuthCheck";
+import * as THREE from "three";
 
 export default function HomePage() {
   useAuthCheck();
@@ -11,6 +12,30 @@ export default function HomePage() {
     setVisibleModal(true);
     modelRef?.current?.dismissPoster();
   };
+
+  useEffect(() => {
+    if (!modelRef.current) return;
+
+    const loadTexture = async () => {
+      const modelViewer = modelRef.current;
+      await customElements.whenDefined("model-viewer");
+
+      // منتظر بمانید تا مدل لود شود
+      modelViewer.addEventListener("load", () => {
+        const texture = new THREE.TextureLoader().load("/ar-earth/m2/mp.jpg");
+        const material = new THREE.MeshStandardMaterial({ map: texture });
+
+        // اعمال روی مدل
+        modelViewer.model.traverse((child: any) => {
+          if (child.isMesh) {
+            child.material = material;
+          }
+        });
+      });
+    };
+
+    loadTexture();
+  }, []);
 
   return (
     <>
