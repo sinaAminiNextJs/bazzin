@@ -58,18 +58,17 @@
     <!-- استفاده مستقیم از کد مستندات -->
     <model-viewer
       ar
-      ar-modes="scene-viewer quick-look webxr"
-      src="/ar-earth/earth.glb"
+      src="/ar-earth/m1/untitled.gltf"
       ios-src="/model/pizza.usdz"
       touch-action="pan-y"
-      reveal="manual"
       auto-rotate
-      shadow-intensity="1"
       camera-controls
       scale="0.01 0.01 0.01"
-      ref="{modelRef}"
-      interaction-prompt="none"
     >
+      <!-- ar-modes="scene-viewer quick-look webxr" -->
+      <!-- reveal="manual" -->
+      <!-- shadow-intensity="1" -->
+      <!-- interaction-prompt="none" -->
       <div class="controls glass">
         <button onclick="exportGLB()">Export GLB4</button>
       </div>
