@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>نمونه مدل‌ویور</title>
+    <!-- لود کتابخانه model-viewer -->
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"
+    ></script>
+    <style>
+      /* استایل‌های سفارشی */
+      model-viewer {
+        width: 100%;
+        height: 500px;
+        margin: 0 auto;
+      }
+      .controls.glass {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        padding: 10px;
+        border-radius: 8px;
+      }
+      .controls button {
+        background: #4285f4;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- استفاده مستقیم از کد مستندات -->
+    <model-viewer
+      id="static-model"
+      src="/ar-earth/earth.glb"
+      shadow-intensity="1"
+      camera-controls
+      touch-action="pan-y"
+      alt="A 3D model of an astronaut"
+    >
+      <div class="controls glass">
+        <button onclick="exportGLB()">Export GLB</button>
+      </div>
+    </model-viewer>
+    <script>
+      async function exportGLB() {
+        const modelViewer = document.getElementById("static-model");
+        const glTF = await modelViewer.exportScene();
+        const file = new File([glTF], "export.glb");
+        const link = document.createElement("a");
+        link.download = file.name;
+        link.href = URL.createObjectURL(file);
+        link.click();
+      }
+    </script>
+  </body>
+</html>
