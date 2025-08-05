@@ -33,7 +33,7 @@ export default function About() {
         کنند.
       </p>
       <button
-        onClick={() => router.push("/earthThD/earthAR/")}
+        onClick={() => (window.location.href = "/ar-model/index.html")}
         className="w-full max-w-md min-w-60 text-black h-15 bg-myorange rounded-2xl border-0 border-b-8 border-b-myorangeLight font-iranyekan text-xl active:translate-y-[2px] active:scale-95 transition-all duration-100"
       >
         واقعیت افزوده (AR){" "}
