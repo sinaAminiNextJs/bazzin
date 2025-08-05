@@ -11,16 +11,7 @@ export default function HomePage() {
     setVisibleModal(true);
     modelRef?.current?.dismissPoster();
   };
-  async function exportGLB() {
-    const modelViewer = document.getElementById("static-model");
-    // @ts-ignore
-    const glTF = await modelViewer?.exportScene();
-    const file = new File([glTF], "export.glb");
-    const link = document.createElement("a");
-    link.download = file.name;
-    link.href = URL.createObjectURL(file);
-    link.click();
-  }
+
   return (
     <>
       <button onClick={startModel}>hi</button>
@@ -68,14 +59,6 @@ export default function HomePage() {
           ref={modelRef}
           interaction-prompt="none"
         >
-          <button
-            slot="hotspot-export"
-            onClick={() => exportGLB()}
-            className="fixed bottom-20 left-4 bg-blue-500 text-white p-2 rounded"
-          >
-            Export GLB
-          </button>
-
           <button
             slot="ar-button"
             id="ar-button"
