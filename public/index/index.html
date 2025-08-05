@@ -54,10 +54,13 @@
   </head>
   <body>
     <!-- استفاده مستقیم از کد مستندات -->
+    <!-- id="lazy-load" -->
     <model-viewer
-      id="lazy-load"
+      id="reveal"
+      loading="eager"
+      tone-mapping="aces"
       ar
-      src="/ar-earth/m2/untitled.gltf"
+      src="/ar-earth/m4/untitled.gltf"
       ios-src="/model/pizza.usdz"
       touch-action="pan-y"
       auto-rotate
@@ -66,7 +69,7 @@
       reveal="manual"
     >
       <div id="lazy-load-poster" slot="poster"></div>
-      <div id="button-load" slot="poster">Load 3D Model</div>
+      <div id="button-load" slot="poster">در حال بارگذاری مدل...</div>
       <!-- ar-modes="scene-viewer quick-look webxr" -->
       <!-- shadow-intensity="1" -->
       <!-- interaction-prompt="none" -->
