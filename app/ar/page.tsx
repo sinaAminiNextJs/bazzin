@@ -64,7 +64,7 @@ export default function HomePage() {
           shadow-intensity="1"
           camera-controls
           style={{ width: "100%", height: "100%" }}
-          scale={"0.05 0.05 0.05"}
+          scale={"0.01 0.01 0.01"}
           ref={modelRef}
           interaction-prompt="none"
         >
