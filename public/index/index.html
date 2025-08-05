@@ -17,6 +17,7 @@
         margin: 0 auto;
       }
       .ar-button {
+        display: block !important;
         position: fixed;
         top: 20px;
         left: 50%;
@@ -66,7 +67,9 @@
       <div class="controls glass">
         <button onclick="exportGLB()">Export GLB2</button>
       </div>
-      <button slot="ar-button" class="ar-button">مشاهده در AR</button>
+      <div class="ar-button">
+        <button slot="ar-button">مشاهده در AR</button>
+      </div>
     </model-viewer>
     <script>
       async function exportGLB() {
