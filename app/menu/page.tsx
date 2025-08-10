@@ -33,7 +33,7 @@ export default function Menu() {
             کره زمین سه بعدی
           </button>
           <Image
-            src="/clipart/earth.webp"
+            src="/clipart/earth.png"
             alt="Earth illustration"
             width={96}
             height={96}
@@ -49,7 +49,7 @@ export default function Menu() {
             بازی و سرگرمی{" "}
           </button>
           <Image
-            src="/clipart/joy.webp"
+            src="/clipart/joy.png"
             alt="joy illustration"
             width={96}
             height={96}
@@ -65,7 +65,7 @@ export default function Menu() {
             انیمیشن{" "}
           </button>
           <Image
-            src="/clipart/play.webp"
+            src="/clipart/play.png"
             alt="play illustration"
             width={96}
             height={96}
@@ -81,7 +81,7 @@ export default function Menu() {
             درباره ما{" "}
           </button>
           <Image
-            src="/clipart/qustion.webp"
+            src="/clipart/qustion.png"
             alt="qustion illustration"
             width={96}
             height={96}
